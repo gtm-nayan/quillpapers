@@ -1,0 +1,15 @@
+html,
+body,
+#svelte {
+	margin: 0;
+    padding: 0;
+	height: 100vh;
+	display: flex;
+	flex-flow: column;
+	overflow: hidden;
+}
+
+:root * {
+	box-sizing: border-box;
+	margin: 0;
+}
