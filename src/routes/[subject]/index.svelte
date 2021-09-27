@@ -59,7 +59,7 @@
 		appropriate buttons to flag the questions.
 	</section>
 
-	<Footer/>
+	<Footer />
 </main>
 
 <style>
@@ -67,9 +67,12 @@
 		padding: 2% 10%;
 		text-align: justify;
 		overflow: auto;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
 	}
 
-	h2{
+	h2 {
 		text-align: initial;
 	}
 

@@ -1,0 +1,192 @@
+{
+    "9701": {
+        "subName": "Chemistry",
+        "subNotes": "Questions numbered 31 through 40 are 'Section B' type questions where you have to pick a combination of statements. A means 1, 2 and 3 are correct, B: 1 and 2 are correct, C: 2 and 3 are correct and D means only 1 is correct.",
+        "topics": {
+            "1": {
+                "topicName": "Moles and equations",
+                "count": ""
+            },
+            "2": {
+                "topicName": "Atomic Structure",
+                "count": ""
+            },
+            "3": {
+                "topicName": "Electrons in atoms",
+                "count": ""
+            },
+            "4": {
+                "topicName": "Chemical bonding",
+                "count": ""
+            },
+            "5": {
+                "topicName": "States of Matter",
+                "count": ""
+            },
+            "6": {
+                "topicName": "Enthalpy changes",
+                "count": ""
+            },
+            "7": {
+                "topicName": "Redox reactions",
+                "count": ""
+            },
+            "8": {
+                "topicName": "Equilibrium",
+                "count": ""
+            },
+            "9": {
+                "topicName": "Rates of reaction",
+                "count": ""
+            },
+            "10": {
+                "topicName": "Periodicity",
+                "count": ""
+            },
+            "11": {
+                "topicName": "Group 2",
+                "count": ""
+            },
+            "12": {
+                "topicName": "Group 17",
+                "count": ""
+            },
+            "13": {
+                "topicName": "Nitrogen and Sulfur",
+                "count": ""
+            },
+            "14": {
+                "topicName": "Introduction to Organic Chemistry",
+                "count": ""
+            },
+            "15": {
+                "topicName": "Hydrocarbons",
+                "count": ""
+            },
+            "16": {
+                "topicName": "Halogenoalkanes",
+                "count": ""
+            },
+            "17": {
+                "topicName": "Alcohols, Esters & Carboxylic Acids",
+                "count": ""
+            },
+            "18": {
+                "topicName": "Carbonyl Compounds",
+                "count": ""
+            }
+        }
+    },
+    "9700": {
+        "subName": "Biology",
+        "subNotes": "On some questions the characters μ and × seem to have been replaced by α and • at some point during optimizing PDFs so just keep that in mind if you encounter those.",
+        "topics": {
+            "1": {
+                "topicName": "Cell structure",
+                "count": ""
+            },
+            "2": {
+                "topicName": "Biological molecules",
+                "count": ""
+            },
+            "3": {
+                "topicName": "Enzymes",
+                "count": ""
+            },
+            "4": {
+                "topicName": "Cell membranes and transport",
+                "count": ""
+            },
+            "5": {
+                "topicName": "The mitotic cell cycle",
+                "count": ""
+            },
+            "6": {
+                "topicName": "Nucleic acids and protein synthesis",
+                "count": ""
+            },
+            "7": {
+                "topicName": "Transport in plants",
+                "count": ""
+            },
+            "8": {
+                "topicName": "Transport in mammals",
+                "count": ""
+            },
+            "9": {
+                "topicName": "Gas exchange and smoking",
+                "count": ""
+            },
+            "10": {
+                "topicName": "Infectious diseases",
+                "count": ""
+            },
+            "11": {
+                "topicName": "Immunity",
+                "count": ""
+            },
+            "12": {
+                "topicName": "Redacted",
+                "count": ""
+            }
+        }
+    },
+    "9702": {
+        "subName": "Physics",
+        "subNotes": "",
+        "topics": {
+            "1": {
+                "topicName": "Physical Quantities and Units",
+                "count": ""
+            },
+            "2": {
+                "topicName": "Vectors",
+                "count": ""
+            },
+            "3": {
+                "topicName": "Measurement Techniques",
+                "count": ""
+            },
+            "4": {
+                "topicName": "Kinematics",
+                "count": ""
+            },
+            "5": {
+                "topicName": "Dynamics",
+                "count": ""
+            },
+            "6": {
+                "topicName": "Force, Density and Pressure",
+                "count": ""
+            },
+            "7": {
+                "topicName": "Work, Energy and Power",
+                "count": ""
+            },
+            "8": {
+                "topicName": "Deformation of Solids",
+                "count": ""
+            },
+            "9": {
+                "topicName": "Waves",
+                "count": ""
+            },
+            "10": {
+                "topicName": "Superposition",
+                "count": ""
+            },
+            "11": {
+                "topicName": "Electric Fields",
+                "count": ""
+            },
+            "12": {
+                "topicName": "Current Electricity and DC circuits",
+                "count": ""
+            },
+            "13": {
+                "topicName": "Particle and Nuclear Physics",
+                "count": ""
+            }
+        }
+    }
+}

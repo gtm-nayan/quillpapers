@@ -4,8 +4,8 @@
 
 <script>
 	import Footer from '$lib/components/ui/Footer.svelte';
-
-	import subjects from '$lib/data/subjects';
+	import subjects from '$lib/data/subjects.json';
+	import KofiButton from '$lib/components/ui/KofiButton.svelte';
 </script>
 
 <svelte:head>
@@ -28,17 +28,17 @@
 		</ul>
 	</section>
 
-	<section>
+	<section style="line-height: 1.6;">
 		<h2>Keybinds <subtitle style="font-size: xx-small;">if you wanna use em</subtitle></h2>
-		
-		<code>A, B, C, D</code> : Well....<br />
-		<code>L</code> : Next Question <br />
-		<code>J</code> : Previous Question <br />
-		<code>K</code> : Scroll the question down<br />
-		<code>I</code> : Scroll the question up<br />
-		<code>T</code> : Focus topic selector<br />
-		<code>Shift+E</code> : Open error report <br />
-		<code>Shift+H</code> : Back to this page <br>
+
+		<kbd>A</kbd>, <kbd>B</kbd>, <kbd>C</kbd>, <kbd>D</kbd> : Well....<br />
+		<kbd>L</kbd> : Next Question <br />
+		<kbd>J</kbd> : Previous Question <br />
+		<kbd>K</kbd> : Scroll the question down<br />
+		<kbd>I</kbd> : Scroll the question up<br />
+		<kbd>T</kbd> : Focus topic selector<br />
+		<kbd>Shift</kbd>+<kbd>E</kbd> : Open error report <br />
+		<kbd>Shift</kbd>+<kbd>H</kbd> : Back to this page <br />
 	</section>
 
 	<section>
@@ -60,9 +60,15 @@
 	</section>
 
 	<section>
-		<h3>Mobile when?</h3>
-		I ripped a lot of my hair out trying to write CSS for decently-sized screens, so maybe when it grows
-		back.
+		<h3>Support Quillpapers</h3>
+		<p>
+			While quillpapers isn't for profit, hosting the database for the questions does incur a cost.
+			Your support would go a long way in ensuring that I don't have to resort to ads to keep it
+			running. It'd also allow me to add new features on more powerful servers, and questions for
+			more subjects. If this site has been helpful to you, consider supporting me through Ko-fi.
+		</p>
+		<br />
+		<KofiButton pText="Donate" pId="gtmnayan" />
 	</section>
 
 	<Footer />
@@ -81,6 +87,6 @@
 	}
 
 	section {
-		margin: 2em 0;
+		margin: 1em 0;
 	}
 </style>

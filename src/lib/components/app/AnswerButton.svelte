@@ -12,7 +12,14 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<button class:correct class:incorrect on:click={() => dispatch('choose', option)} type="button" use:shortcut={{code: 'Key'+option}}>
+<button
+	aria-label={option}
+	class:correct
+	class:incorrect
+	on:click={() => dispatch('choose', option)}
+	type="button"
+	use:shortcut={{ code: 'Key' + option }}
+>
 	{option}
 </button>
 
@@ -20,7 +27,6 @@
 	.correct {
 		background-color: green;
 		color: white;
-		position: relative;
 	}
 
 	.correct::before {
@@ -32,7 +38,6 @@
 	.incorrect {
 		background-color: red;
 		color: white;
-		position: relative;
 	}
 
 	.incorrect::before {
@@ -43,7 +48,7 @@
 
 	button {
 		width: 20%;
-		font-size: xx-large;
+		font-size: x-large;
 		border-radius: 10px;
 		border: none;
 		cursor: pointer;
@@ -52,6 +57,7 @@
 		margin-bottom: 0.1em;
 		box-shadow: rgba(0, 0, 0, 0.2) 0em 0.15em 0.1em;
 		transition: background-color 200ms;
+		position: relative;
 	}
 
 	button:active {

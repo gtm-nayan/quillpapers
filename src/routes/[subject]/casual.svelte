@@ -1,15 +1,15 @@
 <script context="module">
-	import subjects from '$lib/data/subjects';
-
+	import subjects from '$lib/data/subjects.json';
 	async function fetchRandomQuestion(subject_code, topic, fetcher) {
-		let res = await fetcher(`/api/${subject_code}/normal/${topic}.json`);
-		let data = await res.json();
-
-		return data;
+		let res = await fetcher(
+			`/api/randomQuestion?subject_code=${subject_code}&topic_number=${topic}`
+		);
+		if (res.ok) return res.json();
 	}
 
 	export async function load({ page, fetch }) {
-		let sub_code = parseInt(page.params.subject);
+		let sub_code = page.params.subject;
+
 		if (subjects[sub_code]?.topics) {
 			let q;
 			try {
@@ -21,7 +21,7 @@
 			return {
 				status: q ? 200 : 504,
 				props: {
-					subject_code: parseInt(page.params.subject),
+					subject_code: page.params.subject,
 					currentQuestion: q
 				}
 			};
@@ -36,11 +36,13 @@
 
 <script>
 	import AnswerButton from '$lib/components/app/AnswerButton.svelte';
-	import Fa from 'svelte-fa';
-	import { faArrowLeft, faArrowRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa/src/fa.svelte';
+	import { faArrowLeft, faArrowRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 	import { setContext } from 'svelte';
 	import ErrorModal from '$lib/components/app/ErrorModal/ErrorModal.svelte';
+	import PdfViewer from '$lib/components/app/PdfViewer.svelte';
 	import { shortcut } from '$lib/helpers/shortcuts';
+	import { browser } from '$app/env';
 
 	export let subject_code;
 	export let currentQuestion;
@@ -69,7 +71,6 @@
 			currentQuestion = newQuestion;
 			selected = '';
 			isImageLoading = true;
-
 		} catch (error) {
 			console.error(error);
 		}
@@ -87,7 +88,7 @@
 		selected = event.detail;
 	}
 
-	let imgDiv;
+	let questionScale = 2;
 </script>
 
 <svelte:head>
@@ -101,15 +102,24 @@
 <main>
 	<section class="question-img">
 		<div
-			bind:this={imgDiv}
-			use:shortcut={{ code: 'KeyI', callback: () => (imgDiv.scrollTop -= 5) }}
-			use:shortcut={{ code: 'KeyK', callback: () => (imgDiv.scrollTop += 5) }}
+			use:shortcut={{ code: 'KeyI', callback: (e) => (e.scrollTop -= 10) }}
+			use:shortcut={{ code: 'KeyK', callback: (e) => (e.scrollTop += 10) }}
 		>
-			<img
-				src="https://res.cloudinary.com/quillpapers/questions/{currentQuestion.subject_code}_{currentQuestion.series}{currentQuestion.year}_qp_{currentQuestion.variant}_{currentQuestion.questionNo}.png"
-				alt="{currentQuestion.subject_code}_{currentQuestion.series}{currentQuestion.year}_qp_{currentQuestion.variant} Question Number:{currentQuestion.questionNo}"
-				on:load="{() => isImageLoading = false}"
-			/>
+			{#if browser}
+				<svelte:component
+					this={PdfViewer}
+					url="https://quillpdfs.netlify.app/{currentQuestion.subject_code}_{currentQuestion.series}{currentQuestion.exam_year}_qp_{currentQuestion.paper_variant}.pdf"
+					canvasStyles="margin: auto;"
+					pageNumber={currentQuestion.question_number}
+					zoom={questionScale}
+					bind:busy={isImageLoading}
+				/>
+			{/if}
+
+			<label style="position: absolute; bottom: 1em; right: 1em;">
+				{questionScale}x
+				<input type="range" min="0.5" max="4" bind:value={questionScale} step="0.5" />
+			</label>
 		</div>
 	</section>
 
@@ -119,7 +129,7 @@
 				name="topic"
 				id="select-topic"
 				on:input={handleTopicChange}
-				use:shortcut={{ code: 'KeyT', focus: true }}
+				use:shortcut={{ code: 'KeyT', callback: (e) => e.focus() }}
 			>
 				{#each Object.keys(subjects[subject_code]['topics']) as topicNum}
 					<option value={topicNum}>
@@ -128,7 +138,7 @@
 				{/each}
 			</select>
 			<span class="qd">
-				{subject_code}/{currentQuestion.series}{currentQuestion.year}/{currentQuestion.variant}
+				{currentQuestion.series}{currentQuestion.exam_year} p{currentQuestion.paper_variant}
 			</span>
 			<div>
 				{#key currentQuestion}
@@ -139,10 +149,11 @@
 
 		<div class="buttons">
 			<button
-				disabled={!previousQuestion}
+				disabled={!previousQuestion || isLoading}
 				class="previous"
 				on:click={goBack}
 				use:shortcut={{ code: 'KeyJ' }}
+				aria-label="previous"
 			>
 				<Fa icon={faArrowLeft} size="4x" />
 			</button>
@@ -150,7 +161,7 @@
 			<div class="choices">
 				{#each ['A', 'B', 'C', 'D'] as choice}
 					<AnswerButton
-						isCorrect={currentQuestion.correct == choice}
+						isCorrect={currentQuestion.correct_answer == choice}
 						isSelected={selected == choice}
 						option={choice}
 						on:choose={handleChoose}
@@ -163,9 +174,10 @@
 				on:click={getNewQuestion}
 				disabled={isLoading}
 				use:shortcut={{ code: 'KeyL' }}
+				aria-label="next"
 			>
 				{#if isLoading}
-					<Fa icon={faSpinner} size="3.5x" spin pulse />
+					<Fa icon={faCircleNotch} size="3.5x" spin />
 				{:else}
 					<Fa icon={faArrowRight} size="4x" />
 				{/if}
@@ -183,7 +195,8 @@
 	}
 
 	.question-img {
-		flex: 1 1 65%;
+		flex: 1 1 75%;
+		position: relative;
 	}
 
 	.question-img > div {
@@ -197,17 +210,12 @@
 		justify-content: space-between;
 	}
 
-	img {
-		margin: auto;
-		max-width: 100%;
-	}
-
 	.ui {
 		display: flex;
 		flex-direction: column;
 		background-color: rgb(248, 249, 250);
 		padding: 0.5em;
-		flex: 1 1 35%;
+		flex: 1 1 27.5%;
 	}
 
 	.choices {
@@ -231,6 +239,7 @@
 
 	.settings {
 		display: flex;
+		gap: 0.2rem;
 		justify-content: space-between;
 		margin-bottom: 0.3em;
 		flex-wrap: wrap;
@@ -238,5 +247,7 @@
 
 	button {
 		border-radius: 0.3em;
+		border: none;
+		box-shadow: var(--btn-shadow);
 	}
 </style>

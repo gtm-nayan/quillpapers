@@ -12,4 +12,5 @@ body,
 :root * {
 	box-sizing: border-box;
 	margin: 0;
+	--btn-shadow: rgba(0, 0, 0, 0.2) 0em 0.2em 0.2em;
 }

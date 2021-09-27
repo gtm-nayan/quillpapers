@@ -4,39 +4,35 @@
 
 	const { close } = getContext('simple-modal');
 
-	let type = 'BAD_CROPPING';
+	let error_type = 'BAD_CROPPING';
 	let betterTopic = '1';
-	let betterAnswer = 'A';
 
 	let question = getContext('currentQuestion');
 	let topics = subjects[question['subject_code']]['topics'];
 
 	async function validateAndSend() {
 		let reqBody;
-		if (type == 'BAD_CROPPING') {
+		if (error_type == 'BAD_CROPPING' || error_type == 'WRONG_ANSWER') {
 			reqBody = {
-				question,
-				type
+				...question,
+				error_type
 			};
-		} else if (type == 'INCORRECT_ANSWER' && ['A', 'B', 'C', 'D'].includes(betterAnswer)) {
+		} else if (error_type == 'WRONG_TOPIC' && Object.keys(topics).includes(betterTopic)) {
 			reqBody = {
-				question,
-				type,
-				betterAnswer
-			};
-		} else if (type == 'INCORRECT_TOPIC' && Object.keys(topics).includes(betterTopic)) {
-			reqBody = {
-				question,
-				type,
-				betterTopic: parseInt(betterTopic)
+				...question,
+				error_type,
+				topic_suggestion: betterTopic
 			};
 		}
 
 		if (reqBody) {
 			try {
-				await fetch('/api/flag', {
+				await fetch('/api/errorReport', {
 					method: 'POST',
-					body: JSON.stringify(reqBody)
+					body: JSON.stringify(reqBody),
+					headers: {
+						'Content-Type': 'application/json'
+					}
 				});
 			} catch (error) {
 				console.log(error);
@@ -48,18 +44,19 @@
 </script>
 
 <div>
-	{question.subject_code} {question.series}{question.year} {question.variant} <br>
-	Question Number: {question.questionNo}
+	{question.subject_code}
+	{question.series}{question.exam_year} p{question.paper_variant} <br />
+	Question Number: {question.question_number}
 	<br />
 	<h2 style="margin-bottom: 0.3rem">Type of error</h2>
-	<select name="type" id="type" bind:value={type}>
+	<select name="type" id="type" bind:value={error_type}>
 		<option value="BAD_CROPPING">Bad cropping</option>
-		<option value="INCORRECT_ANSWER">Incorrect answer</option>
-		<option value="INCORRECT_TOPIC">Incorrect Topic</option>
+		<option value="WRONG_ANSWER">Wrong answer</option>
+		<option value="WRONG_TOPIC">Wrong topic</option>
 	</select>
 </div>
 
-{#if type === 'INCORRECT_TOPIC'}
+{#if error_type === 'WRONG_TOPIC'}
 	<br />
 	<hr />
 	<br />
@@ -71,21 +68,15 @@
 			{/each}
 		</select>
 	</div>
-{:else if type === 'INCORRECT_ANSWER'}
-	<br />
-	<hr />
-	<br />
-	<div>
-		<h5>Are you certain? If so, which answer do you think it is?</h5>
-		{#each ['A', 'B', 'C', 'D'] as answer}
-			<label>
-				<input type="radio" value={answer} bind:group={betterAnswer} />
-				{answer}
-			</label>
-			<br />
-		{/each}
-	</div>
 {/if}
 <br />
 
 <button on:click={validateAndSend}>Submit</button>
+
+<style>
+	button {
+		border-radius: 0.2rem;
+		border: none;
+		box-shadow: var(--btn-shadow);
+	}
+</style>

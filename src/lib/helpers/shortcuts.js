@@ -14,7 +14,7 @@ export const shortcut = (node, params) => {
 			)
 				return;
 			e.preventDefault();
-			params.callback ? params.callback() : params.focus ? node.focus() : node.click();
+			params.callback ? params.callback(node) : node.click();
 		};
 		window.addEventListener('keydown', handler);
 	};
