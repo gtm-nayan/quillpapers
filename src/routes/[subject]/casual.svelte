@@ -40,7 +40,7 @@
 	import { faArrowLeft, faArrowRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 	import { setContext } from 'svelte';
 	import ErrorModal from '$lib/components/app/ErrorModal/ErrorModal.svelte';
-	import PdfViewer from '$lib/components/app/PdfViewer.svelte';
+	import PdfViewer from '$lib/components/app/PdfViewer.svelte?client';
 	import { shortcut } from '$lib/helpers/shortcuts';
 	import { browser } from '$app/env';
 
@@ -106,8 +106,7 @@
 			use:shortcut={{ code: 'KeyK', callback: (e) => (e.scrollTop += 10) }}
 		>
 			{#if browser}
-				<svelte:component
-					this={PdfViewer}
+				<PdfViewer
 					url="https://quillpdfs.netlify.app/{currentQuestion.subject_code}_{currentQuestion.series}{currentQuestion.exam_year}_qp_{currentQuestion.paper_variant}.pdf"
 					canvasStyles="margin: auto;"
 					pageNumber={currentQuestion.question_number}

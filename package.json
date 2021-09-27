@@ -15,7 +15,8 @@
     "@sveltejs/kit": "next",
     "svelte": "^3.43.0",
     "svelte-fa": "^2.3.3",
-    "svelte-simple-modal": "^1.0.3"
+    "svelte-simple-modal": "^1.0.3",
+    "vite-plugin-iso-import": "^0.1.2"
   },
   "type": "module",
   "dependencies": {

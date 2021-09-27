@@ -19,7 +19,6 @@
 
 <script>
 	import Footer from '$lib/components/ui/Footer.svelte';
-
 	export let subject_code;
 </script>
 
