@@ -44,7 +44,7 @@
 	<section>
 		<h2>How do I use the site?</h2>
 		<p>
-			For each subject there are two modes, casual and testing.
+			For each subject there are two modes, casual and speedrun.
 			<br />
 			<br />
 			In casual mode you can pick a topic for the subject and work through all the questions available
@@ -52,7 +52,7 @@
 			cycle between your current and your previous question. The forward arrow will load a new question.
 			<br />
 			<br />
-			In testing mode, you'll get 40 random questions that you have to solve in one go without any feedback.
+			In speedrun mode, you'll get 40 random questions that you have to solve in one go without any feedback.
 			You can submit your answers and the result will be evaluated along with your stats for each topic.
 			If you get all correct while logged in, you will get featured on the speedrun leaderboard for that
 			subject (if you're fast enough).

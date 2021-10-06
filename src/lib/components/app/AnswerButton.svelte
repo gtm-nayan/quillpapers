@@ -4,10 +4,11 @@
 
 	export let isCorrect = false;
 	export let isSelected = false;
+	export let showResult = true;
 	export let option;
 
-	$: correct = isSelected && isCorrect;
-	$: incorrect = isSelected && !isCorrect;
+	$: correct = isCorrect && showResult;
+	$: incorrect = !isCorrect && showResult;
 
 	const dispatch = createEventDispatcher();
 </script>
@@ -16,6 +17,7 @@
 	aria-label={option}
 	class:correct
 	class:incorrect
+	class:isSelected
 	on:click={() => dispatch('choose', option)}
 	type="button"
 	use:shortcut={{ code: 'Key' + option }}
@@ -24,23 +26,26 @@
 </button>
 
 <style>
-	.correct {
-		background-color: green;
+	.isSelected {
+		background-color: rgb(0, 128, 255);
 		color: white;
 	}
 
-	.correct::before {
+	.isSelected.correct {
+		background-color: green;
+	}
+
+	.isSelected.correct::before {
 		content: '\2713';
 		position: absolute;
 		left: 0.5em;
 	}
 
-	.incorrect {
+	.isSelected.incorrect {
 		background-color: red;
-		color: white;
 	}
 
-	.incorrect::before {
+	.isSelected.incorrect::before {
 		content: '\2715';
 		position: absolute;
 		left: 0.5em;

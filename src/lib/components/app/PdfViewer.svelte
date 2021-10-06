@@ -8,15 +8,13 @@
 
 <script>
 	let canvas;
-	let prevLoadingTask;
+	let loadingTask;
 
 	function fetchNewDocument(url) {
 		busy = true;
 
-		prevLoadingTask?.destroy();
-		let loadingTask = getDocument({ url, worker });
+		loadingTask = getDocument({ url, worker });
 		loadingTask.promise.then(render).catch(() => (busy = false));
-		prevLoadingTask = loadingTask;
 	}
 
 	function render(pdf) {
@@ -34,6 +32,7 @@
 				})
 				.promise.then(function () {
 					busy = false;
+					loadingTask.destroy();
 				});
 		});
 	}
@@ -41,7 +40,7 @@
 	export let url;
 	export let canvasStyles = '';
 	export let pageNumber = 1;
-	export let zoom = 0;
+	export let zoom = 1;
 	export let busy = false;
 
 	$: pageNumber, zoom, fetchNewDocument(url);

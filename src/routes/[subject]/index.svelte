@@ -1,4 +1,5 @@
 <script context="module">
+	export const prerender = true;
 	import subjects from '$lib/data/subjects';
 
 	export async function load({ page }) {
@@ -35,8 +36,8 @@
 	<section>
 		<h3>Start Practising</h3>
 		<ul>
-			<li><a href="/{subject_code}/casual">Casual Mode</a> <br /></li>
-			<li>Test/Speedrun Mode? (WIP)</li>
+			<li><a href="/{subject_code}/casual">Casual Mode</a></li>
+			<li><a href="/{subject_code}/speedrun">Speedrun Mode</a></li>
 		</ul>
 	</section>
 	<hr />
