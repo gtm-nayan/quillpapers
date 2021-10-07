@@ -7,7 +7,7 @@
 	<hr />
 	&copy; gtmnayan {new Date().getFullYear()}
 	<br />
-	All questions are subject to the same copyright as specified in their source question papers.
+	All questions are provided for educational purposes only. They're subject to the same copyright as specified in their source question papers.
 	<br />
 	You can reach me through discord for any queries.
 	<br />

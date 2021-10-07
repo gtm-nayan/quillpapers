@@ -42,16 +42,19 @@ Referenced by:
  wrong_topic_flags  | smallint[]           |           |          | ARRAY[]::smallint[]
  wrong_answer_flags | smallint             |           |          | 0
 Indexes:
-    "questions_pkey" PRIMARY KEY, btree (subject_c
-ode, series, exam_year, paper_variant, question_nu
-mber)
-    "questions_sub_n_topic_idx" btree (subject_cod
-e, topic)
+    "questions_pkey" PRIMARY KEY, btree (subject_code, series, exam_year, paper_variant, question_number)
+    "questions_sub_n_topic_idx" btree (subject_code, topic)
 Foreign-key constraints:
-    "questions_subject_code_topic_fkey" FOREIGN KE
-Y (subject_code, topic) REFERENCES topics(subject_
-code, topic_number) ON DELETE SET DEFAULT
+    "questions_subject_code_topic_fkey" FOREIGN KEY (subject_code, topic) REFERENCES topics(subject_code, topic_number) ON DELETE SET DEFAULT
 ```
+
+4. Create a .env file with the variable
+
+```
+VITE_POSTGRES_URI=postgresql://<dbuser>:<password>@<hostname>:<port>/<dbname>
+```
+
+5. Then run the following command in your shell to start the dev server
 
 ```bash
 pnpm run dev
