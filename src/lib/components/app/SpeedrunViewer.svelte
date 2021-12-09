@@ -2,10 +2,9 @@
 	import AnswerButton from '$lib/components/app/AnswerButton.svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { faArrowLeft, faArrowRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-	import PdfViewer from '$lib/components/app/PdfViewer.svelte?client';
 	import { shortcut } from '$lib/helpers/shortcuts';
-	import { browser } from '$app/env';
 	import { createTimer } from '$lib/helpers/timer';
+	import PDFViewer from 'svelte-pdfjs';
 
 	export let questionStore;
 	export let endFunction;
@@ -39,18 +38,14 @@
 		use:shortcut={{ code: 'KeyI', callback: (e) => (e.scrollTop -= 10) }}
 		use:shortcut={{ code: 'KeyK', callback: (e) => (e.scrollTop += 10) }}
 	>
-		{#if browser}
-			<PdfViewer
-				url="https://quillpdfs.netlify.app/{$questionStore[safeCurrentQuestionIdx]
-					.subject_code}_{$questionStore[safeCurrentQuestionIdx].series}{$questionStore[
-					safeCurrentQuestionIdx
-				].exam_year}_qp_{$questionStore[safeCurrentQuestionIdx].paper_variant}.pdf"
-				canvasStyles="margin: auto;"
-				pageNumber={$questionStore[safeCurrentQuestionIdx].question_number}
-				zoom={questionScale}
-				bind:busy={isImageLoading}
-			/>
-		{/if}
+		<PDFViewer
+			pdfUrl="https://quillpdfs.netlify.app/{$questionStore[safeCurrentQuestionIdx]
+				.subject_code}_{$questionStore[safeCurrentQuestionIdx].series}{$questionStore[
+				safeCurrentQuestionIdx
+			].exam_year}_qp_{$questionStore[safeCurrentQuestionIdx].paper_variant}.pdf"
+			pageNumber={$questionStore[safeCurrentQuestionIdx].question_number}
+			zoomLevel={questionScale}
+		/>
 
 		<label style="position: absolute; bottom: 1em; right: 1em;">
 			{questionScale}x

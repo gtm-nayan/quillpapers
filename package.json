@@ -23,6 +23,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "pdfjs-dist": "^2.9.359",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "svelte-pdfjs": "^0.0.3"
   }
 }

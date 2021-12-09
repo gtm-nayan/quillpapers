@@ -24,7 +24,7 @@
 	import SpeedrunViewer from '$lib/components/app/SpeedrunViewer.svelte';
 	import { writable } from 'svelte/store';
 	import Footer from '$lib/components/ui/Footer.svelte';
-	import PdfViewer from '$lib/components/app/PdfViewer.svelte?client';
+	import PDFViewer from 'svelte-pdfjs';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -130,11 +130,10 @@
 						{question.subject_code}_{question.series}{question.exam_year}_qp_{question.paper_variant}
 					</h5>
 					<br />
-					<PdfViewer
-						url="https://quillpdfs.netlify.app/{question.subject_code}_{question.series}{question.exam_year}_qp_{question.paper_variant}.pdf"
-						canvasStyles="margin: auto; display: block;"
+					<PDFViewer
+						pdfUrl="https://quillpdfs.netlify.app/{question.subject_code}_{question.series}{question.exam_year}_qp_{question.paper_variant}.pdf"
 						pageNumber={question.question_number}
-						zoom={1.5}
+						zoomLevel={1.5}
 					/>
 					<br />
 					Correct answer: {question.correct_answer}<br />
