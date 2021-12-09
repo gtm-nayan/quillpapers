@@ -64,7 +64,7 @@
 
 		<select
 			name="question_index"
-			on:change={(e) => (unsafeCurrentQuestionIdx = e.target.value)}
+			on:blur={(e) => (unsafeCurrentQuestionIdx = e.target.value)}
 			value={safeCurrentQuestionIdx}
 		>
 			{#each $questionStore as question, i (i)}

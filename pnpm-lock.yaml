@@ -3,29 +3,29 @@ lockfileVersion: 5.3
 specifiers:
   '@fortawesome/free-brands-svg-icons': ^5.15.4
   '@fortawesome/free-solid-svg-icons': ^5.15.4
-  '@sveltejs/adapter-node': ^1.0.0-next.51
+  '@sveltejs/adapter-node': ^1.0.0-next.55
   '@sveltejs/kit': next
-  pdfjs-dist: ^2.9.359
+  pdfjs-dist: ^2.10.377
   pg: ^8.7.1
-  svelte: ^3.43.0
-  svelte-fa: ^2.3.3
+  svelte: ^3.44.2
+  svelte-fa: ^2.4.0
   svelte-pdfjs: ^0.0.3
-  svelte-simple-modal: ^1.0.3
+  svelte-simple-modal: ^1.1.1
   vite-plugin-iso-import: ^0.1.2
 
 dependencies:
   '@fortawesome/free-brands-svg-icons': 5.15.4
   '@fortawesome/free-solid-svg-icons': 5.15.4
-  pdfjs-dist: 2.9.359
+  pdfjs-dist: 2.10.377
   pg: 8.7.1
   svelte-pdfjs: 0.0.3
 
 devDependencies:
-  '@sveltejs/adapter-node': 1.0.0-next.51
-  '@sveltejs/kit': 1.0.0-next.201_svelte@3.43.0
-  svelte: 3.43.0
-  svelte-fa: 2.3.3
-  svelte-simple-modal: 1.0.3_svelte@3.43.0
+  '@sveltejs/adapter-node': 1.0.0-next.55
+  '@sveltejs/kit': 1.0.0-next.201_svelte@3.44.2
+  svelte: 3.44.2
+  svelte-fa: 2.4.0
+  svelte-simple-modal: 1.1.1_svelte@3.44.2
   vite-plugin-iso-import: 0.1.2
 
 packages:
@@ -60,24 +60,24 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.51:
-    resolution: {integrity: sha512-RMT6BQcNJZkGZskgHiZMsnjMWHXMiE5h30Aws9h1Cnc4+80ws6llWNqHglzP63ENahUHWBW+h9DVcDskHnP9bQ==}
+  /@sveltejs/adapter-node/1.0.0-next.55:
+    resolution: {integrity: sha512-Kmh8lx8kIY7W6rkqjC78y4dQTyjiAHD9D1WfmUTtYuDW1jAIG+YbZmPC9127kH5KOSGK4+tI8mpReDVB1lgf8g==}
     dependencies:
-      esbuild: 0.12.29
+      esbuild: 0.13.15
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.201_svelte@3.43.0:
+  /@sveltejs/kit/1.0.0-next.201_svelte@3.44.2:
     resolution: {integrity: sha512-WcYexOEPWgDWOk0oOteTU5QwWykdIcOFJig+akeHqwE/jVtPURLZFtTNx0ymUWXN4S+dUXf60KF6HEMv74FHpA==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
       svelte: ^3.44.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.31_svelte@3.43.0+vite@2.7.1
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.31_svelte@3.44.2+vite@2.7.1
       cheap-watch: 1.0.4
       sade: 1.7.4
-      svelte: 3.43.0
+      svelte: 3.44.2
       vite: 2.7.1
     transitivePeerDependencies:
       - diff-match-patch
@@ -87,7 +87,7 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.31_svelte@3.43.0+vite@2.7.1:
+  /@sveltejs/vite-plugin-svelte/1.0.0-next.31_svelte@3.44.2+vite@2.7.1:
     resolution: {integrity: sha512-8K3DcGP1V+XBv389u32S6wt8xiun6hHd5wn28AKLSoNTIhOmJOA2RJUJzp0seTRI86Shme4lzHI2Fgq4qz1wXQ==}
     engines: {node: ^14.13.1 || >= 16}
     peerDependencies:
@@ -103,8 +103,8 @@ packages:
       kleur: 4.1.4
       magic-string: 0.25.7
       require-relative: 0.8.7
-      svelte: 3.43.0
-      svelte-hmr: 0.14.7_svelte@3.43.0
+      svelte: 3.44.2
+      svelte-hmr: 0.14.7_svelte@3.44.2
       vite: 2.7.1
     transitivePeerDependencies:
       - supports-color
@@ -272,12 +272,6 @@ packages:
     dev: true
     optional: true
 
-  /esbuild/0.12.29:
-    resolution: {integrity: sha512-w/XuoBCSwepyiZtIRsKsetiLDUVGPVw1E/R3VTFSecIy8UR7Cq3SOtwKHJMFoVqqVG36aGkzh4e8BvpO1Fdc7g==}
-    hasBin: true
-    requiresBuild: true
-    dev: true
-
   /esbuild/0.13.15:
     resolution: {integrity: sha512-raCxt02HBKv8RJxE8vkTSCXGIyKHdEdGfUmiYb8wnabnaEmHzyW7DCHb5tEN0xU8ryqg5xw54mcwnYkC4x3AIw==}
     hasBin: true
@@ -337,8 +331,8 @@ packages:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: false
 
-  /is-core-module/2.6.0:
-    resolution: {integrity: sha512-wShG8vs60jKfPWpF2KZRaAtvt3a20OAn7+IJ6hLPECpSABLcKtFKTTI4ZtH5QcBruBHlq+WsdHWyz0BCZW7svQ==}
+  /is-core-module/2.8.0:
+    resolution: {integrity: sha512-vd15qHsaqrRL7dtH6QNuy0ndJmRDrS9HAM1CAiSifNUFv4x1a0CCVsj18hJ1mShxIG6T2i1sO78MkP56r0nYRw==}
     dependencies:
       has: 1.0.3
     dev: true
@@ -379,12 +373,6 @@ packages:
 
   /pdfjs-dist/2.10.377:
     resolution: {integrity: sha512-i0jRShtvgfsVQUNCoFYH4SVhPO3U0yhtiFLfZ0RR0B+68N+Vnwq+8B3cjWjLEwWGh8wg1XQ/sYMYKUlHn/Qpsw==}
-    peerDependencies:
-      worker-loader: ^3.0.7
-    dev: false
-
-  /pdfjs-dist/2.9.359:
-    resolution: {integrity: sha512-P2nYtkacdlZaNNwrBLw1ZyMm0oE2yY/5S/GDCAmMJ7U4+ciL/D0mrlEC/o4HZZc/LNE3w8lEVzBEyVgEQlPVKQ==}
     peerDependencies:
       worker-loader: ^3.0.7
     dev: false
@@ -501,7 +489,7 @@ packages:
   /resolve/1.20.0:
     resolution: {integrity: sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==}
     dependencies:
-      is-core-module: 2.6.0
+      is-core-module: 2.8.0
       path-parse: 1.0.7
     dev: true
 
@@ -545,16 +533,16 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /svelte-fa/2.3.3:
-    resolution: {integrity: sha512-Izq+L4H9FEsoClSsYe35KuMP+2CUltJq8eP6qrQp9q52zYxRNMQTO3dYylr6K1fFmhKiWcw9q1hUzIiyrJx8dQ==}
+  /svelte-fa/2.4.0:
+    resolution: {integrity: sha512-0bnbMGbsE1LUnlioDcf27tl2O8kjuXlTXMXzIxC7LoIOWmqn0D+zd539HfLiQbdLuOHGTaynwN9V+4ehhEu1Jw==}
     dev: true
 
-  /svelte-hmr/0.14.7_svelte@3.43.0:
+  /svelte-hmr/0.14.7_svelte@3.44.2:
     resolution: {integrity: sha512-pDrzgcWSoMaK6AJkBWkmgIsecW0GChxYZSZieIYfCP0v2oPyx2CYU/zm7TBIcjLVUPP714WxmViE9Thht4etog==}
     peerDependencies:
       svelte: '>=3.19.0'
     dependencies:
-      svelte: 3.43.0
+      svelte: 3.44.2
     dev: true
 
   /svelte-pdfjs/0.0.3:
@@ -565,16 +553,16 @@ packages:
       - worker-loader
     dev: false
 
-  /svelte-simple-modal/1.0.3_svelte@3.43.0:
-    resolution: {integrity: sha512-rW2kGUbw1/JEDBTR63L5XUu0+iW2Iij6Oi78ZiI+cDVicR9qANUwSwzCLtknK5Wb/RBxdsDl62mBKfrHcqeEnQ==}
+  /svelte-simple-modal/1.1.1_svelte@3.44.2:
+    resolution: {integrity: sha512-2u6bGk0TwZ/0oxIEX9d2shQZsqKGQwyJHHL4eiNL2e/wDA9k5zHc9F884Y0qmKa/Pg0D80t+5CrY3At3zmUDzA==}
     peerDependencies:
-      svelte: ^3.18.2
+      svelte: ^3.31.2
     dependencies:
-      svelte: 3.43.0
+      svelte: 3.44.2
     dev: true
 
-  /svelte/3.43.0:
-    resolution: {integrity: sha512-T2pMPHrxXp+SM8pLLUXLQgkdo+JhTls7aqj9cD7z8wT2ccP+OrCAmtQS7h6pvMjitaZhXFNnCK582NxDpy8HSw==}
+  /svelte/3.44.2:
+    resolution: {integrity: sha512-jrZhZtmH3ZMweXg1Q15onb8QlWD+a5T5Oca4C1jYvSURp2oD35h4A5TV6t6MEa93K4LlX6BkafZPdQoFjw/ylA==}
     engines: {node: '>= 8'}
     dev: true
 
