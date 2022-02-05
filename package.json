@@ -42,6 +42,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pg": "^8.7.1"
+		"pg": "^8.7.1",
+		"string.prototype.replaceall": "^1.0.6"
 	}
 }
