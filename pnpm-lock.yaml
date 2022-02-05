@@ -26,7 +26,7 @@ specifiers:
   svelte-actions: ^0.2.0
   svelte-check: ^2.3.0
   svelte-fa: ^2.4.0
-  svelte-pdfjs: 0.3.1
+  svelte-pdfjs: 0.3.3
   svelte-preprocess: ^4.10.1
   tslib: ^2.3.1
   typescript: ^4.5.5
@@ -60,7 +60,7 @@ devDependencies:
   svelte-actions: 0.2.0
   svelte-check: 2.3.0_c9fbc0ebbf8d0b9238d3fa2b57a5cad2
   svelte-fa: 2.4.0
-  svelte-pdfjs: 0.3.1
+  svelte-pdfjs: 0.3.3
   svelte-preprocess: 4.10.2_23222bdcb7defd630101c6469b85e6e7
   tslib: 2.3.1
   typescript: 4.5.5
@@ -2343,12 +2343,8 @@ packages:
       svelte: 3.46.2
     dev: true
 
-  /svelte-pdfjs/0.3.1:
-    resolution: {integrity: sha512-mO7UnJUVxcSa0tz+bm2EqGpGSiG+m91J0lceh/eFE0kM40+qmyeQWc6TKr3yyrSCTPNlR+XSjT/X+CfbKsLfIg==}
-    dependencies:
-      pdfjs-dist: 2.12.313
-    transitivePeerDependencies:
-      - worker-loader
+  /svelte-pdfjs/0.3.3:
+    resolution: {integrity: sha512-4nK1oa8o40XHrDP9WCrhXapZobwo/EzhchzvP5S8U1YnmZyMZBsmoZ+n2tW0I607bqrMaW4F95PCu7Ewv0B41w==}
     dev: true
 
   /svelte-preprocess/4.10.2_23222bdcb7defd630101c6469b85e6e7:
