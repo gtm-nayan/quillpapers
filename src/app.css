@@ -1,0 +1,48 @@
+/* Write your global styles here, in PostCSS syntax */
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+html,
+body,
+#svelte {
+	height: 100vh;
+}
+
+#svelte {
+	font-family: var(--font-sans);
+	display: grid;
+	grid-template-rows: auto 1fr;
+}
+
+:root {
+	color: var(--gray-7);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--gray-9);
+}
+
+code,
+kbd {
+	background-color: var(--gray-2);
+	padding: var(--size-1);
+	border-radius: var(--radius-2);
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	color: var(--yellow-7);
+}
+
+button {
+	border: none;
+	cursor: pointer;
+}

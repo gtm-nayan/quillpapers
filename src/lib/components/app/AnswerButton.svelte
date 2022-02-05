@@ -1,84 +1,59 @@
-<script>
-	import { createEventDispatcher } from 'svelte';
-	import { shortcut } from '$lib/helpers/shortcuts';
+<script lang="ts">
+	import type { Answer } from '$lib/utils/types';
+	import { shortcut } from 'svelte-actions/dist/shortcut';
 
-	export let isCorrect = false;
-	export let isSelected = false;
-	export let showResult = true;
-	export let option;
+	export let answer: Answer;
+	export let selected: boolean;
+	export let show_correct: boolean;
+	export let correct_answer: Answer = undefined;
 
-	$: correct = isCorrect && showResult;
-	$: incorrect = !isCorrect && showResult;
-
-	const dispatch = createEventDispatcher();
+	$: correct = show_correct && correct_answer === answer;
+	$: incorrect = show_correct && correct_answer !== answer;
 </script>
 
 <button
-	aria-label={option}
+	on:click
 	class:correct
 	class:incorrect
-	class:isSelected
-	on:click={() => dispatch('choose', option)}
-	type="button"
-	use:shortcut={{ code: 'Key' + option }}
+	class:selected
+	use:shortcut={{ code: `Key${answer}` }}
 >
-	{option}
+	{answer}
 </button>
 
-<style>
-	.isSelected {
-		background-color: rgb(0, 128, 255);
-		color: white;
-	}
-
-	.isSelected.correct {
-		background-color: green;
-	}
-
-	.isSelected.correct::before {
-		content: '\2713';
-		position: absolute;
-		left: 0.5em;
-	}
-
-	.isSelected.incorrect {
-		background-color: red;
-	}
-
-	.isSelected.incorrect::before {
-		content: '\2715';
-		position: absolute;
-		left: 0.5em;
-	}
-
+<style lang="scss">
 	button {
-		width: 20%;
 		font-size: x-large;
-		border-radius: 10px;
-		border: none;
-		cursor: pointer;
-		height: 3rem;
-		flex: 0 1 80%;
-		margin-bottom: 0.1em;
-		box-shadow: rgba(0, 0, 0, 0.2) 0em 0.15em 0.1em;
-		transition: background-color 200ms;
-		position: relative;
-	}
+		position: relative; /* To position the cross/checkmark */
+		border-radius: var(--radius-conditional-3);
+		padding-block: var(--size-2);
+		padding-inline: var(--size-fluid-3);
 
-	button:active {
-		transform: translate(0em, 0.1em);
-		box-shadow: none;
-	}
-
-	@media screen and (min-width: 425.02px) {
-		button {
-			flex: 0 1 40%;
+		&::before {
+			position: absolute;
+			left: 0.5em;
 		}
 	}
 
-	@media screen and (min-width: 768.02px) {
-		button {
-			flex: 0 1 20%;
+	.selected {
+		color: white;
+		background-color: var(--yellow-5);
+		border: none;
+
+		&.correct {
+			background-color: var(--green-6);
+
+			&::before {
+				content: '\2713';
+			}
+		}
+
+		&.incorrect {
+			background-color: var(--red-6);
+
+			&::before {
+				content: '\2715';
+			}
 		}
 	}
 </style>
