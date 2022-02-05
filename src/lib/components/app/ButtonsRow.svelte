@@ -9,7 +9,7 @@
 	import { createEventDispatcher, getContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import type { Writable } from 'svelte/store';
-	import { shortcut } from 'svelte-actions/dist/shortcut';
+	import { shortcut } from 'svelte-actions/dist/shortcut.js';
 
 	let current_doc = getContext<Writable<any>>('svelte_pdf_current_doc');
 	let current_question = getContext<Writable<Question>>('current_question');

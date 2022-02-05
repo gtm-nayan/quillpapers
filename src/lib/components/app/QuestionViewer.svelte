@@ -3,7 +3,7 @@
 	import { getContext } from 'svelte';
 	import { Page } from 'svelte-pdfjs';
 	import type { Writable } from 'svelte/store';
-	import { shortcut } from 'svelte-actions/dist/shortcut';
+	import { shortcut } from 'svelte-actions/dist/shortcut.js';
 
 	let current_question = getContext<Writable<Question>>('current_question');
 

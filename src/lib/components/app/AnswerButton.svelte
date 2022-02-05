@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Answer } from '$lib/utils/types';
-	import { shortcut } from 'svelte-actions/dist/shortcut';
+	import { shortcut } from 'svelte-actions/dist/shortcut.js';
 
 	export let answer: Answer;
 	export let selected: boolean;

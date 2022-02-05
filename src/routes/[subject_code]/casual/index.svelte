@@ -8,7 +8,7 @@
 	import type { Question, SubjectCode } from '$lib/utils/types.js';
 	import type { Load } from '@sveltejs/kit';
 	import { setContext } from 'svelte';
-	import { shortcut } from 'svelte-actions/dist/shortcut';
+	import { shortcut } from 'svelte-actions/dist/shortcut.js';
 	import { Document } from 'svelte-pdfjs';
 	import { writable } from 'svelte/store';
 
