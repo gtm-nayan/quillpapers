@@ -81,23 +81,22 @@ export const post: RequestHandler = async ({ request }) => {
 			body.paper_variant,
 			body.question_number,
 		];
+		if (!report_params.every((v) => v)) throw new Error('Malformed question.');
+
 		client = await pool.connect();
 
 		switch (body.error_type) {
 			case QuestionErrorType.BAD_CROPPING: {
 				await client.query(BAD_CROPPING_FLAG_QUERY, report_params);
-				// console.log(body);
 				break;
 			}
 
 			case QuestionErrorType.WRONG_ANSWER: {
 				await client.query(WRONG_ANSWER_FLAG_QUERY, report_params);
-				// console.log(body);
 				break;
 			}
 
 			case QuestionErrorType.WRONG_TOPIC: {
-				// console.log(body);
 				if (!body.topic_suggestion) {
 					throw new Error('Topic suggestion not provided.');
 				}
@@ -113,9 +112,10 @@ export const post: RequestHandler = async ({ request }) => {
 		return {
 			status: 200,
 		};
-	} catch {
+	} catch (e) {
 		return {
 			status: 400,
+			body: (e as Error).message,
 		};
 	} finally {
 		client?.release();
