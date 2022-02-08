@@ -5,10 +5,10 @@
 	import create_timer from '$lib/utils/timer';
 	import type { Question } from '$lib/utils/types';
 	import { faStop } from '@fortawesome/free-solid-svg-icons';
-	import { createEventDispatcher,getContext,setContext } from 'svelte';
+	import { createEventDispatcher, getContext, setContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { Document } from 'svelte-pdfjs';
-	import { derived,get,writable,type Readable } from 'svelte/store';
+	import { derived, get, writable, type Readable } from 'svelte/store';
 	import type { QuestionStore } from '../index.svelte';
 
 	function create_idx_store() {
@@ -106,9 +106,12 @@
 					</option>
 				{/each}
 			</select>
-			<button on:click={() => dispatch('end', $timer)}>
+			<button
+				on:click={() => dispatch('end', $timer)}
+				style:color="var(--gray-7)"
+			>
 				<Fa icon={faStop} />
-				End
+				End session
 			</button>
 		</ButtonsRow>
 	</Document>

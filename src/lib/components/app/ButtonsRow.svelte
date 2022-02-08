@@ -9,9 +9,12 @@
 	import { createEventDispatcher, getContext } from 'svelte';
 	import { shortcut } from 'svelte-actions/dist/shortcut.js';
 	import Fa from 'svelte-fa/src/fa.svelte';
+	import type { PDFJS } from 'svelte-pdfjs';
 	import type { Writable } from 'svelte/store';
 
-	let current_doc = getContext<Writable<any>>('svelte_pdf_current_doc');
+	let current_doc = getContext<Writable<PDFJS.PDFDocumentProxy>>(
+		'svelte_pdf_current_doc'
+	);
 	let current_question = getContext<Writable<Question>>('current_question');
 
 	export let show_correct: boolean = false;
