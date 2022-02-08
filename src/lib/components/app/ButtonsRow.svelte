@@ -7,9 +7,9 @@
 		faCircleNotch,
 	} from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext } from 'svelte';
+	import { shortcut } from 'svelte-actions/dist/shortcut.js';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import type { Writable } from 'svelte/store';
-	import { shortcut } from 'svelte-actions/dist/shortcut.js';
 
 	let current_doc = getContext<Writable<any>>('svelte_pdf_current_doc');
 	let current_question = getContext<Writable<Question>>('current_question');
@@ -27,13 +27,13 @@
 	$: is_doc_loading = $current_doc == null;
 </script>
 
-<div class="buttons">
+<section>
 	<div class="controls">
 		<slot />
 	</div>
 
 	<button
-		style:grid-area="back"
+		style:grid-area="b"
 		disabled={is_doc_loading}
 		on:click={() => dispatch('back')}
 		use:shortcut={{ code: 'KeyU' }}
@@ -54,7 +54,7 @@
 	</div>
 
 	<button
-		style:grid-area="next"
+		style:grid-area="n"
 		disabled={is_doc_loading}
 		on:click={() => dispatch('next')}
 		use:shortcut={{ code: 'KeyO' }}
@@ -65,11 +65,11 @@
 			spin={is_doc_loading}
 		/>
 	</button>
-</div>
+</section>
 
 <style lang="scss">
 	.controls {
-		grid-area: controls;
+		grid-area: c;
 		display: flex;
 		justify-content: space-evenly;
 		margin-top: var(--size-2);
@@ -78,28 +78,29 @@
 			font-size: var(--font-size-fluid-0);
 		}
 
-		> :global(:is(select, button)) {
+		> :global(select),
+		:global(button) {
 			width: var(--size-content-1);
 		}
 	}
 
-	.buttons {
+	section {
 		display: grid;
 		grid-template-areas:
-			'controls controls'
-			'answers answers'
-			'back next';
+			'c c'
+			'a a'
+			'b n';
 
 		@media (orientation: landscape) {
 			grid-template-areas:
-				'. controls .'
-				'back answers next';
+				'. c .'
+				'b a n';
 			grid-template-columns: auto 1fr auto;
 		}
 	}
 
 	.answers {
-		grid-area: answers;
+		grid-area: a;
 		display: grid;
 		grid-template: 1fr 1fr / 1fr 1fr;
 		gap: var(--size-2);
