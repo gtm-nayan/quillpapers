@@ -1,7 +1,7 @@
-import type { RequestHandler } from '@sveltejs/kit';
 import pool from '$lib/db';
+import { QuestionErrorType, type BaseQuestion } from '$lib/utils/types';
+import type { RequestHandler } from '@sveltejs/kit';
 import type { PoolClient } from 'pg';
-import { type BaseQuestion, QuestionErrorType } from '$lib/utils/types';
 
 const RANDOM_QUESTION_QUERY = `
 SELECT subject_code, series, exam_year, paper_variant, question_number, correct_answer
@@ -36,31 +36,31 @@ export const get: RequestHandler = async ({ params, url }) => {
 const BAD_CROPPING_FLAG_QUERY = `
 UPDATE questions SET bad_cropping_flags = bad_cropping_flags + 1
 WHERE
-    subject_code = $1::TEXT AND
-    series = $2::exam_series AND
-    exam_year = $3::SMALLINT AND
-    paper_variant = $4::SMALLINT AND
-    question_number = $5::SMALLINT;
+	subject_code = $1::TEXT AND
+	series = $2::exam_series AND
+	exam_year = $3::SMALLINT AND
+	paper_variant = $4::SMALLINT AND
+	question_number = $5::SMALLINT;
 `;
 
 const WRONG_ANSWER_FLAG_QUERY = `
 UPDATE questions SET wrong_answer_flags = wrong_answer_flags + 1
 WHERE
-    subject_code = $1::TEXT AND
-    series = $2::exam_series AND
-    exam_year = $3::SMALLINT AND
-    paper_variant = $4::SMALLINT AND
-    question_number = $5::SMALLINT;
+	subject_code = $1::TEXT AND
+	series = $2::exam_series AND
+	exam_year = $3::SMALLINT AND
+	paper_variant = $4::SMALLINT AND
+	question_number = $5::SMALLINT;
 `;
 
 const WRONG_TOPIC_FLAG_QUERY = `
 UPDATE questions SET wrong_topic_flags = wrong_topic_flags || $6::SMALLINT
 WHERE
-    subject_code = $1::TEXT AND
-    series = $2::exam_series AND
-    exam_year = $3::SMALLINT AND
-    paper_variant = $4::SMALLINT AND
-    question_number = $5::SMALLINT;
+	subject_code = $1::TEXT AND
+	series = $2::exam_series AND
+	exam_year = $3::SMALLINT AND
+	paper_variant = $4::SMALLINT AND
+	question_number = $5::SMALLINT;
 `;
 
 interface ReportedQuestion extends BaseQuestion {
