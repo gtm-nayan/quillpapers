@@ -9,7 +9,7 @@
 
 	const current_question: Writable<Question> = getContext('current_question');
 
-	async function handleSubmit() {
+	async function handle_submit() {
 		try {
 			await fetch(`/${subject_code}/casual.json`, {
 				method: 'POST',
@@ -21,18 +21,18 @@
 			});
 		} catch {
 		} finally {
-			showModal = false;
+			show_modal = false;
 		}
 	}
 
 	let error_type: QuestionErrorType = QuestionErrorType.BAD_CROPPING;
 	let subject_code = $page.params.subject_code as SubjectCode;
 	let topic_suggestion: string = '1';
-	let showModal = false;
+	let show_modal = false;
 </script>
 
 <span>
-	{#if showModal}
+	{#if show_modal}
 		<div class="backdrop">
 			<div class="content">
 				<h4>
@@ -43,7 +43,7 @@
 					{$current_question.paper_variant}
 					QN: {$current_question.question_number.toString().padStart(2, '0')}
 				</h4>
-				<form on:submit|preventDefault={handleSubmit}>
+				<form on:submit|preventDefault={handle_submit}>
 					<fieldset>
 						<legend>Error type</legend>
 						<select bind:value={error_type}>
@@ -68,7 +68,7 @@
 						</fieldset>
 					{/if}
 					<button type="submit">Submit</button>
-					<button type="button" on:click={() => (showModal = false)}>
+					<button type="button" on:click={() => (show_modal = false)}>
 						Cancel
 					</button>
 				</form>
@@ -78,7 +78,7 @@
 
 	<button
 		type="button"
-		on:click={() => (showModal = true)}
+		on:click={() => (show_modal = true)}
 		style:color="var(--gray-7)"
 	>
 		<Fa icon={faFlag} />

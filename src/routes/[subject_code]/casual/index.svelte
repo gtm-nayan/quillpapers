@@ -58,7 +58,7 @@
 
 	let topic_number: string = '1';
 
-	async function handleNextQuestion() {
+	async function handle_next_question() {
 		const new_question = await fetch_random_question(
 			subject_code,
 			topic_number
@@ -68,7 +68,7 @@
 		$current_question = new_question;
 	}
 
-	function handlePreviousQuestion() {
+	function handle_previous_question() {
 		const temp = previous_question;
 		previous_question = $current_question;
 		$current_question = temp;
@@ -91,13 +91,13 @@
 			<!-- <section> -->
 
 			<ButtonsRow
-				on:back={handlePreviousQuestion}
-				on:next={handleNextQuestion}
+				on:back={handle_previous_question}
+				on:next={handle_next_question}
 				show_correct
 			>
 				<select
 					bind:value={topic_number}
-					on:change={handleNextQuestion}
+					on:change={handle_next_question}
 					use:shortcut={{ code: 'KeyT', callback: (e) => e.focus() }}
 				>
 					{#each Object.entries(subjects[subject_code].topics) as [topic_number, { title }]}

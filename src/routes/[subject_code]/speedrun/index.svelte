@@ -12,7 +12,7 @@
 
 	export type QuestionStore = Writable<Question[]>;
 
-	async function getQuestions(subject_code: SubjectCode) {
+	async function get_questions(subject_code: SubjectCode) {
 		return fetch(`/${subject_code}/speedrun.json`).then(
 			(res) => res.json() as Promise<Question[]>
 		);
@@ -33,9 +33,9 @@
 	const questions_store: QuestionStore = writable([]);
 	setContext('questions_store', questions_store);
 
-	async function handleStart() {
+	async function handle_start() {
 		try {
-			questions_store.set(await getQuestions(subject_code));
+			questions_store.set(await get_questions(subject_code));
 			speedrun_state = SpeedrunState.ONGOING;
 		} catch {
 			alert("Couldn't fetch questions.");
@@ -55,7 +55,7 @@
 {/each}
 
 {#if speedrun_state === SpeedrunState.START}
-	<StartScreen on:click={handleStart} />
+	<StartScreen on:click={handle_start} />
 {:else if speedrun_state === SpeedrunState.ONGOING}
 	<MainSpeedrunScreen
 		on:end={({ detail: t }) => {
