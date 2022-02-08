@@ -93,7 +93,7 @@
 		grid-area: unset;
 		background-color: rgb(0 0 0 / 0.5);
 		inset: 0;
-		z-index: 9999;
+		z-index: var(--layer-important);
 	}
 
 	.content {
