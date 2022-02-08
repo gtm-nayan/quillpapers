@@ -11,7 +11,7 @@ function time_diff(t1: number, t2: number): HumanTime {
 	const minutes = Math.floor(diff / 1000 / 60);
 	const seconds = Math.floor(diff / 1000) - minutes * 60;
 	const deciseconds = Math.floor(diff / 100) - (minutes * 60 + seconds) * 10;
-	console.log(deciseconds);
+
 	return { minutes, seconds, deciseconds };
 }
 

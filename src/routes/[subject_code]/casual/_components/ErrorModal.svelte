@@ -78,7 +78,7 @@
 
 	<button
 		type="button"
-		on:click={() => console.log((showModal = true))}
+		on:click={() => (showModal = true)}
 		style:color="var(--gray-7)"
 	>
 		<Fa icon={faFlag} />
