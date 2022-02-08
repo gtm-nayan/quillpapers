@@ -5,11 +5,11 @@
 	import create_timer from '$lib/utils/timer';
 	import type { Question } from '$lib/utils/types';
 	import { faStop } from '@fortawesome/free-solid-svg-icons';
-	import { createEventDispatcher, getContext, setContext } from 'svelte';
-	import { Document } from 'svelte-pdfjs';
-	import { derived, get, writable, type Readable } from 'svelte/store';
-	import type { QuestionStore } from '../index.svelte';
+	import { createEventDispatcher,getContext,setContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
+	import { Document } from 'svelte-pdfjs';
+	import { derived,get,writable,type Readable } from 'svelte/store';
+	import type { QuestionStore } from '../index.svelte';
 
 	function create_idx_store() {
 		const { set, subscribe, update } = writable(0);

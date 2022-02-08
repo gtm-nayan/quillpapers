@@ -2,11 +2,11 @@
 	import subjects from '$lib/data/subjects.json';
 	import type { HumanTime } from '$lib/utils/timer';
 	import type { SubjectCode } from '$lib/utils/types';
+	import { faRedo } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
+	import Fa from 'svelte-fa/src/fa.svelte';
 	import type { QuestionStore } from '../../index.svelte';
 	import QuestionReport from './QuestionReport.svelte';
-	import Fa from 'svelte-fa/src/fa.svelte';
-	import { faRedo } from '@fortawesome/free-solid-svg-icons';
 
 	const questions_store = getContext<QuestionStore>('questions_store');
 	export let subject_code: SubjectCode;

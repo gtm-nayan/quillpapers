@@ -1,5 +1,5 @@
-import type { RequestHandler } from '@sveltejs/kit';
 import pool from '$lib/db';
+import type { RequestHandler } from '@sveltejs/kit';
 import type { PoolClient } from 'pg';
 
 const RANDOM_QUESTIONS_QUERY = `

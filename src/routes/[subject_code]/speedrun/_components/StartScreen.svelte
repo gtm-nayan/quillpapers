@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
-
 	import Fa from 'svelte-fa/src/fa.svelte';
 </script>
 

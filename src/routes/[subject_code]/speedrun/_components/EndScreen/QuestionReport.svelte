@@ -1,6 +1,5 @@
 <script lang="ts">
 	import get_PDF_URL from '$lib/utils/pdf_url_gen';
-
 	import type { Question } from '$lib/utils/types';
 	import { Document, Page } from 'svelte-pdfjs';
 
