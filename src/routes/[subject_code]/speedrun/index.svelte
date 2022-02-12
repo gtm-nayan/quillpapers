@@ -27,10 +27,10 @@
 	}
 
 	const subject_code = $page.params.subject_code as SubjectCode;
-	let speedrun_state = SpeedrunState.START;
-	let time: HumanTime;
+	let speedrun_state = SpeedrunState.START; // @hmr:keep
+	let time: HumanTime; // @hmr:keep
 
-	const questions_store: QuestionStore = writable([]);
+	const questions_store: QuestionStore = writable([]); // @hmr:keep
 	setContext('questions_store', questions_store);
 
 	async function handle_start() {
