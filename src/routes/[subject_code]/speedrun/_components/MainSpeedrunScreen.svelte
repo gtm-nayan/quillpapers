@@ -20,8 +20,8 @@
 			 * Set a value clamped between 0 and 39.
 			 */
 			set: (val: number) => {
-				const t = Math.trunc(val);
-				set(Math.max(0, Math.min(isNaN(t) ? 0 : t, 39)));
+				// Abuse js whack to get val as an integer.
+				set(Math.max(0, Math.min(val >> 0, 39)));
 			},
 			/**
 			 * Increment the index by 1. (Wrap around at 40)
