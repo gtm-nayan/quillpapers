@@ -19,13 +19,13 @@ export function create_idx_store() {
 		 * Increment the index by 1. (Wrap around at 40)
 		 */
 		increment: () => {
-			update((v) => (v === 39 ? 0 : v + 1));
+			update((v) => (v >= 39 ? 0 : v + 1));
 		},
 		/**
 		 * Decrement the index by 1. (Wrap around to 39 at -1)
 		 */
 		decrement: () => {
-			update((v) => (v === 0 ? 39 : v - 1));
+			update((v) => (v <= 0 ? 39 : v - 1));
 		},
 	};
 }
