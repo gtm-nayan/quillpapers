@@ -23,20 +23,24 @@ CREATE TABLE questions (
     bad_cropping_flags SMALLINT DEFAULT 0,
     wrong_topic_flags SMALLINT [] DEFAULT ARRAY [] :: SMALLINT [],
     wrong_answer_flags SMALLINT DEFAULT 0,
-    PRIMARY KEY (
-        subject_code,
-        series,
-        exam_year,
-        paper_variant_major,
-        paper_variant_minor,
-        question_number
-    ),
-    FOREIGN KEY (subject_code, paper_variant_major, topic_number) REFERENCES topics(subject_code, paper_variant_major, topic_number) ON DELETE
-    SET
-        DEFAULT
+    CONSTRAINT question_id
+        PRIMARY KEY (
+            subject_code,
+            series,
+            exam_year,
+            paper_variant_major,
+            paper_variant_minor,
+            question_number
+        ),
+    CONSTRAINT question_topic_id
+        FOREIGN KEY (subject_code, paper_variant_major, topic_number)
+        REFERENCES topics (subject_code, paper_variant_major, topic_number)
+        ON DELETE SET DEFAULT
 );
 
 CREATE INDEX questions_sub_pvmajor_topic_num ON questions USING btree (subject_code, paper_variant_major, topic_number);
 
 -- Only run this after seeding the database 
 -- ALTER TABLE questions CLUSTER ON questions_sub_pvmajor_topic_num;
+
+CREATE FUNCTION random_casual_question()

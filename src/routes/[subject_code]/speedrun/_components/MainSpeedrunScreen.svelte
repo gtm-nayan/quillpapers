@@ -44,7 +44,7 @@
 			</select>
 
 			<select bind:value={$question_idx} class="select-qn">
-				{#each $questions_store as question, i (i)}
+				{#each $questions_store as question, i}
 					<option value={i}>
 						{i + 1}
 						{#if question.selected}
