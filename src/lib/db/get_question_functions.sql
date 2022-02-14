@@ -38,6 +38,7 @@ END; $$;
 
 CREATE OR REPLACE FUNCTION random_speedrun_questions(
 	sub_code INTEGER
+	pv_major INTEGER
 ) RETURNS TABLE (
 	subject_code SMALLINT,
 	series ExamSeries,
@@ -63,6 +64,7 @@ BEGIN
 			questions
 		WHERE
 			questions.subject_code = sub_code::SMALLINT
+			AND questions.paper_variant_major = pv_major::SMALLINT
 		OFFSET FLOOR(
 			RANDOM() * (
 				SELECT
