@@ -16,7 +16,7 @@ BEGIN
 		questions.subject_code,
 		questions.series,
 		questions.exam_year,
-		(questions.paper_variant_major * 10 + questions.paper_variant_minor)::SMALLINT as paper_variant,
+		(questions.paper_variant_major * 10::SMALLINT + questions.paper_variant_minor) as paper_variant,
 		questions.question_number,
 		questions.correct_answer
 	FROM
@@ -55,7 +55,7 @@ BEGIN
 			questions.subject_code,
 			questions.series,
 			questions.exam_year,
-			(questions.paper_variant_major * 10 + questions.paper_variant_minor)::SMALLINT as paper_variant,
+			(questions.paper_variant_major * 10::SMALLINT + questions.paper_variant_minor) as paper_variant,
 			questions.question_number,
 			questions.correct_answer,
 			questions.topic_number
