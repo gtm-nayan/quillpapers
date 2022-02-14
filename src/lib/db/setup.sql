@@ -32,13 +32,13 @@ CREATE TABLE questions (
 			paper_variant_minor,
 			question_number
 		),
-	CONSTRAINT question_topic_id
+	CONSTRAINT questions_topics_fkey
 		FOREIGN KEY (subject_code, paper_variant_major, topic_number)
 		REFERENCES topics (subject_code, paper_variant_major, topic_number)
 		ON DELETE SET DEFAULT
 );
 
-CREATE INDEX questions_sub_pvmajor_topic_num ON questions USING btree (subject_code, paper_variant_major, topic_number);
+CREATE INDEX speedup_rand_casual_idx ON questions USING btree (subject_code, paper_variant_major, topic_number);
 
 -- Only run this after seeding the database 
 -- ALTER TABLE questions CLUSTER ON questions_sub_pvmajor_topic_num;

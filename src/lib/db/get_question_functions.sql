@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION random_casual_question(
-	sub_code INTEGER,
-	pv_major INTEGER,
-	topic_num INTEGER
+	sub_code SMALLINT,
+	pv_major SMALLINT,
+	topic_num SMALLINT
 ) RETURNS TABLE (
 	subject_code SMALLINT,
 	series ExamSeries,
@@ -12,33 +12,33 @@ CREATE OR REPLACE FUNCTION random_casual_question(
 ) LANGUAGE plpgsql AS $$ 
 BEGIN 
 	RETURN QUERY
-	SELECT
-		questions.subject_code,
-		questions.series,
-		questions.exam_year,
-		(questions.paper_variant_major * 10::SMALLINT + questions.paper_variant_minor) as paper_variant,
-		questions.question_number,
-		questions.correct_answer
-	FROM
-		questions
-	WHERE
-		questions.subject_code = sub_code::SMALLINT
-		AND questions.paper_variant_major = pv_major::SMALLINT
-		AND questions.topic_number = topic_num::SMALLINT
-	OFFSET FLOOR(
-		RANDOM() * (
-			SELECT
-				COUNT(*)
-			FROM
-				questions
-		)
+	WITH matching_questions AS (
+		SELECT * FROM questions
+		WHERE
+		questions.subject_code = sub_code
+		AND questions.paper_variant_major = pv_major
+		AND questions.topic_number = topic_num
 	)
+	SELECT
+		m.subject_code,
+		m.series,
+		m.exam_year,
+		(m.paper_variant_major * 10::SMALLINT + m.paper_variant_minor) as paper_variant,
+		m.question_number,
+		m.correct_answer
+	FROM
+		matching_questions m
+	OFFSET FLOOR (
+		random() * (
+			SELECT COUNT(*) FROM matching_questions
+		)
+	) 
 	LIMIT 1;
 END; $$;
 
 CREATE OR REPLACE FUNCTION random_speedrun_questions(
-	sub_code INTEGER
-	pv_major INTEGER
+	sub_code SMALLINT,
+	pv_major SMALLINT
 ) RETURNS TABLE (
 	subject_code SMALLINT,
 	series ExamSeries,
@@ -50,32 +50,24 @@ CREATE OR REPLACE FUNCTION random_speedrun_questions(
 ) LANGUAGE plpgsql AS $$ 
 BEGIN 
 	RETURN QUERY
-	SELECT * FROM 
-	(
-		SELECT
-			questions.subject_code,
-			questions.series,
-			questions.exam_year,
-			(questions.paper_variant_major * 10::SMALLINT + questions.paper_variant_minor) as paper_variant,
-			questions.question_number,
-			questions.correct_answer,
-			questions.topic_number
-		FROM
-			questions
-		WHERE
-			questions.subject_code = sub_code::SMALLINT
-			AND questions.paper_variant_major = pv_major::SMALLINT
-		OFFSET FLOOR(
-			RANDOM() * (
-				SELECT
-					COUNT(*)
-				FROM
-					questions
-			)
+	SELECT * FROM (
+		WITH matching_questions AS (
+			SELECT * FROM questions
+			WHERE
+			questions.subject_code = sub_code
+			AND questions.paper_variant_major = pv_major
 		)
-		LIMIT 120
+		SELECT
+			m.subject_code,
+			m.series,
+			m.exam_year,
+			(m.paper_variant_major * 10::SMALLINT + m.paper_variant_minor) as paper_variant,
+			m.question_number,
+			m.correct_answer,
+			m.topic_number
+		FROM
+			matching_questions m
 	) AS t
-	ORDER BY
-		RANDOM()
+	ORDER BY RANDOM()
 	LIMIT 40;
 END; $$;
