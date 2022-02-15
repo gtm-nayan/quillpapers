@@ -3,13 +3,7 @@ import { QuestionErrorType, type BaseQuestion } from '$lib/utils/types';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { PoolClient } from 'pg';
 
-const RANDOM_QUESTION_QUERY = `
-SELECT subject_code, series, exam_year, paper_variant, question_number, correct_answer
-FROM questions
-WHERE subject_code = $1::TEXT AND topic = $2::SMALLINT
-ORDER BY RANDOM()
-LIMIT 1; 
-`;
+const RANDOM_QUESTION_QUERY = `SELECT * FROM random_casual_question($1::SMALLINT, 1::SMALLINT, $2::SMALLINT)`;
 
 export const get: RequestHandler = async ({ params, url }) => {
 	let client: PoolClient;
@@ -33,35 +27,36 @@ export const get: RequestHandler = async ({ params, url }) => {
 	}
 };
 
-const BAD_CROPPING_FLAG_QUERY = `
-UPDATE questions SET bad_cropping_flags = bad_cropping_flags + 1
-WHERE
-	subject_code = $1::TEXT AND
-	series = $2::exam_series AND
-	exam_year = $3::SMALLINT AND
-	paper_variant = $4::SMALLINT AND
-	question_number = $5::SMALLINT;
-`;
+/**
+ * @param {number} $1 - subject_code
+ * @param {'m' | 's' | 'w'} $2 - series
+ * @param {number} $3 - year
+ * @param {number} $4 - paper_variant_major
+ * @param {number} $5 - paper_variant_minor
+ * @param {number} $6 - question_number
+ */
+const BAD_CROPPING_FLAG_QUERY = `SELECT increment_bad_cropping_flags($1::SMALLINT, $2::ExamSeries, $3::SMALLINT, $4::SMALLINT, $5::SMALLINT, $6::SMALLINT)`;
 
-const WRONG_ANSWER_FLAG_QUERY = `
-UPDATE questions SET wrong_answer_flags = wrong_answer_flags + 1
-WHERE
-	subject_code = $1::TEXT AND
-	series = $2::exam_series AND
-	exam_year = $3::SMALLINT AND
-	paper_variant = $4::SMALLINT AND
-	question_number = $5::SMALLINT;
-`;
+/**
+ * @param {number} $1 - subject_code
+ * @param {'m' | 's' | 'w'} $2 - series
+ * @param {number} $3 - year
+ * @param {number} $4 - paper_variant_major
+ * @param {number} $5 - paper_variant_minor
+ * @param {number} $6 - question_number
+ */
+const WRONG_ANSWER_FLAG_QUERY = `SELECT increment_wrong_answer_flags($1::SMALLINT, $2::ExamSeries, $3::SMALLINT, $4::SMALLINT, $5::SMALLINT, $6::SMALLINT)`;
 
-const WRONG_TOPIC_FLAG_QUERY = `
-UPDATE questions SET wrong_topic_flags = wrong_topic_flags || $6::SMALLINT
-WHERE
-	subject_code = $1::TEXT AND
-	series = $2::exam_series AND
-	exam_year = $3::SMALLINT AND
-	paper_variant = $4::SMALLINT AND
-	question_number = $5::SMALLINT;
-`;
+/**
+ * @param {number} $1 - subject_code
+ * @param {'m' | 's' | 'w'} $2 - series
+ * @param {number} $3 - year
+ * @param {number} $4 - paper_variant_major
+ * @param {number} $5 - paper_variant_minor
+ * @param {number} $6 - question_number
+ * @param {number} $7 - topic_number -  The suggested topic number
+ */
+const WRONG_TOPIC_FLAG_QUERY = `SELECT push_wrong_topic_flags($1::SMALLINT, $2::ExamSeries, $3::SMALLINT, $4::SMALLINT, $5::SMALLINT, $6::SMALLINT, $7::SMALLINT)`;
 
 interface ReportedQuestion extends BaseQuestion {
 	error_type: QuestionErrorType;
@@ -78,7 +73,8 @@ export const post: RequestHandler = async ({ request }) => {
 			body.subject_code,
 			body.series,
 			body.exam_year,
-			body.paper_variant,
+			body.paper_variant.toString()[0],
+			body.paper_variant.toString()[1],
 			body.question_number,
 		];
 		if (!report_params.every((v) => v)) throw new Error('Malformed question.');

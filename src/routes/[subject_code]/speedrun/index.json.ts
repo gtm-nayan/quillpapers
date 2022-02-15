@@ -2,13 +2,7 @@ import pool from '$lib/db';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { PoolClient } from 'pg';
 
-const RANDOM_QUESTIONS_QUERY = `
-SELECT subject_code, series, exam_year, paper_variant, question_number, correct_answer, topic as topic_number
-FROM questions
-WHERE subject_code = $1::TEXT
-ORDER BY RANDOM()
-LIMIT 40;
-`;
+const RANDOM_QUESTIONS_QUERY = `SELECT * FROM random_speedrun_questions($1::SMALLINT, 1::SMALLINT)`;
 
 export const get: RequestHandler = async ({ params }) => {
 	let client: PoolClient;

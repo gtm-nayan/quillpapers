@@ -50,13 +50,6 @@ CREATE OR REPLACE FUNCTION random_speedrun_questions(
 ) LANGUAGE plpgsql AS $$ 
 BEGIN 
 	RETURN QUERY
-	SELECT * FROM (
-		WITH matching_questions AS (
-			SELECT * FROM questions
-			WHERE
-			questions.subject_code = sub_code
-			AND questions.paper_variant_major = pv_major
-		)
 		SELECT
 			m.subject_code,
 			m.series,
@@ -66,8 +59,10 @@ BEGIN
 			m.correct_answer,
 			m.topic_number
 		FROM
-			matching_questions m
-	) AS t
-	ORDER BY RANDOM()
-	LIMIT 40;
+			questions m
+		WHERE
+			m.subject_code = sub_code
+			AND m.paper_variant_major = pv_major
+		ORDER BY RANDOM()
+		LIMIT 40;
 END; $$;
