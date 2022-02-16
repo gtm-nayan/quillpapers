@@ -13,21 +13,20 @@ CREATE OR REPLACE FUNCTION random_casual_question(
 BEGIN 
 	RETURN QUERY
 	WITH matching_questions AS (
-		SELECT * FROM questions
+		SELECT 
+			questions.subject_code,
+			questions.series,
+			questions.exam_year,
+			(questions.paper_variant_major * 10::SMALLINT + questions.paper_variant_minor) as paper_variant,
+			questions.question_number,
+			questions.correct_answer
+		FROM questions
 		WHERE
 		questions.subject_code = sub_code
 		AND questions.paper_variant_major = pv_major
 		AND questions.topic_number = topic_num
 	)
-	SELECT
-		m.subject_code,
-		m.series,
-		m.exam_year,
-		(m.paper_variant_major * 10::SMALLINT + m.paper_variant_minor) as paper_variant,
-		m.question_number,
-		m.correct_answer
-	FROM
-		matching_questions m
+	SELECT * FROM matching_questions
 	OFFSET FLOOR (
 		random() * (
 			SELECT COUNT(*) FROM matching_questions
