@@ -76,6 +76,7 @@
 		justify-content: space-evenly;
 		margin-top: var(--size-2);
 
+		// @todo
 		> :global(*) {
 			font-size: var(--font-size-fluid-0);
 		}
