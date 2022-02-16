@@ -34,7 +34,7 @@
 			</li>
 			<li>
 				<kbd>U/O</kbd>
-				: Next/Previous Question
+				: Previous/Next Question
 			</li>
 			<li>
 				<kbd>Shift + I/K</kbd>
