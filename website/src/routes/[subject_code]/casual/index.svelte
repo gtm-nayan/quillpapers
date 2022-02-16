@@ -16,7 +16,7 @@
 		subject_code: SubjectCode,
 		topic_number: string,
 		fetch_function = fetch
-	): Promise<Question> {
+	): Promise<Question | null> {
 		const res = await fetch_function(
 			`/${subject_code}/casual.json?topic_number=${topic_number}`
 		);
@@ -36,15 +36,16 @@
 			fetch
 		);
 
+		if (!_initial_question)
+			return {
+				status: 504,
+				error: new Error('An error occured.'),
+			};
+
 		current_question.set(_initial_question);
-		return _initial_question
-			? {
-					status: 200,
-			  }
-			: {
-					status: 504,
-					error: new Error('An error occured.'),
-			  };
+		return {
+			status: 200,
+		};
 	};
 </script>
 

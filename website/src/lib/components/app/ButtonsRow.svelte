@@ -19,8 +19,7 @@
 
 	export let show_correct: boolean = false;
 
-	const dispatch =
-		createEventDispatcher<{ back: undefined; next: undefined }>();
+	const dispatch = createEventDispatcher<{ back: void; next: void }>();
 
 	function handle_answer_select(answer: Answer) {
 		$current_question.selected =

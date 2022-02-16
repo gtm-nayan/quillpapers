@@ -1,7 +1,13 @@
 import type { Question } from '$lib/utils/types';
-import { derived, get, writable, type Readable } from 'svelte/store';
-import type { QuestionStore } from '../index.svelte';
+import {
+	derived,
+	get,
+	writable,
+	type Readable,
+	type Writable,
+} from 'svelte/store';
 
+export type QuestionStore = Writable<Question[]>;
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function create_idx_store() {
 	const { set, subscribe, update } = writable(0);

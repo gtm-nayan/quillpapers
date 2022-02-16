@@ -5,12 +5,11 @@
 	import type { HumanTime } from '$lib/utils/timer';
 	import type { Question, SubjectCode } from '$lib/utils/types';
 	import { setContext } from 'svelte';
-	import { writable, Writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 	import EndScreen from './_components/EndScreen/EndScreen.svelte';
 	import MainSpeedrunScreen from './_components/MainSpeedrunScreen.svelte';
 	import StartScreen from './_components/StartScreen.svelte';
-
-	export type QuestionStore = Writable<Question[]>;
+	import type { QuestionStore } from './_components/stores';
 
 	async function get_questions(subject_code: SubjectCode) {
 		return fetch(`/${subject_code}/speedrun.json`).then(

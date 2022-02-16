@@ -7,8 +7,11 @@
 	import { createEventDispatcher, getContext, setContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { Document } from 'svelte-pdfjs';
-	import type { QuestionStore } from '../index.svelte';
-	import { create_current_question_store, create_idx_store } from './stores';
+	import {
+		create_current_question_store,
+		create_idx_store,
+		QuestionStore,
+	} from './stores';
 </script>
 
 <script lang="ts">

@@ -5,7 +5,7 @@
 	import { faRedo } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
-	import type { QuestionStore } from '../../index.svelte';
+	import type { QuestionStore } from '../stores';
 	import QuestionReport from './QuestionReport.svelte';
 
 	const questions_store = getContext<QuestionStore>('questions_store');
@@ -22,15 +22,17 @@
 	let total_correct = 0;
 
 	for (const question of $questions_store) {
-		if (!res.has(question.topic_number)) {
-			res.set(question.topic_number, {
-				name: subjects[subject_code].topics[question.topic_number].title,
+		const topic_number = question.topic_number!;
+		if (!res.has(topic_number)) {
+			res.set(topic_number, {
+				// @ts-ignore
+				name: subjects[subject_code].topics[topic_number].title,
 				encountered: 0,
 				correct: 0,
 			});
 		}
 
-		const current_topic = res.get(question.topic_number);
+		const current_topic = res.get(topic_number)!;
 		++current_topic.encountered;
 		if (question.correct_answer === question.selected) {
 			++current_topic.correct;

@@ -5,7 +5,7 @@
 	export let answer: Answer;
 	export let selected: boolean;
 	export let show_correct: boolean;
-	export let correct_answer: Answer = undefined;
+	export let correct_answer: Answer;
 
 	$: correct = show_correct && correct_answer === answer;
 	$: incorrect = show_correct && correct_answer !== answer;
