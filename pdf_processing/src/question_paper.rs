@@ -2,13 +2,6 @@ use std::{error::Error, fmt, str::FromStr};
 
 use regex::Regex;
 
-#[derive(Debug, PartialEq)]
-enum ExamSeries {
-	M,
-	S,
-	W,
-}
-
 #[derive(Debug)]
 struct InvalidExamSeries;
 impl Error for InvalidExamSeries {}
@@ -16,6 +9,13 @@ impl fmt::Display for InvalidExamSeries {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "Invalid exam series")
 	}
+}
+
+#[derive(Debug, PartialEq)]
+enum ExamSeries {
+	M,
+	S,
+	W,
 }
 
 impl FromStr for ExamSeries {
@@ -51,42 +51,28 @@ impl PartialEq for QuestionPaper {
 }
 
 lazy_static::lazy_static!(
-	static ref VALIDATOR_REGEX: Regex = Regex::new(r"\d{4}_[msw]\d{2}_qp_\d{1,2}.pdf").unwrap();
+	static ref VALIDATOR_REGEX: Regex = Regex::new(r"^(\d{4})_([msw])(\d{2})_qp_(\d)(\d?)\.pdf$").unwrap();
 );
 
 impl QuestionPaper {
-	fn test_name(name: &str) -> bool {
-		VALIDATOR_REGEX.is_match(name)
-	}
-
 	pub fn new(filename: &str) -> Result<Self, Box<dyn Error>> {
-		if !Self::test_name(filename) {
-			return Err("Invalid filename".into());
-		}
+		let caps = VALIDATOR_REGEX
+			.captures(filename)
+			.ok_or("Invalid filename")?;
 
-		let mut parts = filename.split('_');
+		let subject_code = caps.get(1).unwrap().as_str().parse()?;
+		let series = caps.get(2).unwrap().as_str().parse()?;
+		let year = caps.get(3).unwrap().as_str().parse()?;
 
-		let subject_code = parts.next().unwrap().parse()?;
+		let paper_variant_major = caps.get(4).unwrap().as_str().parse()?;
 
-		let series_and_year = parts.next().unwrap();
-
-		let series = (&series_and_year[0..1]).parse()?;
-		let year = (&series_and_year[1..=2]).parse()?;
-
-		// Discard `qp`
-		parts.next();
-
-		let paper_variant = parts
-			.next()
-			.unwrap()
-			.strip_suffix(".pdf")
-			.unwrap()
-			.parse()?;
-		let temp = paper_variant / 10;
-
-		let paper_variant_major = if temp == 0 { paper_variant } else { temp };
-
-		let paper_variant_minor = if temp == 0 { 0 } else { paper_variant % 10 };
+		let paper_variant_minor = match caps.get(5) {
+			Some(m) => match m.as_str() {
+				"" => 0,
+				n => n.parse()?,
+			},
+			None => 0,
+		};
 
 		Ok(Self {
 			subject_code,
@@ -100,15 +86,7 @@ impl QuestionPaper {
 
 #[cfg(test)]
 mod tests {
-
 	use super::*;
-
-	#[test]
-	fn test_test_name() {
-		assert!(QuestionPaper::test_name("9701_m16_qp_12.pdf"));
-		assert!(QuestionPaper::test_name("9701_s03_qp_1.pdf"));
-		assert!(!(QuestionPaper::test_name("tnestn.pdf.pdf")));
-	}
 
 	#[test]
 	fn test_new() {
