@@ -51,7 +51,7 @@ impl PartialEq for QuestionPaper {
 }
 
 lazy_static::lazy_static!(
-	static ref VALIDATOR_REGEX: Regex = Regex::new(r"^(\d{4})_([msw])(\d{2})_qp_(\d)(\d?)\.pdf$").unwrap();
+	static ref VALIDATOR_REGEX: Regex = Regex::new(r"^(\d{4})_([msw])(\d{2})_qp_(\d)(\d)?\.pdf$").unwrap();
 );
 
 impl QuestionPaper {
@@ -67,10 +67,7 @@ impl QuestionPaper {
 		let paper_variant_major = caps.get(4).unwrap().as_str().parse()?;
 
 		let paper_variant_minor = match caps.get(5) {
-			Some(m) => match m.as_str() {
-				"" => 0,
-				n => n.parse()?,
-			},
+			Some(m) => m.as_str().parse()?,
 			None => 0,
 		};
 
