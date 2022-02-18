@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-from fitz import Document
+from fitz import Document, Page, Rect
 
 from question import Question
 
@@ -25,7 +25,11 @@ def parse_filename(filename: str):
 
 class QuestionPaper:
     def __init__(
-        self, filepath: str, start_page: int = 1, max_x: int = 68, max_y: int = 780
+        self,
+        filepath: str,
+        start_page: int = 2,
+        max_x: int = 65,
+        max_y: int = 780,
     ):
         fp = Path(filepath)
 
@@ -39,8 +43,84 @@ class QuestionPaper:
         self.max_x = max_x
         self.max_y = max_y
 
-        self.initialize_doc()
-        self.questions: list[Question] = []
-
-    def initialize_doc(self):
         self.doc = Document(str(self.filepath))
+        self.questions: list[Question] = []
+        self.width = self.doc[0].mediabox_size[0]
+
+    def _get_lowest_graphic_y2(self, page: Page):
+        lowest_graphic_y2: float = 0
+        max_y2: float = self.max_y
+
+        for drawing in page.get_drawings():
+            width: float = drawing["rect"][2] - drawing["rect"][0]
+            y2 = drawing["rect"][3]
+
+            if y2 < max_y2:
+                if width <= 490:
+                    lowest_graphic_y2 = max(lowest_graphic_y2, y2)
+                else:
+                    max_y2 = y2
+
+        for image in page.get_image_info():
+            lowest_graphic_y2 = max(lowest_graphic_y2, image["bbox"][3])
+
+        return lowest_graphic_y2, max_y2
+
+    def extract_questions(self):
+        for page_num in range(self.start_page - 1, self.doc.page_count):
+            questions = self.extract_questions_from_page(self.doc[page_num])
+            self.questions += questions
+        return self.questions
+
+    def extract_questions_from_page(self, page: Page):
+        (lowest_graphic_y2, max_y2) = self._get_lowest_graphic_y2(page)
+
+        questions_on_this_page: list[Question] = []
+
+        question_number_clip = Rect(40, 55, self.max_x, max_y2)
+
+        text_page_dict = page.get_textpage(question_number_clip).extractDICT()
+
+        # region figure out where questions start and end
+        for block in text_page_dict["blocks"]:
+            for line in block["lines"]:
+                for span in line["spans"]:
+                    span_y1: float = span["bbox"][1]
+
+                    try:
+                        span_text = int(span["text"])
+
+                        try:
+                            questions_on_this_page[-1].y2 = span_y1 - 5
+                        except IndexError:
+                            pass
+
+                        questions_on_this_page.append(
+                            Question(span_text, self.metadata, page.number, span_y1)
+                        )
+
+                    except (ValueError):
+                        # Means it's not a question number
+                        continue
+
+        # endregion
+
+        all_text_clip = Rect(40, 55, page.mediabox_size.x, max_y2)
+        text_page_dict = page.get_textpage(all_text_clip).extractDICT()
+
+        # region figure out where the last question ends
+        y2_of_lowest_text = 0
+        for block in text_page_dict["blocks"]:
+            for line in block["lines"]:
+                for span in line["spans"]:
+                    y2_of_lowest_text = span["bbox"][3]
+
+        try:
+            questions_on_this_page[-1].y2 = (
+                max(lowest_graphic_y2, y2_of_lowest_text) + 5
+            )
+        except IndexError:
+            pass
+        # endregion
+
+        return questions_on_this_page

@@ -1,5 +1,5 @@
 import unittest
-from question_paper import parse_filename
+from question_paper import parse_filename, QuestionPaper
 
 
 class TestSuite(unittest.TestCase):
@@ -9,6 +9,17 @@ class TestSuite(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             parse_filename("970qp_12.pdf.pdf")
+
+        with self.assertRaises(ValueError):
+            parse_filename("_9701_m16_qp_12.pdf")
+
+    def test_extraction(self):
+        qp = QuestionPaper("9701_m16_qp_12.pdf")
+        questions = qp.extract_questions()
+        self.assertEqual(len(questions), 40)
+
+        for q in questions:
+            print(q)
 
 
 if __name__ == "__main__":
