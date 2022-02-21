@@ -6,7 +6,7 @@ class Question:
         self.question_number = question_number
 
     def __str__(self) -> str:
-        return f"Question #{self.question_number} on page {self.page_number} Starts at: {self.y1} Ends at: {self.y2}"
+        return f"Question #{self.question_number: <2} on page {self.page_number: >2} Starts at: {self.y1: >3} Ends at: {self.y2: >3}"
 
     @property
     def y2(self):
