@@ -68,14 +68,16 @@ class QuestionPaper:
 
     def extract_questions(self):
         for page_num in range(self.start_page - 1, self.doc.page_count):
-            questions = self.extract_questions_from_page(self.doc[page_num])
-            self.questions += questions
+            self.questions += [
+                question
+                for question in self.extract_questions_from_page(self.doc[page_num])
+            ]
         return self.questions
 
     def extract_questions_from_page(self, page: Page):
         (lowest_graphic_y2, max_y2) = self._get_lowest_graphic_y2(page)
 
-        questions_on_this_page: list[Question] = []
+        prev_question: Question | None = None
 
         question_number_clip = Rect(40, 55, self.max_x, max_y2)
 
@@ -85,18 +87,23 @@ class QuestionPaper:
         for block in text_page_dict["blocks"]:
             for line in block["lines"]:
                 for span in line["spans"]:
-                    span_y1: float = span["bbox"][1]
 
                     try:
-                        span_text = int(span["text"])
+                        question_number = int(span["text"])
+                        start_of_this_question: float = span["bbox"][1]
 
-                        try:
-                            questions_on_this_page[-1].y2 = span_y1 - 5
-                        except IndexError:
-                            pass
+                        if prev_question is not None:
+                            prev_question[-1].y2 = (
+                                start_of_this_question
+                                - 5  # 5 less than start of current question
+                            )
+                            yield prev_question
 
-                        questions_on_this_page.append(
-                            Question(span_text, self.metadata, page.number, span_y1)
+                        prev_question = Question(
+                            question_number,
+                            self.metadata,
+                            page.number,
+                            start_of_this_question,
                         )
 
                     except (ValueError):
@@ -115,12 +122,10 @@ class QuestionPaper:
                 for span in line["spans"]:
                     y2_of_lowest_text = span["bbox"][3]
 
-        try:
-            questions_on_this_page[-1].y2 = (
-                max(lowest_graphic_y2, y2_of_lowest_text) + 5
+        if prev_question is not None:
+            prev_question.y2 = (
+                max(y2_of_lowest_text, lowest_graphic_y2)
+                + 5  # 5 more than end of last question
             )
-        except IndexError:
-            pass
+            yield prev_question
         # endregion
-
-        return questions_on_this_page
