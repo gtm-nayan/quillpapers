@@ -93,7 +93,7 @@ class QuestionPaper:
                         start_of_this_question: float = span["bbox"][1]
 
                         if prev_question is not None:
-                            prev_question[-1].y2 = (
+                            prev_question.y2 = (
                                 start_of_this_question
                                 - 5  # 5 less than start of current question
                             )
