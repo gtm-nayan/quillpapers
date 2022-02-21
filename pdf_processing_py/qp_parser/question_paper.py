@@ -68,11 +68,7 @@ class QuestionPaper:
 
     def extract_questions(self):
         for page_num in range(self.start_page - 1, self.doc.page_count):
-            self.questions += [
-                question
-                for question in self.extract_questions_from_page(self.doc[page_num])
-            ]
-        return self.questions
+            yield from self.extract_questions_from_page(self.doc[page_num])
 
     def extract_questions_from_page(self, page: Page):
         (lowest_graphic_y2, max_y2) = self._get_lowest_graphic_y2(page)
