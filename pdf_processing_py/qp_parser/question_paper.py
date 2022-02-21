@@ -44,7 +44,6 @@ class QuestionPaper:
         self.max_y = max_y
 
         self.doc = Document(str(self.filepath))
-        self.questions: list[Question] = []
         self.width = self.doc[0].mediabox_size[0]
 
     def _get_lowest_graphic_y2(self, page: Page):
@@ -97,7 +96,6 @@ class QuestionPaper:
 
                         prev_question = Question(
                             question_number,
-                            self.metadata,
                             page.number,
                             start_of_this_question,
                         )

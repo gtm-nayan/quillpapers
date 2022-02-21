@@ -17,6 +17,7 @@ class TestSuite(unittest.TestCase):
         qp = QuestionPaper("9701_m16_qp_12.pdf")
         questions = qp.extract_questions()
         num = 0
+        print(qp.metadata)
         for q in questions:
             print(q)
             num += 1
