@@ -5,10 +5,11 @@
 	import { faRedo } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
+	import { get } from 'svelte/store';
 	import type { QuestionStore } from '../stores';
 	import QuestionReport from './QuestionReport.svelte';
 
-	const questions_store = getContext<QuestionStore>('questions_store');
+	const questions = get(getContext<QuestionStore>('questions_store'));
 	export let subject_code: SubjectCode;
 	export let time: HumanTime;
 
@@ -21,7 +22,7 @@
 	const res = new Map<number, Topic>();
 	let total_correct = 0;
 
-	for (const question of $questions_store) {
+	for (const question of questions) {
 		const topic_number = question.topic_number!;
 		if (!res.has(topic_number)) {
 			res.set(topic_number, {
@@ -73,7 +74,7 @@
 			<Fa icon={faRedo} flip />
 			Restart
 		</button>
-		{#each $questions_store as question}
+		{#each questions as question}
 			<QuestionReport {question} />
 		{/each}
 	</div>
