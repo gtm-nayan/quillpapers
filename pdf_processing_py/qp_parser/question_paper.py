@@ -33,8 +33,7 @@ class QuestionPaper:
     ):
         fp = Path(filepath)
 
-        if not (fp.is_file() and fp.exists()):
-            raise ValueError(f"Invalid filepath: {filepath}")
+        self.doc = Document(str(self.filepath))
 
         self.filepath = fp
         self.filename = fp.name
@@ -43,7 +42,6 @@ class QuestionPaper:
         self.max_x = max_x
         self.max_y = max_y
 
-        self.doc = Document(str(self.filepath))
         self.width = self.doc[0].mediabox_size[0]
 
     def _get_lowest_graphic_y2(self, page: Page):
