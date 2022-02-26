@@ -1,7 +1,7 @@
 from re import Pattern
 
 
-class Metadata:
+class PaperMetadata:
     def __init__(self, filename: str, FILENAME_REGEX: Pattern):
         self.filename = filename
 

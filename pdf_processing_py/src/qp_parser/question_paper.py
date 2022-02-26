@@ -7,7 +7,7 @@ from question import Question
 
 FILENAME_REGEX = re.compile(r"^(\d{4})_([msw])(\d{2})_qp_(\d)(\d)?.pdf$")
 
-from utils.parse_filename import Metadata
+from utils.parse_filename import PaperMetadata
 
 
 class QuestionPaper:
@@ -25,7 +25,7 @@ class QuestionPaper:
         self.filepath = fp
         self.filename = fp.name
         self.start_page = start_page
-        self.metadata = Metadata(self.filename, FILENAME_REGEX)
+        self.metadata = PaperMetadata(self.filename, FILENAME_REGEX)
         self.max_x = max_x
         self.max_y = max_y
 
