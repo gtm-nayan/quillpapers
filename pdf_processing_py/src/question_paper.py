@@ -20,11 +20,11 @@ class QuestionPaper:
     ):
         fp = Path(filepath)
 
-        self.doc = Document(str(self.filepath))
+        self.doc = Document(fp)
 
         self.filepath = fp
         self.filename = fp.name
-        self.start_page = start_page
+        self.start_page = start_page - 1
         self.metadata = PaperMetadata(self.filename, FILENAME_REGEX)
         self.max_x = max_x
         self.max_y = max_y
@@ -51,7 +51,7 @@ class QuestionPaper:
         return lowest_graphic_y2, max_y2
 
     def extract_questions(self):
-        for page_num in range(self.start_page - 1, self.doc.page_count):
+        for page_num in range(self.start_page, self.doc.page_count):
             yield from self.extract_questions_from_page(self.doc[page_num])
 
     def extract_questions_from_page(self, page: Page):
