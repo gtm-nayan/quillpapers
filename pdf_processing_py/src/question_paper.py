@@ -7,7 +7,7 @@ from question import Question
 
 FILENAME_REGEX = re.compile(r"^(\d{4})_([msw])(\d{2})_qp_(\d)(\d)?.pdf$")
 
-from utils.parse_filename import PaperMetadata
+from parse_filename import PaperMetadata
 
 
 class QuestionPaper:

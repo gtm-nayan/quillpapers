@@ -1,10 +1,10 @@
 import unittest
 
 from parse_filename import PaperMetadata
-from qp_parser.question_paper import (
+from question_paper import (
     FILENAME_REGEX as QUESTION_PAPER_FILENAME_REGEX,
 )
-from answer_paper_parser.answer_paper import (
+from answer_paper import (
     FILENAME_REGEX as ANSWER_PAPER_FILENAME_REGEX,
 )
 

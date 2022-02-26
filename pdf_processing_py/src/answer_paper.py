@@ -5,7 +5,7 @@ from fitz import Document, Page, Rect
 
 FILENAME_REGEX = re.compile(r"^(\d{4})_([msw])(\d{2})_ms_(\d)(\d)?.pdf$")
 
-from utils.parse_filename import PaperMetadata
+from parse_filename import PaperMetadata
 
 bounds = Rect(50, 72, 490, 780)
 
