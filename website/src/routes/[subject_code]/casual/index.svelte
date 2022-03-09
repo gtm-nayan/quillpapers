@@ -8,7 +8,7 @@
 	import type { Question, SubjectCode } from '$lib/utils/types.js';
 	import type { Load } from '@sveltejs/kit';
 	import { setContext } from 'svelte';
-	import { shortcut } from 'svelte-actions/dist/shortcut.js';
+	import { shortcut } from '$lib/utils/shortcut';
 	import { Document } from 'svelte-pdfjs';
 	import { writable } from 'svelte/store';
 
@@ -57,7 +57,7 @@
 	let previous_question = $current_question;
 	setContext('current_question', current_question);
 
-	let topic_number: string = '1';
+	let topic_number: keyof typeof subjects[SubjectCode]['topics'] = '1';
 
 	async function handle_next_question() {
 		const new_question = await fetch_random_question(

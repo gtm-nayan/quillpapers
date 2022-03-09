@@ -3,11 +3,11 @@
 	import { getContext } from 'svelte';
 	import { Page } from 'svelte-pdfjs';
 	import type { Writable } from 'svelte/store';
-	import { shortcut } from 'svelte-actions';
+	import { shortcut } from '$lib/utils/shortcut';
 
 	let current_question = getContext<Writable<Question>>('current_question');
 
-	let scale: number = 1.5;
+	let scale = 1.5;
 </script>
 
 <section

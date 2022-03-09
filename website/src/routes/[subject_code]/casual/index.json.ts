@@ -6,7 +6,7 @@ import type { PoolClient } from 'pg';
 const RANDOM_QUESTION_QUERY = `SELECT * FROM random_casual_question($1::SMALLINT, 1::SMALLINT, $2::SMALLINT)`;
 
 export const get: RequestHandler = async ({ params, url }) => {
-	let client: PoolClient;
+	let client!: PoolClient;
 	try {
 		client = await pool.connect();
 
@@ -64,7 +64,7 @@ interface ReportedQuestion extends BaseQuestion {
 }
 
 export const post: RequestHandler = async ({ request }) => {
-	let client: PoolClient;
+	let client!: PoolClient;
 
 	try {
 		const body = (await request.json()) as ReportedQuestion;

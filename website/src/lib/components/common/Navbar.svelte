@@ -1,6 +1,6 @@
 <script lang="ts">
 	import KofiButton from './KofiButton.svelte';
-	// @ts-expect-error
+	// @ts-expect-error ts won't recognize the import signature for image tools
 	import logo from '../../styles/logo.png?w=32';
 </script>
 

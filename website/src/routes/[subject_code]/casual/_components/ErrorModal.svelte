@@ -19,7 +19,6 @@
 					topic_suggestion,
 				}),
 			});
-		} catch {
 		} finally {
 			show_modal = false;
 		}
@@ -27,7 +26,7 @@
 
 	let error_type: QuestionErrorType = QuestionErrorType.BAD_CROPPING;
 	let subject_code = $page.params.subject_code as SubjectCode;
-	let topic_suggestion: string = '1';
+	let topic_suggestion = '1';
 	let show_modal = false;
 </script>
 

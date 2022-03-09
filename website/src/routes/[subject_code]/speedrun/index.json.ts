@@ -5,7 +5,7 @@ import type { PoolClient } from 'pg';
 const RANDOM_QUESTIONS_QUERY = `SELECT * FROM random_speedrun_questions($1::SMALLINT, 1::SMALLINT)`;
 
 export const get: RequestHandler = async ({ params }) => {
-	let client: PoolClient;
+	let client!: PoolClient;
 	try {
 		client = await pool.connect();
 

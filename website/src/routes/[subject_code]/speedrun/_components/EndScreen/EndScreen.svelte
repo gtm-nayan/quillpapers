@@ -24,9 +24,10 @@
 
 	for (const question of questions) {
 		const topic_number = question.topic_number!;
+
 		if (!res.has(topic_number)) {
 			res.set(topic_number, {
-				// @ts-ignore
+				// @ts-expect-error casting topic_number is verbose but safe
 				name: subjects[subject_code].topics[topic_number].title,
 				encountered: 0,
 				correct: 0,
@@ -71,7 +72,7 @@
 
 	<div>
 		<button on:click>
-			<Fa icon={faRedo} flip />
+			<Fa icon={faRedo} flip="horizontal" />
 			Restart
 		</button>
 		{#each questions as question}
