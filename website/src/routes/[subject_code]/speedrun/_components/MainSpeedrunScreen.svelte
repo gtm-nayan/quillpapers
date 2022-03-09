@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import ButtonsRow from '$lib/components/app/ButtonsRow.svelte';
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
-	import get_PDF_URL from '$lib/utils/pdf_url_gen';
+	import get_PDF_URL, { pdf_id } from '$lib/utils/pdf_url_gen';
 	import create_timer, { HumanTime } from '$lib/utils/timer';
 	import { faStop } from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext, setContext } from 'svelte';
@@ -47,7 +47,7 @@
 			</select>
 
 			<select bind:value={$question_idx} class="select-qn">
-				{#each $questions_store as question, i}
+				{#each $questions_store as question, i (pdf_id(question) + question.question_number)}
 					<option value={i}>
 						{i + 1}
 						{#if question.selected}
