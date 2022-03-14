@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import subjects from '$lib/data/subjects.json';
-	import { Question, QuestionErrorType, SubjectCode } from '$lib/utils/types';
+	import {
+		QuestionErrorType,
+		type Question,
+		type SubjectCode,
+	} from '$lib/utils/types';
 	import { faFlag } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';

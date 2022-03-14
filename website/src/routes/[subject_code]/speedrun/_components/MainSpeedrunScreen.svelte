@@ -2,7 +2,7 @@
 	import ButtonsRow from '$lib/components/app/ButtonsRow.svelte';
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
 	import get_PDF_URL, { pdf_id } from '$lib/utils/pdf_url_gen';
-	import create_timer, { HumanTime } from '$lib/utils/timer';
+	import create_timer, { type HumanTime } from '$lib/utils/timer';
 	import { faStop } from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext, setContext } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
@@ -10,7 +10,7 @@
 	import {
 		create_current_question_store,
 		create_idx_store,
-		QuestionStore,
+		type QuestionStore,
 	} from './stores';
 </script>
 

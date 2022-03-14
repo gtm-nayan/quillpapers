@@ -1,13 +1,17 @@
 <script lang="ts">
 	import AnswerButton from '$lib/components/app/AnswerButton.svelte';
-	import { Answer, POSSIBLE_ANSWERS, Question } from '$lib/utils/types';
+	import { shortcut } from '$lib/utils/shortcut';
+	import {
+		POSSIBLE_ANSWERS,
+		type Answer,
+		type Question,
+	} from '$lib/utils/types';
 	import {
 		faArrowLeft,
 		faArrowRight,
 		faCircleNotch,
 	} from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext } from 'svelte';
-	import { shortcut } from '$lib/utils/shortcut';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import type { PDFJS } from 'svelte-pdfjs';
 	import type { Writable } from 'svelte/store';
