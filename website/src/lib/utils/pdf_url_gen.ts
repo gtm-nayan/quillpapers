@@ -6,5 +6,12 @@ export default function get_PDF_URL(question: Question): string {
 
 export function pdf_id(question: Question): string {
 	//prettier-ignore
-	return `${question.subject_code}_${question.series}${question.exam_year.toString().padStart(2, '0')}_qp_${question.paper_variant}`;
+	return `${question.subject_code}_${question.series}${zero_two(question.exam_year)}_qp_${question.paper_variant}`;
+}
+
+/**
+ * Pad a number with leading zeros to make it a string of length 2.
+ */
+export function zero_two(num: number): string {
+	return num.toString().padStart(2, '0');
 }

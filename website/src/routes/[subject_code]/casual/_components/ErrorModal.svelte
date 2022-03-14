@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import subjects from '$lib/data/subjects.json';
+	import { zero_two } from '$lib/utils/pdf_url_gen';
 	import {
 		QuestionErrorType,
 		type Question,
@@ -40,11 +41,9 @@
 			<div class="content">
 				<h4>
 					{$current_question.subject_code}
-					{$current_question.series}{$current_question.exam_year
-						.toString()
-						.padStart(2, '0')}
+					{$current_question.series}{zero_two($current_question.exam_year)}
 					{$current_question.paper_variant}
-					QN: {$current_question.question_number.toString().padStart(2, '0')}
+					QN: {zero_two($current_question.question_number)}
 				</h4>
 				<form on:submit|preventDefault={handle_submit}>
 					<fieldset>

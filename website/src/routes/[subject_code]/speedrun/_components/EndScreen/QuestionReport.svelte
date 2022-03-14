@@ -1,5 +1,5 @@
 <script lang="ts">
-	import get_PDF_URL from '$lib/utils/pdf_url_gen';
+	import get_PDF_URL, { zero_two } from '$lib/utils/pdf_url_gen';
 	import type { Question } from '$lib/utils/types';
 	import { Document, Page } from 'svelte-pdfjs';
 
@@ -10,9 +10,9 @@
 	<summary>
 		<code>
 			{question.subject_code}
-			{question.series}{question.exam_year.toString().padStart(2, '0')}
+			{question.series}{zero_two(question.exam_year)}
 			{question.paper_variant}
-			QN: {question.question_number.toString().padStart(2, '0')}
+			QN: {zero_two(question.question_number)}
 			|
 			<span>
 				<!-- Normal space gets collapsed so use a &ensp; -->
