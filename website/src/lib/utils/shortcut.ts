@@ -24,9 +24,6 @@ export type ShortcutConfig = {
 	alt?: boolean;
 };
 
-function default_callback(node: HTMLElement) {
-	node.click();
-}
 /**
  * Simplest possible way to add a keyboard shortcut to an element.
  * It either calls a callback or clicks on the node it was put on.
@@ -49,7 +46,7 @@ export const shortcut: Action<ShortcutConfig> = (node, config) => {
 
 		event.preventDefault();
 
-		(config.callback || default_callback)(node);
+		(config.callback || node.click)(node);
 	}
 
 	window.addEventListener('keydown', handler);
