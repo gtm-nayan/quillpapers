@@ -10,7 +10,7 @@ interface Action<Parameter = void, Return = ActionReturn<Parameter>> {
 export type ShortcutConfig = {
 	/**
 	 * The code of the key to listen for.
-	 * {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code}
+	 * See {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code KeyboardEvent.code}
 	 */
 	code: KeyboardEventInit['code'];
 
@@ -24,6 +24,9 @@ export type ShortcutConfig = {
 	alt?: boolean;
 };
 
+function default_callback(node: HTMLElement) {
+	node.click();
+}
 /**
  * Simplest possible way to add a keyboard shortcut to an element.
  * It either calls a callback or clicks on the node it was put on.
@@ -46,7 +49,7 @@ export const shortcut: Action<ShortcutConfig> = (node, config) => {
 
 		event.preventDefault();
 
-		(config.callback || node.click)(node);
+		(config.callback || default_callback)(node);
 	}
 
 	window.addEventListener('keydown', handler);
