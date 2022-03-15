@@ -1,6 +1,6 @@
 import type { Question } from './types.js';
 
-export default function get_PDF_URL(question: Question): string {
+export function get_PDF_URL(question: Question): string {
 	return `https://quillpdfs.netlify.app/${pdf_id(question)}.pdf`;
 }
 

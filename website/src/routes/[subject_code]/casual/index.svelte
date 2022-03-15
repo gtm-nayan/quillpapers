@@ -4,7 +4,7 @@
 	import ButtonsRow from '$lib/components/app/ButtonsRow.svelte';
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
 	import subjects from '$lib/data/subjects.json';
-	import get_PDF_URL from '$lib/utils/pdf_url_gen';
+	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import type { Question, SubjectCode } from '$lib/utils/types.js';
 	import type { Load } from '@sveltejs/kit';
 	import { setContext } from 'svelte';

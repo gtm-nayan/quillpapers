@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
 	import subjects from '$lib/data/subjects.json';
-	import get_PDF_URL from '$lib/utils/pdf_url_gen';
+	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import type { HumanTime } from '$lib/utils/timer';
 	import type { Question, SubjectCode } from '$lib/utils/types';
 	import { setContext } from 'svelte';

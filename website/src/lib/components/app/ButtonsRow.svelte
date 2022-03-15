@@ -11,12 +11,11 @@
 		faArrowRight,
 		faCircleNotch,
 	} from '@fortawesome/free-solid-svg-icons';
-	import { createEventDispatcher, getContext } from 'svelte';
+	import { createEventDispatcher, getContext, onDestroy } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { key, type PDFJS } from 'svelte-pdfjs';
 	import type { Writable } from 'svelte/store';
 
-	let current_doc = getContext<Writable<PDFJS.PDFDocumentProxy>>(key);
 	let current_question = getContext<Writable<Question>>('current_question');
 
 	export let show_correct = false;
@@ -28,7 +27,11 @@
 			$current_question.selected === answer ? undefined : answer;
 	}
 
-	$: is_doc_loading = $current_doc == null;
+	let is_doc_loading = false;
+	const unsub = getContext<Writable<PDFJS.PDFDocumentProxy>>(key).subscribe(
+		(doc) => (is_doc_loading = doc == null)
+	);
+	onDestroy(unsub);
 </script>
 
 <section>
