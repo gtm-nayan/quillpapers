@@ -12,26 +12,31 @@ export type QuestionStore = Writable<Question[]>;
 export function create_idx_store() {
 	const { set, subscribe, update } = writable(0);
 
+	function wrapping_clamp(n: number) {
+		// mod != remainder in js so we have to do this weird dance
+		const num_questions = 40;
+		return ((n % num_questions) + num_questions) % num_questions;
+	}
+
 	return {
 		subscribe,
 		/**
 		 * Set a value clamped between 0 and 39.
 		 */
 		set: (val: number) => {
-			// Abuse js whack to get val as an integer.
-			set(Math.max(0, Math.min(val >> 0, 39)));
+			set(wrapping_clamp(val >> 0));
 		},
 		/**
 		 * Increment the index by 1. (Wrap around at 40)
 		 */
 		increment: () => {
-			update((v) => (v >= 39 ? 0 : v + 1));
+			update((n) => wrapping_clamp(n + 1));
 		},
 		/**
 		 * Decrement the index by 1. (Wrap around to 39 at -1)
 		 */
 		decrement: () => {
-			update((v) => (v <= 0 ? 39 : v - 1));
+			update((n) => wrapping_clamp(n - 1));
 		},
 	};
 }
