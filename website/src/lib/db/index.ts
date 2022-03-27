@@ -1,8 +1,3 @@
-import pg from 'pg';
+import postgres from 'postgres';
 
-const pool = new pg.Pool({
-	connectionString: import.meta.env.VITE_POSTGRES_URI as string,
-	idleTimeoutMillis: 60_000,
-});
-
-export default pool;
+export const sql = postgres(import.meta.env.VITE_POSTGRES_URI as string);

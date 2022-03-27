@@ -1,106 +1,65 @@
-import pool from '$lib/db';
-import { QuestionErrorType, type BaseQuestion } from '$lib/utils/types';
+import { sql } from '$lib/db';
+import { QuestionErrorType, type SubjectCode } from '$lib/utils/types';
 import type { RequestHandler } from '@sveltejs/kit';
-import type { PoolClient } from 'pg';
-
-const RANDOM_QUESTION_QUERY = `SELECT * FROM random_casual_question($1::SMALLINT, 1::SMALLINT, $2::SMALLINT)`;
+import { ValidationError } from 'yup';
+import { schema, type ReportedQuestion } from './_reported_question';
 
 export const get: RequestHandler = async ({ params, url }) => {
-	let client!: PoolClient;
 	try {
-		client = await pool.connect();
+		const res = await sql`SELECT * FROM random_casual_question(
+			${params.subject_code as SubjectCode}::SMALLINT,
+			1::SMALLINT,
+			${url.searchParams.get('topic_number') ?? 1}::SMALLINT
+		)`;
 
-		const db_res = await client.query(RANDOM_QUESTION_QUERY, [
-			params.subject_code,
-			url.searchParams.get('topic_number'),
-		]);
-
-		return db_res.rowCount
-			? { status: 200, body: db_res.rows[0] }
-			: { status: 404 };
+		return res.length ? { status: 200, body: res.at(0) } : { status: 404 };
 	} catch (err) {
 		return {
 			status: 504,
 		};
-	} finally {
-		client?.release();
 	}
 };
 
-/**
- * @param {number} $1 - subject_code
- * @param {'m' | 's' | 'w'} $2 - series
- * @param {number} $3 - year
- * @param {number} $4 - paper_variant_major
- * @param {number} $5 - paper_variant_minor
- * @param {number} $6 - question_number
- */
-const BAD_CROPPING_FLAG_QUERY = `SELECT increment_bad_cropping_flags($1::SMALLINT, $2::ExamSeries, $3::SMALLINT, $4::SMALLINT, $5::SMALLINT, $6::SMALLINT)`;
-
-/**
- * @param {number} $1 - subject_code
- * @param {'m' | 's' | 'w'} $2 - series
- * @param {number} $3 - year
- * @param {number} $4 - paper_variant_major
- * @param {number} $5 - paper_variant_minor
- * @param {number} $6 - question_number
- */
-const WRONG_ANSWER_FLAG_QUERY = `SELECT increment_wrong_answer_flags($1::SMALLINT, $2::ExamSeries, $3::SMALLINT, $4::SMALLINT, $5::SMALLINT, $6::SMALLINT)`;
-
-/**
- * @param {number} $1 - subject_code
- * @param {'m' | 's' | 'w'} $2 - series
- * @param {number} $3 - year
- * @param {number} $4 - paper_variant_major
- * @param {number} $5 - paper_variant_minor
- * @param {number} $6 - question_number
- * @param {number} $7 - topic_number -  The suggested topic number
- */
-const WRONG_TOPIC_FLAG_QUERY = `SELECT push_wrong_topic_flags($1::SMALLINT, $2::ExamSeries, $3::SMALLINT, $4::SMALLINT, $5::SMALLINT, $6::SMALLINT, $7::SMALLINT)`;
-
-interface ReportedQuestion extends BaseQuestion {
-	error_type: QuestionErrorType;
-	topic_suggestion?: number;
-}
-
 export const post: RequestHandler = async ({ request }) => {
-	let client!: PoolClient;
-
 	try {
 		const body = (await request.json()) as ReportedQuestion;
-
-		const report_params = [
-			body.subject_code,
-			body.series,
-			body.exam_year,
-			body.paper_variant.toString()[0],
-			body.paper_variant.toString()[1],
-			body.question_number,
-		];
-		if (!report_params.every((v) => v)) throw new Error('Malformed question.');
-
-		client = await pool.connect();
+		schema.validateSync(body);
 
 		switch (body.error_type) {
-			case QuestionErrorType.BAD_CROPPING: {
-				await client.query(BAD_CROPPING_FLAG_QUERY, report_params);
+			case QuestionErrorType.BAD_CROPPING:
+				await sql`SELECT increment_bad_cropping_flags(
+					${body.subject_code}::SMALLINT, 
+					${body.series}::ExamSeries, 
+					${body.exam_year}::SMALLINT, 
+					${body.paper_variant.toString()[0]}::SMALLINT, 
+					${body.paper_variant.toString()[1]}::SMALLINT, 
+					${body.question_number}::SMALLINT
+				)`;
 				break;
-			}
-
-			case QuestionErrorType.WRONG_ANSWER: {
-				await client.query(WRONG_ANSWER_FLAG_QUERY, report_params);
+			case QuestionErrorType.WRONG_ANSWER:
+				await sql`SELECT increment_wrong_answer_flags(
+					${body.subject_code}::SMALLINT, 
+					${body.series}::ExamSeries, 
+					${body.exam_year}::SMALLINT, 
+					${body.paper_variant.toString()[0]}::SMALLINT, 
+					${body.paper_variant.toString()[1]}::SMALLINT, 
+					${body.question_number}::SMALLINT
+				)`;
 				break;
-			}
-
 			case QuestionErrorType.WRONG_TOPIC: {
 				if (!body.topic_suggestion) {
 					throw new Error('Topic suggestion not provided.');
 				}
 
-				await client.query(WRONG_TOPIC_FLAG_QUERY, [
-					...report_params,
-					body.topic_suggestion,
-				]);
+				await sql`SELECT increment_wrong_answer_flags(
+					${body.subject_code}::SMALLINT, 
+					${body.series}::ExamSeries, 
+					${body.exam_year}::SMALLINT, 
+					${body.paper_variant.toString()[0]}::SMALLINT, 
+					${body.paper_variant.toString()[1]}::SMALLINT, 
+					${body.question_number}::SMALLINT,
+					${body.topic_suggestion}::SMALLINT
+				)`;
 				break;
 			}
 		}
@@ -109,11 +68,11 @@ export const post: RequestHandler = async ({ request }) => {
 			status: 200,
 		};
 	} catch (e) {
+		console.error(e);
 		return {
 			status: 400,
-			body: (e as Error).message,
+			body:
+				e instanceof ValidationError ? e.errors : ["Couldn't report question."],
 		};
-	} finally {
-		client?.release();
 	}
 };
