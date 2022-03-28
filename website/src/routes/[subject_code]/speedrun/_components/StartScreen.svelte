@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
-	import Fa from 'svelte-fa/src/fa.svelte';
+	import { FaSvg, Icon } from 'svelte-yafal';
 </script>
 
 <main>
 	<button on:click>
-		<Fa icon={faPlay} />
+		<FaSvg><Icon icon={faPlay} /></FaSvg>
 		Start
 	</button>
 </main>

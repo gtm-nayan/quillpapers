@@ -4,7 +4,7 @@
 	import type { SubjectCode } from '$lib/utils/types';
 	import { faRedo } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
-	import Fa from 'svelte-fa/src/fa.svelte';
+	import { FaSvg, Icon } from 'svelte-yafal';
 	import { get } from 'svelte/store';
 	import type { QuestionStore } from '../stores';
 	import QuestionReport from './QuestionReport.svelte';
@@ -72,7 +72,7 @@
 
 	<div>
 		<button on:click>
-			<Fa icon={faRedo} flip="horizontal" />
+			<FaSvg><Icon icon={faRedo} flipX /></FaSvg>
 			Restart
 		</button>
 		{#each questions as question}

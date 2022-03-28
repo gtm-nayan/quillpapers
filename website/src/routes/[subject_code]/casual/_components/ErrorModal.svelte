@@ -9,7 +9,7 @@
 	} from '$lib/utils/types';
 	import { faFlag } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
-	import Fa from 'svelte-fa/src/fa.svelte';
+	import { FaSvg, Icon } from 'svelte-yafal';
 	import type { Writable } from 'svelte/store';
 
 	const current_question: Writable<Question> = getContext('current_question');
@@ -83,8 +83,7 @@
 		on:click={() => (show_modal = true)}
 		style:color="var(--gray-7)"
 	>
-		<Fa icon={faFlag} />
-
+		<FaSvg><Icon icon={faFlag} /></FaSvg>
 		Flag this question
 	</button>
 </span>

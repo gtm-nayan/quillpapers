@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { faDiscord, faGithub } from '@fortawesome/free-brands-svg-icons';
-	import Fa from 'svelte-fa/src/fa.svelte';
+	import { FaSvg, Icon } from 'svelte-yafal';
 </script>
 
 <footer>
@@ -13,14 +13,17 @@
 	You can reach me through discord for any queries.
 	<br />
 	<a href="https://discordapp.com/users/339731096793251854" rel="external">
-		<Fa icon={faDiscord} color="#7289DA" size="1.25x" />
+		<FaSvg><Icon icon={faDiscord} color="#7289DA" /></FaSvg>
 	</a>
 	<a href="https://github.com/gtm-nayan/quillpapers">
-		<Fa icon={faGithub} color="#333" size="1.5x" />
+		<FaSvg><Icon icon={faGithub} color="#333" /></FaSvg>
 	</a>
 </footer>
 
 <style>
+	a {
+		font-size: 1.5em;
+	}
 	footer {
 		text-align: center;
 		margin-top: auto;

@@ -12,8 +12,8 @@
 		faCircleNotch,
 	} from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext, onDestroy } from 'svelte';
-	import Fa from 'svelte-fa/src/fa.svelte';
 	import { key, type PDFJS } from 'svelte-pdfjs';
+	import { FaSvg, Icon } from 'svelte-yafal';
 	import type { Writable } from 'svelte/store';
 
 	let current_question = getContext<Writable<Question>>('current_question');
@@ -45,7 +45,7 @@
 		on:click={() => dispatch('back')}
 		use:shortcut={{ code: 'KeyU' }}
 	>
-		<Fa icon={faArrowLeft} size="4x" />
+		<FaSvg><Icon icon={faArrowLeft} /></FaSvg>
 	</button>
 
 	<div class="answers">
@@ -66,11 +66,9 @@
 		on:click={() => dispatch('next')}
 		use:shortcut={{ code: 'KeyO' }}
 	>
-		<Fa
-			icon={is_doc_loading ? faCircleNotch : faArrowRight}
-			size="{is_doc_loading ? 3.5 : 4}x"
-			spin={is_doc_loading}
-		/>
+		<FaSvg spin={is_doc_loading}>
+			<Icon icon={is_doc_loading ? faCircleNotch : faArrowRight} />
+		</FaSvg>
 	</button>
 </section>
 
@@ -119,5 +117,6 @@
 		overflow: hidden;
 		background-color: transparent;
 		color: var(--yellow-5);
+		font-size: 3.5em;
 	}
 </style>
