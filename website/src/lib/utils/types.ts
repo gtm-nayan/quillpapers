@@ -1,8 +1,7 @@
 import type subjects from '$lib/data/subjects.json';
 
-export type Answer = 'A' | 'B' | 'C' | 'D';
-
-export const POSSIBLE_ANSWERS: Array<Answer> = ['A', 'B', 'C', 'D'];
+export const POSSIBLE_ANSWERS = ['A', 'B', 'C', 'D'] as const;
+export type Answer = typeof POSSIBLE_ANSWERS[number];
 
 export interface BaseQuestion {
 	subject_code: SubjectCode;
