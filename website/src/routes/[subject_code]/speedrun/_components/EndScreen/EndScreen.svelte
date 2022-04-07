@@ -9,7 +9,6 @@
 	import type { QuestionStore } from '../stores';
 	import QuestionReport from './QuestionReport.svelte';
 
-	const questions = get(getContext<QuestionStore>('questions_store'));
 	export let subject_code: SubjectCode;
 	export let time: HumanTime;
 
@@ -19,25 +18,28 @@
 		correct: number;
 	};
 
+	const questions = get(getContext<QuestionStore>('questions_store'));
 	const res = new Map<number, Topic>();
 	let total_correct = 0;
 
+	function get_or_new_entry(topic_number: number) {
+		let obj = res.get(topic_number);
+		if (obj) return obj;
+		obj = {
+			// @ts-expect-error casting topic_number is verbose but safe
+			name: subjects[subject_code].topics[topic_number].title,
+			encountered: 0,
+			correct: 0,
+		};
+		res.set(topic_number, obj);
+		return obj;
+	}
+
 	for (const question of questions) {
-		const topic_number = question.topic_number!;
-
-		if (!res.has(topic_number)) {
-			res.set(topic_number, {
-				// @ts-expect-error casting topic_number is verbose but safe
-				name: subjects[subject_code].topics[topic_number].title,
-				encountered: 0,
-				correct: 0,
-			});
-		}
-
-		const current_topic = res.get(topic_number)!;
-		++current_topic.encountered;
+		const topic = get_or_new_entry(question.topic_number!);
+		++topic.encountered;
 		if (question.correct_answer === question.selected) {
-			++current_topic.correct;
+			++topic.correct;
 			++total_correct;
 		}
 	}
@@ -72,8 +74,7 @@
 
 	<div>
 		<button on:click>
-			<FaSvg><Icon icon={faRedo} flipX /></FaSvg>
-			Restart
+			<FaSvg><Icon icon={faRedo} flipX /></FaSvg> Restart
 		</button>
 		{#each questions as question}
 			<QuestionReport {question} />

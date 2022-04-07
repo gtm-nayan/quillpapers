@@ -44,8 +44,7 @@
 
 <svelte:head>
 	<title>
-		{subject_code} |
-		{subjects[subject_code].name} | Speedrun
+		{subject_code} | {subjects[subject_code].name} | Speedrun
 	</title>
 </svelte:head>
 
@@ -57,9 +56,9 @@
 	<StartScreen on:click={handle_start} />
 {:else if speedrun_state === SpeedrunState.ONGOING}
 	<MainSpeedrunScreen
-		on:end={({ detail: t }) => {
+		on:end={(e) => {
 			speedrun_state = SpeedrunState.DONE;
-			time = t;
+			time = e.detail;
 		}}
 	/>
 {:else}

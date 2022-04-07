@@ -35,6 +35,7 @@
 		"svelte-check": "^2.4.5",
 		"svelte-pdfjs": "^0.3.14",
 		"svelte-preprocess": "^4.10.4",
+		"svelte-yafal": "^0.1.0",
 		"tslib": "^2.3.1",
 		"typescript": "^4.6.2",
 		"vite-imagetools": "^4.0.3"
@@ -42,7 +43,6 @@
 	"type": "module",
 	"dependencies": {
 		"postgres": "^3.0.0",
-		"svelte-yafal": "^0.1.0",
 		"yup": "^0.32.11"
 	}
 }

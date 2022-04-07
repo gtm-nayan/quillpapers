@@ -18,8 +18,6 @@
 
 	let current_question = getContext<Writable<Question>>('current_question');
 
-	export let show_correct = false;
-
 	const dispatch = createEventDispatcher<{ back: void; next: void }>();
 
 	function handle_answer_select(answer: Answer) {
@@ -28,10 +26,11 @@
 	}
 
 	let is_doc_loading = false;
-	const unsub = getContext<Writable<PDFJS.PDFDocumentProxy>>(key).subscribe(
-		(doc) => (is_doc_loading = doc == null)
+	onDestroy(
+		getContext<Writable<PDFJS.PDFDocumentProxy>>(key).subscribe(
+			(doc) => (is_doc_loading = doc == null)
+		)
 	);
-	onDestroy(unsub);
 </script>
 
 <section>
@@ -52,7 +51,6 @@
 		{#each POSSIBLE_ANSWERS as answer}
 			<AnswerButton
 				{answer}
-				{show_correct}
 				selected={$current_question.selected === answer}
 				correct_answer={$current_question.correct_answer}
 				on:click={() => handle_answer_select(answer)}

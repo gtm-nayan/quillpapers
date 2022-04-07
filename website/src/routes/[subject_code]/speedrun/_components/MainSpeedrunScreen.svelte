@@ -47,7 +47,7 @@
 			</select>
 
 			<select bind:value={$question_idx} class="select-qn">
-				{#each $questions_store as question, i (pdf_id(question) + question.question_number)}
+				{#each $questions_store as question, i (question)}
 					<option value={i}>
 						{i + 1}{question.selected ? ' | Answered' : ''}
 					</option>

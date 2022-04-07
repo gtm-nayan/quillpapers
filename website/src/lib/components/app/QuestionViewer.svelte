@@ -1,13 +1,17 @@
 <script lang="ts">
 	import type { Question } from '$lib/utils/types.js';
-	import { getContext } from 'svelte';
+	import { getContext, onDestroy } from 'svelte';
 	import { Page } from 'svelte-pdfjs';
 	import type { Writable } from 'svelte/store';
 	import { shortcut } from '$lib/utils/shortcut';
 
-	let current_question = getContext<Writable<Question>>('current_question');
-
 	let scale = 1.5;
+	let num: number;
+	onDestroy(
+		getContext<Writable<Question>>('current_question').subscribe(
+			({ question_number }) => (num = question_number)
+		)
+	);
 </script>
 
 <section
@@ -28,7 +32,7 @@
 		callback: (e) => (e.scrollLeft += 20),
 	}}
 >
-	<Page num={$current_question.question_number} {scale} />
+	<Page {num} {scale} />
 	<label>
 		{scale}x
 		<input

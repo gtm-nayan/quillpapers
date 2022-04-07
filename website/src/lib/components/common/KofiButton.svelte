@@ -21,25 +21,16 @@
 		vertical-align: middle;
 		height: 13px;
 		width: 20px;
-		padding-top: 0;
-		padding-bottom: 0;
+		padding-block: 0;
 		border: none;
-		margin-top: 0;
-		margin-right: 5px;
-		margin-left: 0;
-		margin-bottom: 3px;
-		content: url('https://storage.ko-fi.com/cdn/cup-border.png');
+		margin: 0 5px 0 3px;
 	}
 	img::after {
 		vertical-align: middle;
 		height: 25px;
-		padding-top: 0;
-		padding-bottom: 0;
+		padding-block: 0;
 		border: none;
-		margin-top: 0;
-		margin-right: 6px;
-		margin-left: 0;
-		margin-bottom: 4px;
+		margin: 0 6px 0 4px;
 		content: url('https://storage.ko-fi.com/cdn/whitelogo.svg');
 	}
 	div {

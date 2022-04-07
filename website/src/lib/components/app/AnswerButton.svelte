@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { Answer } from '$lib/utils/types';
 	import { shortcut } from '$lib/utils/shortcut';
+	import { getContext } from 'svelte';
 
 	export let answer: Answer;
 	export let selected: boolean;
-	export let show_correct: boolean;
+	const show_correct = getContext<boolean>('show_correct');
 	export let correct_answer: Answer;
 </script>
 
@@ -29,6 +30,7 @@
 		&::before {
 			position: absolute;
 			left: 0.5em;
+			content: var(--sign);
 		}
 	}
 
@@ -39,18 +41,12 @@
 
 		&.correct {
 			background-color: var(--green-6);
-
-			&::before {
-				content: '\2713';
-			}
+			--sign: '\2713';
 		}
 
 		&.incorrect {
 			background-color: var(--red-6);
-
-			&::before {
-				content: '\2715';
-			}
+			--sign: '\2715';
 		}
 	}
 </style>

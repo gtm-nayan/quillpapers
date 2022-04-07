@@ -1,16 +1,17 @@
 <script context="module" lang="ts">
 	import { browser } from '$app/env';
-	import { page } from '$app/stores';
 	import ButtonsRow from '$lib/components/app/ButtonsRow.svelte';
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
 	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
+	import { shortcut } from '$lib/utils/shortcut';
+	import subject_code from '$lib/utils/subject_code_store';
 	import type { Question, SubjectCode } from '$lib/utils/types.js';
 	import type { Load } from '@sveltejs/kit';
 	import { setContext } from 'svelte';
-	import { shortcut } from '$lib/utils/shortcut';
 	import { Document } from 'svelte-pdfjs';
-	import { writable } from 'svelte/store';
+	import { writable, type Writable } from 'svelte/store';
+	import ErrorModal from './_components/ErrorModal.svelte';
 
 	async function fetch_random_question(
 		subject_code: SubjectCode,
@@ -25,8 +26,6 @@
 		return await res.json();
 	}
 
-	const current_question = writable<Question>();
-
 	export const load: Load = async ({ params, fetch }) => {
 		const subject_code = params.subject_code as SubjectCode;
 
@@ -39,29 +38,31 @@
 		if (!_initial_question)
 			return {
 				status: 504,
-				error: new Error('An error occured.'),
+				error: new Error("Couldn't fetch question."),
 			};
 
-		current_question.set(_initial_question);
+		const current_question = writable<Question>();
 		return {
 			status: 200,
+			props: {
+				current_question,
+			},
 		};
 	};
 </script>
 
 <script lang="ts">
-	import ErrorModal from './_components/ErrorModal.svelte';
-
-	const subject_code = $page.params.subject_code as SubjectCode;
+	export let current_question: Writable<Question>;
 
 	let previous_question = $current_question;
 	setContext('current_question', current_question);
+	setContext('show_correct', true); // Show whether answer was correct or not
 
 	let topic_number: keyof typeof subjects[SubjectCode]['topics'] = '1';
 
 	async function handle_next_question() {
 		const new_question = await fetch_random_question(
-			subject_code,
+			$subject_code,
 			topic_number
 		);
 		if (!new_question) return alert('Failed to fetch question.');
@@ -78,9 +79,9 @@
 
 <svelte:head>
 	<title>
-		{subject_code} |
-		{subjects[subject_code].name} |
-		{subjects[subject_code].topics[topic_number].title}
+		{$subject_code} |
+		{subjects[$subject_code].name} |
+		{subjects[$subject_code].topics[topic_number].title}
 	</title>
 </svelte:head>
 
@@ -88,20 +89,16 @@
 	{#if browser}
 		<Document file={get_PDF_URL($current_question)}>
 			<QuestionViewer />
-
-			<!-- <section> -->
-
 			<ButtonsRow
 				on:back={handle_previous_question}
 				on:next={handle_next_question}
-				show_correct
 			>
 				<select
 					bind:value={topic_number}
 					on:change={handle_next_question}
 					use:shortcut={{ code: 'KeyT', callback: (e) => e.focus() }}
 				>
-					{#each Object.entries(subjects[subject_code].topics) as [topic_number, { title }]}
+					{#each Object.entries(subjects[$subject_code].topics) as [topic_number, { title }]}
 						<option value={topic_number}>{title}</option>
 					{/each}
 				</select>
@@ -111,8 +108,6 @@
 				</code>
 				<ErrorModal />
 			</ButtonsRow>
-
-			<!-- </section> -->
 		</Document>
 	{/if}
 </main>

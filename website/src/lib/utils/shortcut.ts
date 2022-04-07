@@ -1,3 +1,5 @@
+import { listen } from 'svelte/internal';
+
 interface ActionReturn<Parameter> {
 	update?: (parameter: Parameter) => void;
 	destroy?: () => void;
@@ -52,14 +54,11 @@ export const shortcut: Action<ShortcutConfig> = (node, config) => {
 		(config.callback || default_callback)(node);
 	}
 
-	window.addEventListener('keydown', handler);
-
+	const destroy = listen(window, 'keydown', handler as EventListener);
 	return {
 		update(params) {
 			config = params;
 		},
-		destroy() {
-			window.removeEventListener('keydown', handler);
-		},
+		destroy,
 	};
 };
