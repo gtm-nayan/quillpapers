@@ -40,25 +40,21 @@ function default_callback(node: HTMLElement) {
  */
 export const shortcut: Action<ShortcutConfig> = (node, config) => {
 	function handler(event: KeyboardEvent) {
-		const should_ignore = !(
-			!!config.alt == event.altKey &&
-			!!config.shift == event.shiftKey &&
-			!!config.control == (event.ctrlKey || event.metaKey) &&
-			config.code == event.code
-		);
-
-		if (should_ignore) return;
-
-		event.preventDefault();
-
-		(config.callback || default_callback)(node);
+		if (
+			event.code == config.code &&
+			event.altKey == !!config.alt &&
+			event.shiftKey == !!config.shift &&
+			(event.ctrlKey || event.metaKey) == !!config.control
+		) {
+			event.preventDefault();
+			(config.callback || default_callback)(node);
+		}
 	}
 
-	const destroy = listen(window, 'keydown', handler as EventListener);
 	return {
 		update(params) {
 			config = params;
 		},
-		destroy,
+		destroy: listen(window, 'keydown', handler as EventListener), // returns removeEventListener
 	};
 };

@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import ButtonsRow from '$lib/components/app/ButtonsRow.svelte';
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
-	import { get_PDF_URL, pdf_id } from '$lib/utils/pdf_url_gen';
+	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import create_timer, { type HumanTime } from '$lib/utils/timer';
 	import { faStop } from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext, setContext } from 'svelte';

@@ -2,45 +2,28 @@
 	export const prerender = true;
 
 	import Footer from '$lib/components/common/Footer.svelte';
+	import Seo from '$lib/components/common/SEO.svelte';
 	import subjects from '$lib/data/subjects.json';
-	import type { SubjectCode } from '$lib/utils/types';
-	import type { Load } from '@sveltejs/kit';
-
-	export const load: Load = async ({ params }) => {
-		return {
-			props: {
-				subject_code: params.subject_code,
-			},
-		};
-	};
+	import subject_code from '$lib/utils/subject_code_store';
 </script>
 
-<script lang="ts">
-	export let subject_code: SubjectCode;
-</script>
-
-<svelte:head>
-	<title>
-		{subject_code} |
-		{subjects[subject_code].name}
-	</title>
-</svelte:head>
+<Seo title="{$subject_code} | {subjects[$subject_code].name}" />
 
 <main>
-	<h2>{subject_code}: {subjects[subject_code].name}</h2>
+	<h2>{$subject_code}: {subjects[$subject_code].name}</h2>
 	<hr />
 	<section>
 		<h3>Start Practising</h3>
 		<ul>
 			<li>
-				<a href="/{subject_code}/casual">Casual Mode</a>
+				<a href="/{$subject_code}/casual">Casual Mode</a>
 				<p>
 					Pick a topic and work through the questions available for it. You'll
 					get live feedback on whether your answer was correct or not.
 				</p>
 			</li>
 			<li>
-				<a href="/{subject_code}/speedrun">Speedrun Mode</a>
+				<a href="/{$subject_code}/speedrun">Speedrun Mode</a>
 				<p>
 					Go through 40 random questions as fast as possible without any help.
 					If you think you're fast enough and you can get at least 38 correct
@@ -52,11 +35,9 @@
 	</section>
 	<hr />
 
-	{#if subjects[subject_code].notes}
+	{#if subjects[$subject_code].notes}
 		<section>
-			<p>
-				{subjects[subject_code].notes}
-			</p>
+			<p>{subjects[$subject_code].notes}</p>
 		</section>
 		<hr />
 	{/if}

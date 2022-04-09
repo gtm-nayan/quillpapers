@@ -2,6 +2,7 @@
 	import { browser } from '$app/env';
 	import ButtonsRow from '$lib/components/app/ButtonsRow.svelte';
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
+	import Seo from '$lib/components/common/SEO.svelte';
 	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import { shortcut } from '$lib/utils/shortcut';
@@ -17,13 +18,10 @@
 		subject_code: SubjectCode,
 		topic_number: string,
 		fetch_function = fetch
-	): Promise<Question | null> {
-		const res = await fetch_function(
+	) {
+		return fetch_function(
 			`/${subject_code}/casual.json?topic_number=${topic_number}`
-		);
-
-		if (!res.ok) return null;
-		return await res.json();
+		).then((res) => (res.ok ? (res.json() as unknown as Question) : null));
 	}
 
 	export const load: Load = async ({ params, fetch }) => {
@@ -41,11 +39,10 @@
 				error: new Error("Couldn't fetch question."),
 			};
 
-		const current_question = writable<Question>();
 		return {
 			status: 200,
 			props: {
-				current_question,
+				current_question: writable<Question>(_initial_question),
 			},
 		};
 	};
@@ -54,11 +51,11 @@
 <script lang="ts">
 	export let current_question: Writable<Question>;
 
-	let previous_question = $current_question;
+	let prev_question = $current_question;
 	setContext('current_question', current_question);
 	setContext('show_correct', true); // Show whether answer was correct or not
 
-	let topic_number: keyof typeof subjects[SubjectCode]['topics'] = '1';
+	let topic_number = '1';
 
 	async function handle_next_question() {
 		const new_question = await fetch_random_question(
@@ -66,24 +63,21 @@
 			topic_number
 		);
 		if (!new_question) return alert('Failed to fetch question.');
-		previous_question = $current_question;
+		prev_question = $current_question;
 		$current_question = new_question;
 	}
 
 	function handle_previous_question() {
-		const temp = previous_question;
-		previous_question = $current_question;
+		const temp = prev_question;
+		prev_question = $current_question;
 		$current_question = temp;
 	}
 </script>
 
-<svelte:head>
-	<title>
-		{$subject_code} |
-		{subjects[$subject_code].name} |
-		{subjects[$subject_code].topics[topic_number].title}
-	</title>
-</svelte:head>
+<!-- prettier-ignore -->
+<Seo
+	title="{$subject_code} | {subjects[$subject_code].name} | {subjects[$subject_code].topics[topic_number].title}"
+/>
 
 <main>
 	{#if browser}

@@ -1,15 +1,16 @@
 <script lang="ts">
+	import { shortcut } from '$lib/utils/shortcut';
 	import type { Question } from '$lib/utils/types.js';
 	import { getContext, onDestroy } from 'svelte';
 	import { Page } from 'svelte-pdfjs';
-	import type { Writable } from 'svelte/store';
-	import { shortcut } from '$lib/utils/shortcut';
+	import { subscribe } from 'svelte/internal';
 
 	let scale = 1.5;
 	let num: number;
 	onDestroy(
-		getContext<Writable<Question>>('current_question').subscribe(
-			({ question_number }) => (num = question_number)
+		subscribe(
+			getContext('current_question'),
+			(q: Question) => (num = q.question_number)
 		)
 	);
 </script>

@@ -1,19 +1,25 @@
 <script lang="ts">
-	import type { Answer } from '$lib/utils/types';
+	import type { Answer, Question } from '$lib/utils/types';
 	import { shortcut } from '$lib/utils/shortcut';
 	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 
 	export let answer: Answer;
-	export let selected: boolean;
+
+	function handle_answer_select() {
+		$current_question.selected =
+			$current_question.selected === answer ? undefined : answer;
+	}
+
+	const current_question = getContext<Writable<Question>>('current_question');
 	const show_correct = getContext<boolean>('show_correct');
-	export let correct_answer: Answer;
 </script>
 
 <button
-	on:click
-	class:correct={show_correct && correct_answer === answer}
-	class:incorrect={show_correct && correct_answer !== answer}
-	class:selected
+	on:click={handle_answer_select}
+	class:correct={show_correct && $current_question.correct_answer === answer}
+	class:incorrect={show_correct && $current_question.correct_answer !== answer}
+	class:selected={$current_question.selected === answer}
 	use:shortcut={{ code: `Key${answer}` }}
 >
 	{answer}
@@ -40,12 +46,12 @@
 		border: none;
 
 		&.correct {
-			background-color: var(--green-6);
+			background-color: var(--green-7);
 			--sign: '\2713';
 		}
 
 		&.incorrect {
-			background-color: var(--red-6);
+			background-color: var(--red-7);
 			--sign: '\2715';
 		}
 	}

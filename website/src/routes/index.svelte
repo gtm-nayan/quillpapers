@@ -3,12 +3,11 @@
 
 	import Footer from '$lib/components/common/Footer.svelte';
 	import KofiButton from '$lib/components/common/KofiButton.svelte';
+	import Seo from '$lib/components/common/SEO.svelte';
 	import subjects from '$lib/data/subjects.json';
 </script>
 
-<svelte:head>
-	<title>Quill Papers</title>
-</svelte:head>
+<Seo title="Quill Papers" />
 
 <main>
 	<section>
@@ -19,8 +18,8 @@
 	<section>
 		<h2>Subjects</h2>
 		<ul>
-			{#each Object.entries(subjects) as [subject_code, details]}
-				<li><a href="/{subject_code}">{details.name}</a></li>
+			{#each Object.entries(subjects) as [subject_code, { name }]}
+				<li><a href="/{subject_code}">{name}</a></li>
 			{/each}
 		</ul>
 	</section>

@@ -1,7 +1,8 @@
 <script context="module" lang="ts">
-	import { page } from '$app/stores';
+	import Seo from '$lib/components/common/SEO.svelte';
 	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
+	import subject_code from '$lib/utils/subject_code_store';
 	import type { HumanTime } from '$lib/utils/timer';
 	import type { Question, SubjectCode } from '$lib/utils/types';
 	import { setContext } from 'svelte';
@@ -25,7 +26,6 @@
 		DONE,
 	}
 
-	const subject_code = $page.params.subject_code as SubjectCode;
 	let speedrun_state = SpeedrunState.START; // @hmr:keep
 	let time: HumanTime; // @hmr:keep
 
@@ -34,7 +34,7 @@
 
 	async function handle_start() {
 		try {
-			questions_store.set(await get_questions(subject_code));
+			questions_store.set(await get_questions($subject_code));
 			speedrun_state = SpeedrunState.ONGOING;
 		} catch {
 			alert("Couldn't fetch questions.");
@@ -42,11 +42,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>
-		{subject_code} | {subjects[subject_code].name} | Speedrun
-	</title>
-</svelte:head>
+<Seo title="{$subject_code} | {subjects[$subject_code].name} | Speedrun" />
 
 {#each $questions_store as question (question)}
 	<link rel="prefetch" href={get_PDF_URL(question)} />
@@ -63,7 +59,7 @@
 	/>
 {:else}
 	<EndScreen
-		{subject_code}
+		subject_code={$subject_code}
 		{time}
 		on:click={() => (speedrun_state = SpeedrunState.START)}
 	/>

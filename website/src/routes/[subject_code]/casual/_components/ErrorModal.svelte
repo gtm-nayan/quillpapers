@@ -1,12 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import subjects from '$lib/data/subjects.json';
 	import { zero_two } from '$lib/utils/pdf_url_gen';
-	import {
-		QuestionErrorType,
-		type Question,
-		type SubjectCode,
-	} from '$lib/utils/types';
+	import subject_code from '$lib/utils/subject_code_store';
+	import { QuestionErrorType, type Question } from '$lib/utils/types';
 	import { faFlag } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
 	import { FaSvg, Icon } from 'svelte-yafal';
@@ -16,7 +12,7 @@
 
 	async function handle_submit() {
 		try {
-			await fetch(`/${subject_code}/casual.json`, {
+			await fetch(`/${$subject_code}/casual.json`, {
 				method: 'POST',
 				body: JSON.stringify({
 					...$current_question,
@@ -30,7 +26,7 @@
 	}
 
 	let error_type: QuestionErrorType = QuestionErrorType.BAD_CROPPING;
-	let subject_code = $page.params.subject_code as SubjectCode;
+
 	let topic_suggestion = '1';
 	let show_modal = false;
 </script>
@@ -63,7 +59,7 @@
 						<fieldset>
 							<legend>Which topic would be better for this question?</legend>
 							<select bind:value={topic_suggestion}>
-								{#each Object.entries(subjects[subject_code].topics) as [topic_number, { title }]}
+								{#each Object.entries(subjects[$subject_code].topics) as [topic_number, { title }]}
 									<option value={topic_number}>{title}</option>
 								{/each}
 							</select>
@@ -91,21 +87,18 @@
 <style>
 	.backdrop {
 		position: fixed;
-		grid-area: unset;
 		background-color: rgb(0 0 0 / 0.5);
 		inset: 0;
 		z-index: var(--layer-important);
+		display: grid;
+		place-items: center;
 	}
 
 	.content {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
 		background-color: white;
 		padding: 1rem;
 		border-radius: 0.5rem;
-		width: 80%;
+		width: minmax(90%, var(--size-content-3));
 	}
 
 	fieldset {

@@ -1,35 +1,23 @@
 <script lang="ts">
 	import AnswerButton from '$lib/components/app/AnswerButton.svelte';
 	import { shortcut } from '$lib/utils/shortcut';
-	import {
-		POSSIBLE_ANSWERS,
-		type Answer,
-		type Question,
-	} from '$lib/utils/types';
+	import { POSSIBLE_ANSWERS } from '$lib/utils/types';
 	import {
 		faArrowLeft,
 		faArrowRight,
 		faCircleNotch,
 	} from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext, onDestroy } from 'svelte';
-	import { key, type PDFJS } from 'svelte-pdfjs';
+	import { key } from 'svelte-pdfjs';
 	import { FaSvg, Icon } from 'svelte-yafal';
-	import type { Writable } from 'svelte/store';
-
-	let current_question = getContext<Writable<Question>>('current_question');
+	import { subscribe } from 'svelte/internal';
 
 	const dispatch = createEventDispatcher<{ back: void; next: void }>();
 
-	function handle_answer_select(answer: Answer) {
-		$current_question.selected =
-			$current_question.selected === answer ? undefined : answer;
-	}
-
 	let is_doc_loading = false;
 	onDestroy(
-		getContext<Writable<PDFJS.PDFDocumentProxy>>(key).subscribe(
-			(doc) => (is_doc_loading = doc == null)
-		)
+		// returns unsubscriber which is called on destroy
+		subscribe(getContext(key), (doc: any) => (is_doc_loading = doc == null))
 	);
 </script>
 
@@ -49,12 +37,7 @@
 
 	<div class="answers">
 		{#each POSSIBLE_ANSWERS as answer}
-			<AnswerButton
-				{answer}
-				selected={$current_question.selected === answer}
-				correct_answer={$current_question.correct_answer}
-				on:click={() => handle_answer_select(answer)}
-			/>
+			<AnswerButton {answer} />
 		{/each}
 	</div>
 
