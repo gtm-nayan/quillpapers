@@ -2,11 +2,11 @@
 	import Seo from '$lib/components/common/SEO.svelte';
 	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
-	import subject_code from '$lib/utils/subject_code_store';
 	import type { HumanTime } from '$lib/utils/timer';
 	import type { Question, SubjectCode } from '$lib/utils/types';
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
+	import subject_code from '../_subject_code_store';
 	import EndScreen from './_components/EndScreen/EndScreen.svelte';
 	import MainSpeedrunScreen from './_components/MainSpeedrunScreen.svelte';
 	import StartScreen from './_components/StartScreen.svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import subjects from '$lib/data/subjects.json';
 	import { zero_two } from '$lib/utils/pdf_url_gen';
-	import subject_code from '$lib/utils/subject_code_store';
+	import subject_code from '../../_subject_code_store';
 	import { QuestionErrorType, type Question } from '$lib/utils/types';
 	import { faFlag } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';

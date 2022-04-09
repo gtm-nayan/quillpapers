@@ -34,10 +34,7 @@
 	<Document file={get_PDF_URL($current_question)}>
 		<QuestionViewer />
 
-		<ButtonsRow
-			on:next={question_idx.increment}
-			on:back={question_idx.decrement}
-		>
+		<ButtonsRow on:next={question_idx.inc} on:back={question_idx.dec}>
 			<select class="timer">
 				<option>
 					{$timer.minutes}m {$timer.seconds}.{$timer.deciseconds}s

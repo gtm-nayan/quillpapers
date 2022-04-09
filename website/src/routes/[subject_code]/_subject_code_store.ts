@@ -1,6 +1,6 @@
 import { page } from '$app/stores';
 import { derived } from 'svelte/store';
-import type { SubjectCode } from './types';
+import type { SubjectCode } from '../../lib/utils/types';
 
 export default derived(
 	page,

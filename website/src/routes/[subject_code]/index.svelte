@@ -4,7 +4,7 @@
 	import Footer from '$lib/components/common/Footer.svelte';
 	import Seo from '$lib/components/common/SEO.svelte';
 	import subjects from '$lib/data/subjects.json';
-	import subject_code from '$lib/utils/subject_code_store';
+	import subject_code from './_subject_code_store';
 </script>
 
 <Seo title="{$subject_code} | {subjects[$subject_code].name}" />

@@ -29,13 +29,13 @@ export function create_idx_store() {
 		/**
 		 * Increment the index by 1. (Wrap around at 40)
 		 */
-		increment: () => {
+		inc: () => {
 			update((n) => wrapping_clamp(n + 1));
 		},
 		/**
 		 * Decrement the index by 1. (Wrap around to 39 at -1)
 		 */
-		decrement: () => {
+		dec: () => {
 			update((n) => wrapping_clamp(n - 1));
 		},
 	};

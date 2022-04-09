@@ -6,12 +6,12 @@
 	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import { shortcut } from '$lib/utils/shortcut';
-	import subject_code from '$lib/utils/subject_code_store';
+	import subject_code from 'src/routes/[subject_code]/_subject_code_store';
 	import type { Question, SubjectCode } from '$lib/utils/types.js';
-	import type { Load } from '@sveltejs/kit';
 	import { setContext } from 'svelte';
 	import { Document } from 'svelte-pdfjs';
 	import { writable, type Writable } from 'svelte/store';
+	import type { Load } from '.';
 	import ErrorModal from './_components/ErrorModal.svelte';
 
 	async function fetch_random_question(
@@ -25,10 +25,8 @@
 	}
 
 	export const load: Load = async ({ params, fetch }) => {
-		const subject_code = params.subject_code as SubjectCode;
-
 		const _initial_question = await fetch_random_question(
-			subject_code,
+			params.subject_code as SubjectCode,
 			'1',
 			fetch
 		);
@@ -53,7 +51,7 @@
 
 	let prev_question = $current_question;
 	setContext('current_question', current_question);
-	setContext('show_correct', true); // Show whether answer was correct or not
+	setContext('show_correct', true); // Tells AnswerButton to show whether answer was correct or not
 
 	let topic_number = '1';
 
