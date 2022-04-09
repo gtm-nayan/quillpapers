@@ -67,7 +67,7 @@
 
 <style>
 	main {
-		padding: 2% 10%;
+		padding: var(--size-7) clamp(1em, 6em, 10%);
 		overflow: auto;
 		text-align: justify;
 	}

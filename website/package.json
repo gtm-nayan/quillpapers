@@ -33,7 +33,7 @@
 		"sass": "^1.49.9",
 		"svelte": "^3.46.4",
 		"svelte-check": "^2.4.5",
-		"svelte-pdfjs": "^0.3.14",
+		"svelte-pdfjs": "^0.3.15",
 		"svelte-preprocess": "^4.10.4",
 		"svelte-yafal": "^0.1.0",
 		"tslib": "^2.3.1",
