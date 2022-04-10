@@ -1,5 +1,4 @@
 <script lang="ts">
-	import subjects from '$lib/data/subjects.json';
 	import { zero_two } from '$lib/utils/pdf_url_gen';
 	import { QuestionErrorType, type Question } from '$lib/utils/types';
 	import { faFlag } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +6,7 @@
 	import { FaSvg, Icon } from 'svelte-yafal';
 	import { noop } from 'svelte/internal';
 	import type { Writable } from 'svelte/store';
-	import subject_code from '../../_subject_code_store';
+	import { subject_code, subject_details } from '../../_subject_code_store';
 
 	const current_question: Writable<Question> = getContext('current_question');
 
@@ -57,7 +56,7 @@
 				<fieldset>
 					<legend>Which topic would be better for this question?</legend>
 					<select bind:value={topic_suggestion}>
-						{#each Object.entries(subjects[$subject_code].topics) as [topic_number, { title }]}
+						{#each Object.entries($subject_details.topics) as [topic_number, { title }]}
 							<option value={topic_number}>{title}</option>
 						{/each}
 					</select>

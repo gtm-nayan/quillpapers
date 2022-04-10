@@ -3,14 +3,13 @@
 
 	import Footer from '$lib/components/common/Footer.svelte';
 	import Seo from '$lib/components/common/SEO.svelte';
-	import subjects from '$lib/data/subjects.json';
-	import subject_code from './_subject_code_store';
+	import { subject_code, subject_details } from './_subject_code_store';
 </script>
 
-<Seo title="{$subject_code} | {subjects[$subject_code].name}" />
+<Seo title="{$subject_code} | {$subject_details.name}" />
 
 <main>
-	<h2>{$subject_code}: {subjects[$subject_code].name}</h2>
+	<h2>{$subject_code}: {$subject_details.name}</h2>
 	<hr />
 	<section>
 		<h3>Start Practising</h3>
@@ -35,9 +34,9 @@
 	</section>
 	<hr />
 
-	{#if subjects[$subject_code].notes}
+	{#if $subject_details.notes}
 		<section>
-			<p>{subjects[$subject_code].notes}</p>
+			<p>{$subject_details.notes}</p>
 		</section>
 		<hr />
 	{/if}

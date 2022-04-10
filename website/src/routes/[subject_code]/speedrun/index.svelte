@@ -1,12 +1,11 @@
 <script context="module" lang="ts">
 	import Seo from '$lib/components/common/SEO.svelte';
-	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import type { HumanTime } from '$lib/utils/timer';
 	import type { Question, SubjectCode } from '$lib/utils/types';
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-	import subject_code from '../_subject_code_store';
+	import { subject_code, subject_details } from '../_subject_code_store';
 	import EndScreen from './_components/EndScreen/EndScreen.svelte';
 	import MainSpeedrunScreen from './_components/MainSpeedrunScreen.svelte';
 	import StartScreen from './_components/StartScreen.svelte';
@@ -42,7 +41,7 @@
 	}
 </script>
 
-<Seo title="{$subject_code} | {subjects[$subject_code].name} | Speedrun" />
+<Seo title="{$subject_code} | {$subject_details.name} | Speedrun" />
 
 {#each $questions_store as question (question)}
 	<link rel="prefetch" href={get_PDF_URL(question)} />

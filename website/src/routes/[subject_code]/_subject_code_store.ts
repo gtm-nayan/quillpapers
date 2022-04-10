@@ -1,8 +1,14 @@
 import { page } from '$app/stores';
+import subjects from '$lib/data/subjects.json';
 import { derived } from 'svelte/store';
-import type { SubjectCode } from '../../lib/utils/types';
+import type { SubjectCode } from '$lib/utils/types';
 
-export default derived(
+export const subject_code = derived(
 	page,
 	($page) => $page.params.subject_code as SubjectCode
+);
+
+export const subject_details = derived(
+	page,
+	($page) => subjects[$page.params.subject_code]
 );

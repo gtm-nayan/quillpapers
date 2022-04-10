@@ -3,7 +3,6 @@
 	import ButtonsRow from '$lib/components/app/ButtonsRow.svelte';
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
 	import Seo from '$lib/components/common/SEO.svelte';
-	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import { shortcut } from '$lib/utils/shortcut';
 	import type { Question, SubjectCode } from '$lib/utils/types.js';
@@ -11,7 +10,7 @@
 	import { Document } from 'svelte-pdfjs';
 	import { writable, type Writable } from 'svelte/store';
 	import type { Load } from '.';
-	import subject_code from '../_subject_code_store';
+	import { subject_code, subject_details } from '../_subject_code_store';
 	import ErrorModal from './_components/ErrorModal.svelte';
 
 	async function fetch_random_question(
@@ -74,7 +73,7 @@
 
 <!-- prettier-ignore -->
 <Seo
-	title="{$subject_code} | {subjects[$subject_code].name} | {subjects[$subject_code].topics[topic_number].title}"
+	title="{$subject_code} | {$subject_details.name} | {$subject_details.topics[topic_number].title}"
 />
 
 <main>
@@ -90,7 +89,7 @@
 					on:change={handle_next_question}
 					use:shortcut={{ code: 'KeyT', callback: (e) => e.focus() }}
 				>
-					{#each Object.entries(subjects[$subject_code].topics) as [topic_number, { title }]}
+					{#each Object.entries($subject_details.topics) as [topic_number, { title }]}
 						<option value={topic_number}>{title}</option>
 					{/each}
 				</select>
