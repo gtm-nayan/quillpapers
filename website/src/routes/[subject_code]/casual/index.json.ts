@@ -36,6 +36,7 @@ export const post: RequestHandler = async ({ request }) => {
 					${body.question_number}::SMALLINT
 				)`;
 				break;
+
 			case QuestionErrorType.WRONG_ANSWER:
 				await sql`SELECT increment_wrong_answer_flags(
 					${body.subject_code}::SMALLINT, 
@@ -46,12 +47,13 @@ export const post: RequestHandler = async ({ request }) => {
 					${body.question_number}::SMALLINT
 				)`;
 				break;
+
 			case QuestionErrorType.WRONG_TOPIC: {
 				if (!body.topic_suggestion) {
 					throw new Error('Topic suggestion not provided.');
 				}
 
-				await sql`SELECT increment_wrong_answer_flags(
+				await sql`SELECT push_wrong_topic_flags(
 					${body.subject_code}::SMALLINT, 
 					${body.series}::ExamSeries, 
 					${body.exam_year}::SMALLINT, 
