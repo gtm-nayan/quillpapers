@@ -26,7 +26,6 @@
 		let obj = res.get(topic_number);
 		if (obj) return obj;
 		obj = {
-			// @ts-expect-error casting topic_number is verbose but safe
 			name: subjects[subject_code].topics[topic_number].title,
 			encountered: 0,
 			correct: 0,

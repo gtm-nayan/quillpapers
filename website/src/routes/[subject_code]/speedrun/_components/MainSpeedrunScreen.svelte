@@ -35,7 +35,7 @@
 		<QuestionViewer />
 
 		<ButtonsRow on:next={question_idx.inc} on:back={question_idx.dec}>
-			<select class="timer">
+			<select>
 				<option>
 					{$timer.minutes}m {$timer.seconds}.{$timer.deciseconds}s
 				</option>
@@ -43,7 +43,7 @@
 				<option>Hawaii Time</option>
 			</select>
 
-			<select bind:value={$question_idx} class="select-qn">
+			<select bind:value={$question_idx}>
 				{#each $questions_store as question, i (question)}
 					<option value={i}>
 						{i + 1}{question.selected ? ' | Answered' : ''}

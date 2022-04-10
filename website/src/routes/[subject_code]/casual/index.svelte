@@ -6,12 +6,12 @@
 	import subjects from '$lib/data/subjects.json';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import { shortcut } from '$lib/utils/shortcut';
-	import subject_code from 'src/routes/[subject_code]/_subject_code_store';
 	import type { Question, SubjectCode } from '$lib/utils/types.js';
 	import { setContext } from 'svelte';
 	import { Document } from 'svelte-pdfjs';
 	import { writable, type Writable } from 'svelte/store';
 	import type { Load } from '.';
+	import subject_code from '../_subject_code_store';
 	import ErrorModal from './_components/ErrorModal.svelte';
 
 	async function fetch_random_question(
@@ -21,7 +21,7 @@
 	) {
 		return fetch_function(
 			`/${subject_code}/casual.json?topic_number=${topic_number}`
-		).then((res) => (res.ok ? (res.json() as unknown as Question) : null));
+		).then((res) => (res.ok ? (res.json() as Promise<Question>) : null));
 	}
 
 	export const load: Load = async ({ params, fetch }) => {
@@ -40,7 +40,7 @@
 		return {
 			status: 200,
 			props: {
-				current_question: writable<Question>(_initial_question),
+				current_question: writable(_initial_question),
 			},
 		};
 	};

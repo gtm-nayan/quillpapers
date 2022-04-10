@@ -70,7 +70,7 @@ export const post: RequestHandler = async ({ request }) => {
 			status: 200,
 		};
 	} catch (e) {
-		console.error(e);
+		console.error((e as Error)?.message ?? e);
 		return {
 			status: 400,
 			body:
