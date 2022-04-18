@@ -44,7 +44,11 @@ export const post: RequestHandler = async ({ request }) => {
 			case QuestionErrorType.WRONG_TOPIC: {
 				await sql`SELECT push_wrong_topic_flags(
 					${id},
-					${body.topic_suggestion!}::SMALLINT
+					${
+						// zod_schema's refine guarantees this
+						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+						body.topic_suggestion!
+					}::SMALLINT
 				)`;
 				break;
 			}
