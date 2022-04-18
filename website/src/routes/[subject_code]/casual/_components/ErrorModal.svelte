@@ -4,23 +4,23 @@
 	import { faFlag } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
 	import { FaSvg, Icon } from 'svelte-yafal';
-	import { noop } from 'svelte/internal';
 	import type { Writable } from 'svelte/store';
 	import { subject_code, subject_details } from '../../_subject_code_store';
 
 	const current_question: Writable<Question> = getContext('current_question');
 
-	async function handle_submit() {
-		console.log(
-			fetch(`/${$subject_code}/casual.json`, {
-				method: 'POST',
-				body: JSON.stringify({
-					...$current_question,
-					error_type,
-					topic_suggestion,
-				}),
-			}).catch(noop)
-		);
+	function handle_submit() {
+		fetch(`/${$subject_code}/casual.json`, {
+			method: 'POST',
+			body: JSON.stringify({
+				...$current_question,
+				error_type,
+				topic_suggestion:
+					error_type === QuestionErrorType.WRONG_TOPIC
+						? topic_suggestion
+						: undefined,
+			}),
+		}).catch(console.error);
 	}
 
 	let error_type: QuestionErrorType = QuestionErrorType.BAD_CROPPING;
@@ -30,7 +30,7 @@
 
 	function modal(show: boolean) {
 		// @ts-expect-error
-		dialog[show ? 'showModal' : 'close']?.();
+		dialog[show ? 'showModal' : 'close']();
 	}
 </script>
 
