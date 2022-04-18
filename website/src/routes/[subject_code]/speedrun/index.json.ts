@@ -1,5 +1,5 @@
 import { sql } from '$lib/db';
-import type { RequestHandler } from '@sveltejs/kit';
+import type { RequestHandler } from '.svelte-kit/types/src/routes/[subject_code]/speedrun/index.json';
 
 export const get: RequestHandler = async ({ params }) => {
 	try {

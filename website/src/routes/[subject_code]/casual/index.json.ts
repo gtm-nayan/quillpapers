@@ -1,6 +1,6 @@
 import { sql } from '$lib/db';
-import { QuestionErrorType, type SubjectCode } from '$lib/utils/types';
-import type { RequestHandler } from '@sveltejs/kit';
+import { QuestionErrorType } from '$lib/utils/types';
+import type { RequestHandler } from '.svelte-kit/types/src/routes/[subject_code]/casual/index.json';
 import { ValidationError } from 'yup';
 import { schema, type ReportedQuestion } from './_reported_question';
 
