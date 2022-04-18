@@ -17,7 +17,7 @@
 				error_type,
 				topic_suggestion:
 					error_type === QuestionErrorType.WRONG_TOPIC
-						? topic_suggestion
+						? +topic_suggestion
 						: undefined,
 			}),
 		}).catch(console.error);
@@ -29,7 +29,7 @@
 	let dialog: HTMLDialogElement;
 
 	function modal(show: boolean) {
-		// @ts-expect-error
+		// @ts-expect-error typescript hasn't caught up with the HTMLDialogElement
 		dialog[show ? 'showModal' : 'close']();
 	}
 </script>

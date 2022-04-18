@@ -4,7 +4,7 @@ export const POSSIBLE_ANSWERS = ['A', 'B', 'C', 'D'] as const;
 export type Answer = typeof POSSIBLE_ANSWERS[number];
 
 export interface BaseQuestion {
-	subject_code: SubjectCode;
+	subject_code: number;
 	series: 'm' | 's' | 'w';
 	exam_year: number;
 	paper_variant: number;

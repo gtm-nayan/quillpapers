@@ -35,6 +35,7 @@
 	}
 
 	for (const question of questions) {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- question.topic is never undefined in speedrun mode
 		const topic = get_or_new_entry(question.topic_number!);
 		++topic.encountered;
 		if (question.correct_answer === question.selected) {
