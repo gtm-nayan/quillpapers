@@ -15,8 +15,6 @@ class QuestionPaper:
         self,
         filepath: str,
         start_page: int = 2,
-        max_x: int = 65,
-        max_y: int = 780,
     ):
         fp = Path(filepath)
 
@@ -26,10 +24,15 @@ class QuestionPaper:
         self.filename = fp.name
         self.start_page = start_page - 1
         self.metadata = PaperMetadata(self.filename, FILENAME_REGEX)
-        self.max_x = max_x
-        self.max_y = max_y
 
         self.width = self.doc[0].mediabox_size[0]
+        self.height = self.doc[0].mediabox_size[1]
+
+        self.rel_x = self.width / 595
+        self.rel_y = self.height / 842
+
+        self.max_x = (65 * self.rel_x)
+        self.max_y = (780 * self.rel_y)
 
     def _get_lowest_graphic_y2(self, page: Page):
         lowest_graphic_y2: float = 0
@@ -40,7 +43,7 @@ class QuestionPaper:
             y2 = drawing["rect"][3]
 
             if y2 < max_y2:
-                if width <= 490:
+                if width <= (490 * self.rel_x):
                     lowest_graphic_y2 = max(lowest_graphic_y2, y2)
                 else:
                     max_y2 = y2
@@ -59,7 +62,7 @@ class QuestionPaper:
 
         prev_question: Question | None = None
 
-        question_number_clip = Rect(40, 55, self.max_x, max_y2)
+        question_number_clip = Rect((40 * self.rel_x), (55 * self.rel_y), self.max_x, max_y2)
 
         text_page_dict = page.get_textpage(question_number_clip).extractDICT()
 
@@ -91,7 +94,7 @@ class QuestionPaper:
 
         # endregion
 
-        all_text_clip = Rect(40, 55, page.mediabox_size.x, max_y2)
+        all_text_clip = Rect((40 * self.rel_x), (55 * self.rel_y), page.mediabox_size.x, max_y2)
         text_page_dict = page.get_textpage(all_text_clip).extractDICT()
 
         # region figure out where the last question ends
@@ -99,7 +102,7 @@ class QuestionPaper:
         for block in text_page_dict["blocks"]:
             for line in block["lines"]:
                 for span in line["spans"]:
-                    y2_of_lowest_text = span["bbox"][3]
+                    y2_of_lowest_text = max(y2_of_lowest_text, span["bbox"][3])
 
         if prev_question is not None:
             prev_question.y2 = (
