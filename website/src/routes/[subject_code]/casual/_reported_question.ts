@@ -22,7 +22,7 @@ export const zod_schema = z
 		(data) =>
 			data.error_type !== QuestionErrorType.WRONG_TOPIC ||
 			data.topic_suggestion,
-		'missing topic_suggestion'
+		'topic_suggestion is required if error_type is WRONG_TOPIC'
 	);
 
 export interface ReportedQuestion extends BaseQuestion {
