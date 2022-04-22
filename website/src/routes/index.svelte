@@ -61,6 +61,13 @@
 		<br />
 		<KofiButton />
 	</section>
+	<section>
+		Found a bug or have a feature request? <a
+			href="https://github.com/gtm-nayan/quillpapers/issues"
+		>
+			File an issue on github
+		</a>
+	</section>
 
 	<Footer />
 </main>
