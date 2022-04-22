@@ -89,6 +89,7 @@
 		border: none;
 		width: 90%;
 		max-width: 80ch;
+		margin: auto;
 	}
 
 	fieldset {
