@@ -67,19 +67,15 @@
 		</form>
 	</dialog>
 
-	<button
-		type="button"
-		on:click={() => modal(true)}
-		style:color="var(--gray-7)"
-	>
+	<button on:click={() => modal(true)}>
 		<FaSvg><Icon icon={faFlag} /></FaSvg>
 		Flag this question
 	</button>
 </span>
 
-<style>
+<style lang="scss">
 	::backdrop {
-		background-color: rgb(0 0 0 / 0.5);
+		background-color: #0000007f;
 	}
 
 	dialog {
@@ -105,5 +101,9 @@
 		box-shadow: var(--shadow-2);
 		font-size: var(--font-size-1);
 		padding: var(--size-1);
+
+		&:not([type]) {
+			color: var(--gray-7);
+		}
 	}
 </style>
