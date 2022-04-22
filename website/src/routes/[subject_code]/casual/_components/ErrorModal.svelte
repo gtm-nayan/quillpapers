@@ -79,7 +79,6 @@
 	}
 
 	dialog {
-		background-color: white;
 		padding: 1rem;
 		border-radius: 0.5rem;
 		border: none;
