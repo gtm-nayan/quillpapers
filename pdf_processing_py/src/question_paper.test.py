@@ -3,7 +3,7 @@ from question_paper import QuestionPaper
 
 
 class TestSuite(unittest.TestCase):
-    def extraction(self):
+    def test_extraction(self):
         qp = QuestionPaper("9701_m16_qp_12.pdf")
         questions = qp.extract_questions()
         num = 0

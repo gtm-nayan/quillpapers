@@ -10,7 +10,7 @@ from answer_paper import (
 
 
 class TestSuite(unittest.TestCase):
-    def question_paper(self):
+    def test_question_paper(self):
         metadata = PaperMetadata("9701_m16_qp_12.pdf", QUESTION_PAPER_FILENAME_REGEX)
 
         self.assertEqual(metadata.subject_code, 9701)
@@ -26,7 +26,7 @@ class TestSuite(unittest.TestCase):
         self.assertEqual(metadata.paper_variant_major, 1)
         self.assertEqual(metadata.paper_variant_minor, 0)
 
-    def answer_paper(self):
+    def test_answer_paper(self):
         metadata = PaperMetadata("9701_m16_ms_12.pdf", ANSWER_PAPER_FILENAME_REGEX)
 
         self.assertEqual(metadata.subject_code, 9701)
