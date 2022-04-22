@@ -39,10 +39,10 @@ class QuestionPaper:
         max_y2: float = self.max_y
 
         for drawing in page.get_drawings():
-            width: float = drawing["rect"][2] - drawing["rect"][0]
             y2 = drawing["rect"][3]
 
             if y2 < max_y2:
+                width: float = drawing["rect"][2] - drawing["rect"][0]
                 if width <= (490 * self.rel_x):
                     lowest_graphic_y2 = max(lowest_graphic_y2, y2)
                 else:
