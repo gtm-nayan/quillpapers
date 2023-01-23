@@ -3,10 +3,10 @@
 	import QuestionViewer from '$lib/components/app/QuestionViewer.svelte';
 	import { get_PDF_URL } from '$lib/utils/pdf_url_gen';
 	import create_timer, { type HumanTime } from '$lib/utils/timer';
-	import { faStop } from '@fortawesome/free-solid-svg-icons';
+	import Stop from '~icons/fa-solid/stop';
 	import { createEventDispatcher, getContext, setContext } from 'svelte';
 	import { Document } from 'svelte-pdfjs';
-	import { FaSvg, Icon } from 'svelte-yafal';
+
 	import {
 		create_current_question_store,
 		create_idx_store,
@@ -54,7 +54,7 @@
 				on:click={() => dispatch('end', $timer)}
 				style:color="var(--gray-7)"
 			>
-				<FaSvg><Icon icon={faStop} /></FaSvg>
+				<Stop />
 				End session
 			</button>
 		</ButtonsRow>

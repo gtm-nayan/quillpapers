@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-	export const prerender = true;
-
 	import Footer from '$lib/components/common/Footer.svelte';
 	import KofiButton from '$lib/components/common/KofiButton.svelte';
 	import Seo from '$lib/components/common/SEO.svelte';

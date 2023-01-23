@@ -3,7 +3,7 @@
 		title="Support me on ko-fi.com"
 		href="https://ko-fi.com/gtmnayan"
 		target="_blank"
-		rel="noopener"
+		rel="noopener noreferrer"
 	>
 		<span class="kofitext">
 			<img

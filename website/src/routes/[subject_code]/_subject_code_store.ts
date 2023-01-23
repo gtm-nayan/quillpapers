@@ -8,7 +8,6 @@ export const subject_code = derived(
 	($page) => $page.params.subject_code as SubjectCode
 );
 
-export const subject_details = derived(
-	page,
-	($page) => subjects[$page.params.subject_code]
-);
+export const subject_details = derived(page, ($page) => {
+	return subjects[$page.params.subject_code];
+});

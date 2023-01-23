@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { faDiscord, faGithub } from '@fortawesome/free-brands-svg-icons';
-	import { FaSvg, Icon } from 'svelte-yafal';
+	import GithubIcon from '~icons/skill-icons/github-dark';
+	import DiscordIcon from '~icons/skill-icons/discord';
 </script>
 
 <footer>
@@ -13,10 +13,10 @@
 	You can reach me through discord for any queries.
 	<br />
 	<a href="https://discordapp.com/users/339731096793251854" rel="external">
-		<FaSvg><Icon icon={faDiscord} color="#7289DA" /></FaSvg>
+		<DiscordIcon />
 	</a>
-	<a href="https://github.com/gtm-nayan/quillpapers">
-		<FaSvg><Icon icon={faGithub} color="#333" /></FaSvg>
+	<a href="https://github.com/gtm-nayan/quillpapers" rel="external">
+		<GithubIcon />
 	</a>
 </footer>
 

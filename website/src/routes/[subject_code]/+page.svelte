@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-	export const prerender = true;
-
 	import Footer from '$lib/components/common/Footer.svelte';
 	import Seo from '$lib/components/common/SEO.svelte';
 	import { subject_code, subject_details } from './_subject_code_store';

@@ -1,26 +1,16 @@
 import adapter from '@sveltejs/adapter-netlify';
-import preprocess from 'svelte-preprocess';
-import { imagetools } from 'vite-imagetools';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: [
-		preprocess({
-			postcss: {
-				configFilePath: 'postcss.config.cjs',
-			},
-		}),
-	],
+	preprocess: [vitePreprocess()],
 
 	kit: {
 		adapter: adapter({
-			external: ["canvas"]
+			external: ['canvas'],
 		}),
-		vite: {
-			plugins: [imagetools()],
-		},
 	},
 };
 

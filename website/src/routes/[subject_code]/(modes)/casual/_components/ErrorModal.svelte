@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { zero_two } from '$lib/utils/pdf_url_gen';
 	import { QuestionErrorType, type Question } from '$lib/utils/types';
-	import { faFlag } from '@fortawesome/free-solid-svg-icons';
 	import { getContext } from 'svelte';
-	import { FaSvg, Icon } from 'svelte-yafal';
 	import type { Writable } from 'svelte/store';
-	import { subject_code, subject_details } from '../../_subject_code_store';
+	import {
+		subject_code,
+		subject_details,
+	} from '../../../_subject_code_store.js';
 
 	const current_question: Writable<Question> = getContext('current_question');
 
@@ -29,7 +30,6 @@
 	let dialog: HTMLDialogElement;
 
 	function modal(show: boolean) {
-		// @ts-expect-error typescript hasn't caught up with the HTMLDialogElement
 		dialog[show ? 'showModal' : 'close']();
 	}
 </script>
@@ -67,10 +67,7 @@
 		</form>
 	</dialog>
 
-	<button on:click={() => modal(true)}>
-		<FaSvg><Icon icon={faFlag} /></FaSvg>
-		Flag this question
-	</button>
+	<button on:click={() => modal(true)}>Flag this question</button>
 </span>
 
 <style lang="scss">
