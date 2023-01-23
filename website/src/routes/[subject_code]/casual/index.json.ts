@@ -24,7 +24,7 @@ export const post: RequestHandler = async ({ request }) => {
 	try {
 		const body = zod_schema.parse(await request.json()) as ReportedQuestion;
 
-		const id = sql`
+		const args = sql`
 			${body.subject_code}::SMALLINT,
 			${body.series}::ExamSeries,
 			${body.exam_year}::SMALLINT,
@@ -34,16 +34,16 @@ export const post: RequestHandler = async ({ request }) => {
 
 		switch (body.error_type) {
 			case QuestionErrorType.BAD_CROPPING:
-				await sql`SELECT increment_bad_cropping_flags(${id})`;
+				await sql`SELECT increment_bad_cropping_flags(${args})`;
 				break;
 
 			case QuestionErrorType.WRONG_ANSWER:
-				await sql`SELECT increment_wrong_answer_flags(${id})`;
+				await sql`SELECT increment_wrong_answer_flags(${args})`;
 				break;
 
 			case QuestionErrorType.WRONG_TOPIC: {
 				await sql`SELECT push_wrong_topic_flags(
-					${id},
+					${args},
 					${
 						// zod_schema's refine guarantees this
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
