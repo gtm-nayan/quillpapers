@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@fortawesome/free-brands-svg-icons': ^5.15.4
   '@fortawesome/free-solid-svg-icons': ^5.15.4
-  '@sveltejs/adapter-vercel': 1.0.0-next.54
+  '@sveltejs/adapter-vercel': 1.0.0-next.53
   '@sveltejs/kit': 1.0.0-next.318
   '@typescript-eslint/eslint-plugin': ^5.19.0
   '@typescript-eslint/parser': ^5.19.0
@@ -37,7 +37,7 @@ dependencies:
 devDependencies:
   '@fortawesome/free-brands-svg-icons': 5.15.4
   '@fortawesome/free-solid-svg-icons': 5.15.4
-  '@sveltejs/adapter-vercel': 1.0.0-next.54
+  '@sveltejs/adapter-vercel': 1.0.0-next.53
   '@sveltejs/kit': 1.0.0-next.318_sass@1.50.0+svelte@3.47.0
   '@typescript-eslint/eslint-plugin': 5.19.0_6nfnzbei2lspafh6mfbs24gl6i
   '@typescript-eslint/parser': 5.19.0_jzhokl4shvj5szf5bgr66kln2a
@@ -147,8 +147,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@sveltejs/adapter-vercel/1.0.0-next.54:
-    resolution: {integrity: sha512-DnKexL3QzUcJlxUE6Mhi9Re3McSfVwvCqyd1UcBDpJK6rLmu8ASlcB9o/FY5RJIF3A+agfeypcQ4OFQJQH0nPQ==}
+  /@sveltejs/adapter-vercel/1.0.0-next.53:
+    resolution: {integrity: sha512-MmeQxvUYP9UeNuVPd50ZeskzvIqIasyo1Ooa0SUPqoQ41IH+dnkT0+oGJplpX7Ii3gmTbJgleYkV6X6huWQESg==}
     dependencies:
       esbuild: 0.14.36
     dev: true

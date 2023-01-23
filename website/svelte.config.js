@@ -15,7 +15,9 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			external: ["canvas"]
+		}),
 		vite: {
 			plugins: [imagetools()],
 		},
