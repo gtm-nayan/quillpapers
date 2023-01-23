@@ -15,7 +15,7 @@
 	"devDependencies": {
 		"@fortawesome/free-brands-svg-icons": "^5.15.4",
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
-		"@sveltejs/adapter-vercel":"1.0.0-next.53",
+		"@sveltejs/adapter-netlify":"1.0.0-next.58",
 		"@sveltejs/kit": "1.0.0-next.318",
 		"@typescript-eslint/eslint-plugin": "^5.19.0",
 		"@typescript-eslint/parser": "^5.19.0",
@@ -44,6 +44,7 @@
 	"engines": {
 		"node": ">=16"
 	},
+	"packageManager": "pnpm@7.18.1",
 	"dependencies": {
 		"postgres": "^3.0.5",
 		"zod": "^3.14.4"
