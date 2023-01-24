@@ -82,7 +82,7 @@
 	</div>
 </main>
 
-<style>
+<style lang="scss">
 	td:not(:nth-child(2)) {
 		text-align: center;
 	}

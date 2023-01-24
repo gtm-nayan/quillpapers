@@ -9,7 +9,7 @@
 	</button>
 </main>
 
-<style>
+<style lang="scss">
 	main {
 		display: grid;
 		place-items: center;

@@ -20,7 +20,7 @@
 	</a>
 </footer>
 
-<style>
+<style lang="scss">
 	a {
 		font-size: 1.5em;
 	}

@@ -63,6 +63,7 @@
 
 	h2 {
 		text-align: initial;
+		text-decoration: var(--size-7);
 	}
 
 	section {

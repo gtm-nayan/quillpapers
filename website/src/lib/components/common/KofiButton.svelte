@@ -15,7 +15,7 @@
 	</a>
 </div>
 
-<style>
+<style lang="scss">
 	img {
 		display: initial;
 		vertical-align: middle;

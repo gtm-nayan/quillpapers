@@ -61,7 +61,7 @@
 	</Document>
 </main>
 
-<style>
+<style lang="scss">
 	main {
 		display: grid;
 		grid-template-rows: 7fr auto;

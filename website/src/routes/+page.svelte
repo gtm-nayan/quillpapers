@@ -70,7 +70,7 @@
 	<Footer />
 </main>
 
-<style>
+<style lang="scss">
 	main {
 		padding: var(--size-7) clamp(1em, 6em, 10%);
 		overflow: auto;
