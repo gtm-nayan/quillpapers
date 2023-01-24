@@ -45,7 +45,7 @@
 		on:click={() => dispatch('next')}
 		use:shortcut={{ code: 'KeyO' }}
 	>
-		<span class:spin={!is_doc_loading}>
+		<span class:spin={is_doc_loading}>
 			{@html is_doc_loading ? fa_spinner : fa_arrow_right}
 		</span>
 	</button>
@@ -99,16 +99,11 @@
 		font-size: 3.5em;
 	}
 
-	@keyframes spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
+	span {
+		display: grid;
 
-	.spin {
-		animation: spin 2s infinite linear;
+		&.spin {
+			animation: var(--animation-spin);
+		}
 	}
 </style>
