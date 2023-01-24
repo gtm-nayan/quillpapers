@@ -18,6 +18,7 @@
 	$: ({ current_question } = data);
 
 	setContext('current_question', current_question);
+	setContext('show_correct', true);
 	let prev_question = $current_question;
 
 	let topic_number = '1';
