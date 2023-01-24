@@ -93,7 +93,7 @@
 	}
 
 	button {
-		overflow: hidden;
+		overflow: clip;
 		background-color: transparent;
 		color: var(--yellow-5);
 		font-size: 3.5em;
