@@ -5,16 +5,18 @@
 	import type { Question, SubjectCode } from '$lib/utils/types';
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { subject_code, subject_details } from '../_subject_code_store';
+	import { subject_code, subject_details } from '../../_subject_code_store';
 	import EndScreen from './_components/EndScreen/EndScreen.svelte';
 	import MainSpeedrunScreen from './_components/MainSpeedrunScreen.svelte';
 	import StartScreen from './_components/StartScreen.svelte';
 	import type { QuestionStore } from './_components/stores';
 
 	async function get_questions(subject_code: SubjectCode) {
-		return fetch(`/${subject_code}/speedrun.json`).then(
-			(res) => res.json() as Promise<Question[]>
-		);
+		const res = await fetch(`/${subject_code}/speedrun.json`);
+
+		if (!res.ok) throw Error("Couldn't fetch questions");
+
+		return (await res.json()) as Question[];
 	}
 </script>
 

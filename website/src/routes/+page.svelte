@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-	export const prerender = true;
-
 	import Footer from '$lib/components/common/Footer.svelte';
 	import KofiButton from '$lib/components/common/KofiButton.svelte';
 	import Seo from '$lib/components/common/SEO.svelte';
@@ -72,7 +70,7 @@
 	<Footer />
 </main>
 
-<style>
+<style lang="scss">
 	main {
 		padding: var(--size-7) clamp(1em, 6em, 10%);
 		overflow: auto;

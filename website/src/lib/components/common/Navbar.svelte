@@ -18,7 +18,7 @@
 	</div>
 </nav>
 
-<style>
+<style lang="scss">
 	nav {
 		background: var(--gradient-19);
 		display: flex;

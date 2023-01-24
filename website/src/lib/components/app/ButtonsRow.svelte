@@ -2,22 +2,20 @@
 	import AnswerButton from '$lib/components/app/AnswerButton.svelte';
 	import { shortcut } from '$lib/utils/shortcut';
 	import { POSSIBLE_ANSWERS } from '$lib/utils/types';
-	import {
-		faArrowLeft,
-		faArrowRight,
-		faCircleNotch,
-	} from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher, getContext, onDestroy } from 'svelte';
-	import { key } from 'svelte-pdfjs';
-	import { FaSvg, Icon } from 'svelte-yafal';
 	import { subscribe } from 'svelte/internal';
+	import fa_arrow_left from '~icons/fa-solid/arrow-left?raw';
+	import fa_arrow_right from '~icons/fa-solid/arrow-right?raw';
+	import fa_spinner from '~icons/fa-solid/circle-notch?raw';
 
 	const dispatch = createEventDispatcher<{ back: void; next: void }>();
 
 	let is_doc_loading = false;
 	onDestroy(
-		// returns unsubscriber which is called on destroy
-		subscribe(getContext(key), (doc: any) => (is_doc_loading = doc == null))
+		subscribe(
+			getContext('svelte_pdfjs_doc'),
+			(doc: any) => (is_doc_loading = doc == null)
+		)
 	);
 </script>
 
@@ -32,7 +30,7 @@
 		on:click={() => dispatch('back')}
 		use:shortcut={{ code: 'KeyU' }}
 	>
-		<FaSvg><Icon icon={faArrowLeft} /></FaSvg>
+		<span>{@html fa_arrow_left}</span>
 	</button>
 
 	<div class="answers">
@@ -47,9 +45,9 @@
 		on:click={() => dispatch('next')}
 		use:shortcut={{ code: 'KeyO' }}
 	>
-		<FaSvg spin={is_doc_loading}>
-			<Icon icon={is_doc_loading ? faCircleNotch : faArrowRight} />
-		</FaSvg>
+		<span class:spin={is_doc_loading}>
+			{@html is_doc_loading ? fa_spinner : fa_arrow_right}
+		</span>
 	</button>
 </section>
 
@@ -95,9 +93,17 @@
 	}
 
 	button {
-		overflow: hidden;
+		overflow: clip;
 		background-color: transparent;
 		color: var(--yellow-5);
 		font-size: 3.5em;
+	}
+
+	span {
+		display: grid;
+
+		&.spin {
+			animation: var(--animation-spin);
+		}
 	}
 </style>

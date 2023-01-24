@@ -30,7 +30,7 @@
 	</div>
 </details>
 
-<style>
+<style lang="scss">
 	details[open] {
 		padding-bottom: 1em;
 	}

@@ -58,7 +58,7 @@
 	</label>
 </section>
 
-<style>
+<style lang="scss">
 	section {
 		display: grid;
 		place-items: center;

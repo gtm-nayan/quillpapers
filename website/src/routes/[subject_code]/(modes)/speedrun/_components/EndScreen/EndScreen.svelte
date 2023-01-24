@@ -2,9 +2,9 @@
 	import subjects from '$lib/data/subjects.json';
 	import type { HumanTime } from '$lib/utils/timer';
 	import type { SubjectCode } from '$lib/utils/types';
-	import { faRedo } from '@fortawesome/free-solid-svg-icons';
+	import Redo from '~icons/fa-solid/redo';
 	import { getContext } from 'svelte';
-	import { FaSvg, Icon } from 'svelte-yafal';
+
 	import { get } from 'svelte/store';
 	import type { QuestionStore } from '../stores';
 	import QuestionReport from './QuestionReport.svelte';
@@ -74,7 +74,7 @@
 
 	<div>
 		<button on:click>
-			<FaSvg><Icon icon={faRedo} flipX /></FaSvg> Restart
+			<Redo /> Restart
 		</button>
 		{#each questions as question}
 			<QuestionReport {question} />
@@ -82,7 +82,7 @@
 	</div>
 </main>
 
-<style>
+<style lang="scss">
 	td:not(:nth-child(2)) {
 		text-align: center;
 	}

@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { faPlay } from '@fortawesome/free-solid-svg-icons';
-	import { FaSvg, Icon } from 'svelte-yafal';
+	import Play from '~icons/fa-solid/Play';
 </script>
 
 <main>
 	<button on:click>
-		<FaSvg><Icon icon={faPlay} /></FaSvg>
+		<Play />
 		Start
 	</button>
 </main>
 
-<style>
+<style lang="scss">
 	main {
 		display: grid;
 		place-items: center;
