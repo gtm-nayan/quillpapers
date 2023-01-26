@@ -46,3 +46,44 @@ button {
 	border: none;
 	cursor: pointer;
 }
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
+.btn-w {
+	background-color: white;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	border-radius: 12px;
+	--border-color: #e5e5e5;
+	border: 2px solid var(--border-color);
+	box-shadow: 0 2px 0 var(--border-color);
+	padding: 0.5rem 0.5rem;
+}
+
+.btn-muted {
+	color: #afafaf;
+}
+
+.btn-active-blue:active {
+	--border-color: #84d8ff;
+	background-color: #ddf4ff;
+	color: #1899d6;
+}
+
+.btn-depress:active {
+	box-shadow: none;
+	translate: 0 2px;
+}

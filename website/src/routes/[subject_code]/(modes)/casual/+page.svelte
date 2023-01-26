@@ -53,7 +53,11 @@
 			on:back={handle_previous_question}
 			on:next={handle_next_question}
 		>
-			<select bind:value={topic_number} on:change={handle_next_question}>
+			<select
+				bind:value={topic_number}
+				on:change={handle_next_question}
+				class="btn-w"
+			>
 				{#each Object.entries($subject_details.topics) as [topic_number, { title }]}
 					<option value={topic_number}>{title}</option>
 				{/each}
@@ -72,5 +76,9 @@
 	main {
 		display: grid;
 		grid-template-rows: 7fr auto;
+	}
+
+	select {
+		padding-inline: 0.5rem;
 	}
 </style>

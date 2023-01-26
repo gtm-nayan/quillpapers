@@ -13,46 +13,65 @@
 
 	const current_question = getContext<Writable<Question>>('current_question');
 	const show_correct = getContext<boolean>('show_correct');
+
+	$: selected = $current_question.selected === answer;
 </script>
 
-<button
-	on:click={handle_answer_select}
-	class:correct={show_correct && $current_question.correct_answer === answer}
-	class:incorrect={show_correct && $current_question.correct_answer !== answer}
-	class:selected={$current_question.selected === answer}
-	use:shortcut={{ code: `Key${answer}` }}
+<label
+	class="btn-w btn-active-blue btn-depress"
+	class:correct={show_correct &&
+		selected &&
+		$current_question.correct_answer === answer}
+	class:incorrect={show_correct &&
+		selected &&
+		$current_question.correct_answer !== answer}
+	class:selected={selected && !show_correct}
 >
+	<input
+		type="radio"
+		name="answer"
+		class="sr-only"
+		value={answer}
+		on:change={handle_answer_select}
+		use:shortcut={{
+			code: `Key${answer}`,
+			callback(node) {
+				handle_answer_select();
+				node.focus();
+			},
+		}}
+	/>
 	{answer}
-</button>
+</label>
 
 <style lang="scss">
-	button {
-		font-size: x-large;
-		position: relative; /* To position the cross/checkmark */
-		border-radius: var(--radius-conditional-3);
-		padding-block: var(--size-2);
-		padding-inline: var(--size-fluid-3);
+	label {
+		position: relative;
 
-		&::before {
-			position: absolute;
-			left: 0.5em;
-			content: var(--sign);
-		}
+		width: 10rem;
+		font-size: 1rem;
+		padding: 0.5rem 2rem;
+	}
+
+	:where(button:hover) {
+		background-color: #f7f7f7;
 	}
 
 	.selected {
-		color: white;
-		background-color: var(--yellow-5);
-		border: none;
+		--border-color: #84d8ff;
+		background-color: #ddf4ff;
+		color: #1899d6;
+	}
 
-		&.correct {
-			background-color: var(--green-7);
-			--sign: '\2713';
-		}
+	.correct {
+		--border-color: #94ea00;
+		background-color: #d7ffb8;
+		color: #58a700;
+	}
 
-		&.incorrect {
-			background-color: var(--red-7);
-			--sign: '\2715';
-		}
+	.incorrect {
+		--border-color: #ffb2b2;
+		background-color: #ffdfe0;
+		color: #ea2b2b;
 	}
 </style>

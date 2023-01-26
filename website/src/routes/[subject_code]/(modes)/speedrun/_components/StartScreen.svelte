@@ -3,7 +3,7 @@
 </script>
 
 <main>
-	<button on:click>
+	<button on:click class="btn-w btn-depress btn-muted">
 		<Play />
 		Start
 	</button>
@@ -16,11 +16,7 @@
 	}
 
 	button {
-		font-size: var(--font-size-fluid-2);
-		padding: var(--size-5);
-		border-radius: var(--radius-4);
-		box-shadow: var(--shadow-4);
-		background: var(--gradient-19);
-		color: var(--gray-0);
+		font-size: 2rem;
+		padding: 2rem;
 	}
 </style>

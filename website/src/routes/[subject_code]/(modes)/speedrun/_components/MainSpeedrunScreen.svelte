@@ -35,7 +35,7 @@
 		<QuestionViewer />
 
 		<ButtonsRow on:next={question_idx.inc} on:back={question_idx.dec}>
-			<select>
+			<select class="btn-w">
 				<option>
 					{$timer.minutes}m {$timer.seconds}.{$timer.deciseconds}s
 				</option>
@@ -43,7 +43,7 @@
 				<option>Hawaii Time</option>
 			</select>
 
-			<select bind:value={$question_idx}>
+			<select bind:value={$question_idx} class="btn-w">
 				{#each $questions_store as question, i (question)}
 					<option value={i}>
 						{i + 1}{question.selected ? ' | Answered' : ''}
@@ -52,10 +52,10 @@
 			</select>
 			<button
 				on:click={() => dispatch('end', $timer)}
-				style:color="var(--gray-7)"
+				class="btn-w btn-depress btn-muted"
 			>
 				<Stop />
-				End session
+				<span>End session</span>
 			</button>
 		</ButtonsRow>
 	</Document>
@@ -65,5 +65,9 @@
 	main {
 		display: grid;
 		grid-template-rows: 7fr auto;
+	}
+
+	span {
+		margin-inline: 0.5rem;
 	}
 </style>

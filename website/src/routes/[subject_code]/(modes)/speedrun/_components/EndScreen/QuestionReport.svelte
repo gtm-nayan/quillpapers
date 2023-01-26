@@ -34,4 +34,8 @@
 	details[open] {
 		padding-bottom: 1em;
 	}
+
+	div {
+		padding-block: 1rem;
+	}
 </style>

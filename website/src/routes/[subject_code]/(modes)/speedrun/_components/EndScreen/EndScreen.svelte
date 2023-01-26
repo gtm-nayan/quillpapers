@@ -72,14 +72,17 @@
 		</tbody>
 	</table>
 
-	<div>
-		<button on:click>
-			<Redo /> Restart
-		</button>
+	<section>
+		<div>
+			<button on:click class="btn-w btn-depress btn-muted">
+				<Redo />
+				<span class="restart">Restart</span>
+			</button>
+		</div>
 		{#each questions as question}
 			<QuestionReport {question} />
 		{/each}
-	</div>
+	</section>
 </main>
 
 <style lang="scss">
@@ -87,7 +90,7 @@
 		text-align: center;
 	}
 
-	div {
+	section {
 		display: flex;
 		flex-direction: column;
 		padding: 2em;
@@ -97,12 +100,21 @@
 		margin: auto;
 	}
 
+	div {
+		display: flex;
+	}
+
 	button {
 		font-size: var(--font-size-fluid-1);
 		padding: var(--size-3);
-		border-radius: var(--radius-4);
-		box-shadow: var(--shadow-4);
-		background: var(--gradient-19);
-		color: var(--gray-0);
+		margin: auto;
+	}
+
+	.restart {
+		margin: 0.5rem;
+	}
+
+	main {
+		padding: var(--size-7) clamp(1em, 6em, 10%);
 	}
 </style>

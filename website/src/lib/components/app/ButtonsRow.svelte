@@ -23,32 +23,33 @@
 	<div class="controls">
 		<slot />
 	</div>
+	<div class="buttons">
+		<button
+			style:grid-area="b"
+			disabled={is_doc_loading}
+			on:click={() => dispatch('back')}
+			use:shortcut={{ code: 'KeyU' }}
+		>
+			<span>{@html fa_arrow_left}</span>
+		</button>
 
-	<button
-		style:grid-area="b"
-		disabled={is_doc_loading}
-		on:click={() => dispatch('back')}
-		use:shortcut={{ code: 'KeyU' }}
-	>
-		<span>{@html fa_arrow_left}</span>
-	</button>
+		<div class="answers">
+			{#each POSSIBLE_ANSWERS as answer}
+				<AnswerButton {answer} />
+			{/each}
+		</div>
 
-	<div class="answers">
-		{#each POSSIBLE_ANSWERS as answer}
-			<AnswerButton {answer} />
-		{/each}
+		<button
+			style:grid-area="n"
+			disabled={is_doc_loading}
+			on:click={() => dispatch('next')}
+			use:shortcut={{ code: 'KeyO' }}
+		>
+			<span class:spin={is_doc_loading}>
+				{@html is_doc_loading ? fa_spinner : fa_arrow_right}
+			</span>
+		</button>
 	</div>
-
-	<button
-		style:grid-area="n"
-		disabled={is_doc_loading}
-		on:click={() => dispatch('next')}
-		use:shortcut={{ code: 'KeyO' }}
-	>
-		<span class:spin={is_doc_loading}>
-			{@html is_doc_loading ? fa_spinner : fa_arrow_right}
-		</span>
-	</button>
 </section>
 
 <style lang="scss">
@@ -57,16 +58,10 @@
 		display: flex;
 		justify-content: space-evenly;
 		margin-top: var(--size-2);
+	}
 
-		// @todo
-		> :global(*) {
-			font-size: var(--font-size-fluid-0);
-		}
-
-		> :global(select),
-		:global(button) {
-			width: var(--size-content-1);
-		}
+	.buttons {
+		display: contents;
 	}
 
 	section {
@@ -87,9 +82,21 @@
 	.answers {
 		grid-area: a;
 		display: grid;
-		grid-template: 1fr 1fr / 1fr 1fr;
 		gap: var(--size-2);
+		place-items: center;
 		padding: var(--size-2);
+
+		@media (min-width: 768px) {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-evenly;
+			padding: var(--size-6);
+		}
+
+		@media (max-width: 768px) {
+			display: grid;
+			grid-template: 1fr 1fr / 1fr 1fr;
+		}
 	}
 
 	button {
@@ -101,6 +108,7 @@
 
 	span {
 		display: grid;
+		place-items: center;
 
 		&.spin {
 			animation: var(--animation-spin);

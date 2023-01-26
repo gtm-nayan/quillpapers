@@ -62,12 +62,12 @@
 					</select>
 				</fieldset>
 			{/if}
-			<button type="submit">Submit</button>
-			<button type="button" on:click={() => modal(false)}>Cancel</button>
+			<button type="submit" class="btn-w">Submit</button>
+			<button type="button" on:click={() => modal(false)} class="btn-w">Cancel</button>
 		</form>
 	</dialog>
 
-	<button on:click={() => modal(true)}>Flag this question</button>
+	<button on:click={() => modal(true)} class="btn-w btn-muted btn-depress">Report</button>
 </span>
 
 <style lang="scss">
@@ -94,12 +94,6 @@
 	}
 
 	button {
-		box-shadow: var(--shadow-2);
-		font-size: var(--font-size-1);
-		padding: var(--size-1);
-
-		&:not([type]) {
-			color: var(--gray-7);
-		}
+		padding: 0.5rem 1rem;
 	}
 </style>
