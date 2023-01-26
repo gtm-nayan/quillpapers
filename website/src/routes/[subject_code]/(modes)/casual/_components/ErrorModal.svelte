@@ -7,6 +7,7 @@
 		subject_code,
 		subject_details,
 	} from '../../../_subject_code_store.js';
+	import Warn from '~icons/fa-solid/exclamation';
 
 	const current_question: Writable<Question> = getContext('current_question');
 
@@ -63,11 +64,15 @@
 				</fieldset>
 			{/if}
 			<button type="submit" class="btn-w">Submit</button>
-			<button type="button" on:click={() => modal(false)} class="btn-w">Cancel</button>
+			<button type="button" on:click={() => modal(false)} class="btn-w">
+				Cancel
+			</button>
 		</form>
 	</dialog>
 
-	<button on:click={() => modal(true)} class="btn-w btn-muted btn-depress">Report</button>
+	<button on:click={() => modal(true)} class="btn-w btn-muted btn-depress">
+		<Warn style="margin-right: 0.5em;"/> Report
+	</button>
 </span>
 
 <style lang="scss">

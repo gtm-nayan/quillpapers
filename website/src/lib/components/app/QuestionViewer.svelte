@@ -81,6 +81,6 @@
 	}
 
 	input {
-		accent-color: var(--yellow-3);
+		accent-color: var(--primary);
 	}
 </style>
