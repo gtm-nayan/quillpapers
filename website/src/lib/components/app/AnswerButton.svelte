@@ -47,9 +47,8 @@
 <style lang="scss">
 	label {
 		position: relative;
-
 		width: 10rem;
-		font-size: 1rem;
+		font-size: var(--font-size-fluid-1);
 		padding: 0.5rem 2rem;
 	}
 

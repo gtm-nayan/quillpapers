@@ -52,7 +52,7 @@
 			</select>
 			<button
 				on:click={() => dispatch('end', $timer)}
-				class="btn-w btn-depress btn-muted"
+				class="btn-w btn-depress"
 			>
 				<Stop />
 				<span>End session</span>
@@ -69,5 +69,9 @@
 
 	span {
 		margin-inline: 0.5rem;
+	}
+
+	button {
+		color: var(--primary);
 	}
 </style>

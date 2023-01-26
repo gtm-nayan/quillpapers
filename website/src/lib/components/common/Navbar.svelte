@@ -10,7 +10,7 @@
 
 <nav>
 	<a href="/">
-		<img src={logo} alt="logo" width="32" height="32" />
+		<span style:--icon-mask="url('{logo}')" />
 		Quill Papers
 	</a>
 	<div class="kofi-button">
@@ -20,7 +20,7 @@
 
 <style lang="scss">
 	nav {
-		background: var(--gradient-19);
+		background: var(--primary);
 		display: flex;
 		align-items: center;
 		padding: 0.5em;
@@ -29,16 +29,19 @@
 	a {
 		text-decoration: none;
 		font-size: 1.5rem;
-		margin: 0.5rem 0;
 		display: flex;
-		color: var(--gray-8);
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem;
+		color: white;
 	}
 
-	img {
-		width: 2rem;
-		height: auto;
-		margin-right: 0.3rem;
-		border-radius: 0.1rem;
+	span {
+		background-color: white;
+		mask-image: var(--icon-mask);
+		aspect-ratio: 1;
+		height: 1.5em;
+		mask-size: 100%;
 	}
 
 	.kofi-button {

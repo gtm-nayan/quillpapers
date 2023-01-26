@@ -26,6 +26,7 @@
 	<div class="buttons">
 		<button
 			style:grid-area="b"
+			class="btn-w btn-depress btn-active-blue"
 			disabled={is_doc_loading}
 			on:click={() => dispatch('back')}
 			use:shortcut={{ code: 'KeyU' }}
@@ -41,6 +42,7 @@
 
 		<button
 			style:grid-area="n"
+			class="btn-w btn-depress btn-active-blue"
 			disabled={is_doc_loading}
 			on:click={() => dispatch('next')}
 			use:shortcut={{ code: 'KeyO' }}
@@ -70,10 +72,12 @@
 			'c c'
 			'a a'
 			'b n';
+		border-top: 2px solid #e8e8e8;
+		padding: 0.5rem;
 
 		@media (orientation: landscape) {
 			grid-template-areas:
-				'. c .'
+				'b c n'
 				'b a n';
 			grid-template-columns: auto 1fr auto;
 		}
@@ -102,8 +106,8 @@
 	button {
 		overflow: clip;
 		background-color: transparent;
-		color: var(--yellow-5);
-		font-size: 3.5em;
+		color: var(--primary);
+		font-size: var(--font-size-fluid-2);
 	}
 
 	span {

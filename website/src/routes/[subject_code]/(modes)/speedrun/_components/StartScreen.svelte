@@ -18,5 +18,6 @@
 	button {
 		font-size: 2rem;
 		padding: 2rem;
+		color: var(--primary);
 	}
 </style>
