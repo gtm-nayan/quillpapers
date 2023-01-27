@@ -19,9 +19,14 @@ export const GET: RequestHandler = async ({ params, url }) => {
 };
 
 export const POST: RequestHandler = async ({ request }) => {
-	try {
-		const body = zod_schema.parse(await request.json()) as ReportedQuestion;
+	const parsed_question = zod_schema.safeParse(await request.json());
 
+	if (!parsed_question.success) {
+		throw error(400);
+	}
+
+	try {
+		const body = parsed_question.data as ReportedQuestion;
 		const args = sql`
 			${body.subject_code}::SMALLINT,
 			${body.series}::ExamSeries,
@@ -56,6 +61,6 @@ export const POST: RequestHandler = async ({ request }) => {
 			status: 200,
 		});
 	} catch (err: unknown) {
-		throw error(400);
+		throw error(500);
 	}
 };
