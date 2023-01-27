@@ -14,24 +14,16 @@
 	const current_question = getContext<Writable<Question>>('current_question');
 	const show_correct = getContext<boolean>('show_correct');
 
-	$: selected = $current_question.selected === answer;
+	$: checked = $current_question.selected === answer;
 </script>
 
-<label
-	class="btn-w btn-active-blue btn-depress"
-	class:correct={show_correct &&
-		selected &&
-		$current_question.correct_answer === answer}
-	class:incorrect={show_correct &&
-		selected &&
-		$current_question.correct_answer !== answer}
-	class:selected={selected && !show_correct}
->
+<label>
 	<input
 		type="radio"
 		name="answer"
 		class="sr-only"
 		value={answer}
+		{checked}
 		on:change={handle_answer_select}
 		use:shortcut={{
 			code: `Key${answer}`,
@@ -41,36 +33,45 @@
 			},
 		}}
 	/>
-	{answer}
+	<span
+		class="btn-w btn-depress"
+		class:correct={show_correct &&
+			checked &&
+			$current_question.correct_answer === answer}
+		class:incorrect={show_correct &&
+			checked &&
+			$current_question.correct_answer !== answer}
+		class:btn-active-blue={!show_correct}>{answer}</span
+	>
 </label>
 
 <style lang="scss">
-	label {
+	span {
 		position: relative;
 		width: 10rem;
 		font-size: var(--font-size-fluid-1);
 		padding: 0.5rem 2rem;
 	}
 
-	:where(button:hover) {
-		background-color: #f7f7f7;
+	input:focus-visible ~ span {
+		outline: solid 2px var(--border-color);
 	}
 
-	.selected {
+	input:checked ~ span {
 		--border-color: #84d8ff;
 		background-color: #ddf4ff;
 		color: #1899d6;
-	}
 
-	.correct {
-		--border-color: #94ea00;
-		background-color: #d7ffb8;
-		color: #58a700;
-	}
+		&.correct {
+			--border-color: #94ea00;
+			background-color: #d7ffb8;
+			color: #58a700;
+		}
 
-	.incorrect {
-		--border-color: #ffb2b2;
-		background-color: #ffdfe0;
-		color: #ea2b2b;
+		&.incorrect {
+			--border-color: #ffb2b2;
+			background-color: #ffdfe0;
+			color: #ea2b2b;
+		}
 	}
 </style>

@@ -37,7 +37,6 @@
 	div {
 		display: inline-block;
 		white-space: nowrap;
-		min-width: 160px;
 	}
 	span {
 		font-family: cursive;

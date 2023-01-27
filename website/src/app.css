@@ -39,7 +39,7 @@ kbd {
 
 a {
 	text-decoration: none;
-	color: var(--primary)
+	color: var(--primary);
 }
 
 button {
@@ -71,6 +71,10 @@ button {
 	border: 2px solid var(--border-color);
 	box-shadow: 0 2px 0 var(--border-color);
 	padding: 0.5rem 0.5rem;
+}
+
+:where(.btn-w:hover) {
+	background-color: #f7f7f7;
 }
 
 .btn-muted {

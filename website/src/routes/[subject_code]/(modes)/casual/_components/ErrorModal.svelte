@@ -71,7 +71,7 @@
 	</dialog>
 
 	<button on:click={() => modal(true)} class="btn-w btn-muted btn-depress">
-		<Warn style="margin-right: 0.5em;"/> Report
+		<Warn style="margin-right: 0.5em;" /> Report
 	</button>
 </span>
 

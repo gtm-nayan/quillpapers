@@ -12,6 +12,7 @@
 	import { _fetch_random_question } from './+page';
 	import Seo from '$lib/components/common/SEO.svelte';
 	import ErrorModal from './_components/ErrorModal.svelte';
+	import { shortcut } from '$lib/utils/shortcut';
 
 	export let data: PageData;
 	let { current_question } = data;
@@ -57,6 +58,12 @@
 				bind:value={topic_number}
 				on:change={handle_next_question}
 				class="btn-w"
+				use:shortcut={{
+					code: 'KeyT',
+					callback(node) {
+						node.focus();
+					},
+				}}
 			>
 				{#each Object.entries($subject_details.topics) as [topic_number, { title }]}
 					<option value={topic_number}>{title}</option>
