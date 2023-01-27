@@ -4,9 +4,13 @@ export function get_PDF_URL(question: Question): string {
 	return `https://quillpdfs.netlify.app/${pdf_id(question)}.pdf`;
 }
 
-export function pdf_id(question: Question): string {
-	//prettier-ignore
-	return `${question.subject_code}_${question.series}${zero_two(question.exam_year)}_qp_${question.paper_variant}`;
+export function pdf_id({
+	subject_code,
+	series,
+	exam_year,
+	paper_variant,
+}: Question): string {
+	return `${subject_code}_${series}${zero_two(exam_year)}_qp_${paper_variant}`;
 }
 
 /**
