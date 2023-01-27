@@ -8,6 +8,7 @@
 		subject_details,
 	} from '../../../_subject_code_store.js';
 	import Warn from '~icons/fa-solid/exclamation';
+	import type { ReportedQuestion } from '../../../casual.json/_reported_question.js';
 
 	const current_question: Writable<Question> = getContext('current_question');
 
@@ -15,13 +16,15 @@
 		fetch(`/${$subject_code}/casual.json`, {
 			method: 'POST',
 			body: JSON.stringify({
-				...$current_question,
-				error_type,
-				topic_suggestion:
+				question: $current_question,
+				error:
 					error_type === QuestionErrorType.WRONG_TOPIC
-						? +topic_suggestion
-						: undefined,
-			}),
+						? {
+								type: error_type,
+								topic_suggestion: +topic_suggestion,
+						  }
+						: { type: error_type },
+			} satisfies ReportedQuestion),
 		}).catch(console.error);
 	}
 

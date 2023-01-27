@@ -2,7 +2,7 @@ import { sql } from '$lib/db';
 import { QuestionErrorType } from '$lib/utils/types';
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { zod_schema, type ReportedQuestion } from './_reported_question.js';
+import { error_report_schema, type ReportedQuestion } from './_reported_question.js';
 
 export const GET: RequestHandler = async ({ params, url }) => {
 	const res = await sql`SELECT * FROM random_casual_question(
@@ -19,23 +19,23 @@ export const GET: RequestHandler = async ({ params, url }) => {
 };
 
 export const POST: RequestHandler = async ({ request }) => {
-	const parsed_question = zod_schema.safeParse(await request.json());
+	const parsed_question = error_report_schema.safeParse(await request.json());
 
 	if (!parsed_question.success) {
 		throw error(400);
 	}
 
 	try {
-		const body = parsed_question.data as ReportedQuestion;
+		const { question, error } = parsed_question.data as ReportedQuestion;
 		const args = sql`
-			${body.subject_code}::SMALLINT,
-			${body.series}::ExamSeries,
-			${body.exam_year}::SMALLINT,
-			${body.paper_variant.toString()[0]}::SMALLINT,
-			${body.paper_variant.toString()[1]}::SMALLINT,
-			${body.question_number}::SMALLINT`;
+			${question.subject_code}::SMALLINT,
+			${question.series}::ExamSeries,
+			${question.exam_year}::SMALLINT,
+			${question.paper_variant.toString()[0]}::SMALLINT,
+			${question.paper_variant.toString()[1]}::SMALLINT,
+			${question.question_number}::SMALLINT`;
 
-		switch (body.error_type) {
+		switch (error.type) {
 			case QuestionErrorType.BAD_CROPPING:
 				await sql`SELECT increment_bad_cropping_flags(${args})`;
 				break;
@@ -47,11 +47,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			case QuestionErrorType.WRONG_TOPIC: {
 				await sql`SELECT push_wrong_topic_flags(
 					${args},
-					${
-						// zod_schema's refine guarantees this
-						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-						body.topic_suggestion!
-					}::SMALLINT
+					${error.topic_suggestion}::SMALLINT
 				)`;
 				break;
 			}
