@@ -45,9 +45,11 @@
 
 <Seo title="{$subject_code} | {$subject_details.name} | Speedrun" />
 
-{#each $questions_store as question (question)}
-	<link rel="prefetch" href={get_PDF_URL(question)} />
-{/each}
+<svelte:head>
+	{#each $questions_store as question (question)}
+		<link rel="prefetch" href={get_PDF_URL(question)} />
+	{/each}
+</svelte:head>
 
 {#if speedrun_state === SpeedrunState.START}
 	<StartScreen on:click={handle_start} />
